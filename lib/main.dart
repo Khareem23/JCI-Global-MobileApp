@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: _navigatorKey,
-      title: 'SmartCash Mobile',
+      title: 'JCI Remit Mobile',
       theme: ThemeData(
         primaryColor: AppColors.primaryColor,
         accentColor: AppColors.accentColor,
