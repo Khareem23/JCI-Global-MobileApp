@@ -16,7 +16,7 @@ class LoginController extends StateNotifier<LoginState> {
     state = LoginLoading();
     try {
       final res = await authRepository.login(username, password);
-      if (res.isConfirmed) {
+      if (res.data != null) {
         state = LoginSuccess();
       } else {
         state = UserNotConfirmed();

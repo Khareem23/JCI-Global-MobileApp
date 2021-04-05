@@ -1,3 +1,3 @@
 class Globals {
-  static const apiBaseUrl = 'https://getsmartcash.herokuapp.com/api/';
+  static const apiBaseUrl = 'http://api.jciremit.com/api/';
 }
