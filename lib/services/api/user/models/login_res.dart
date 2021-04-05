@@ -1,25 +1,34 @@
+// To parse this JSON data, do
+//
+//     final loginResDto = loginResDtoFromJson(jsonString);
+
+import 'dart:convert';
+
+LoginResDto loginResDtoFromJson(String str) =>
+    LoginResDto.fromJson(json.decode(str));
+
+String loginResDtoToJson(LoginResDto data) => json.encode(data.toJson());
+
 class LoginResDto {
-  String accessToken;
-  String refreshToken;
-  String userId;
-  bool isConfirmed;
+  LoginResDto({
+    this.status,
+    this.message,
+    this.data,
+  });
 
-  LoginResDto(
-      {this.accessToken, this.refreshToken, this.userId, this.isConfirmed});
+  final String status;
+  final String message;
+  final String data;
 
-  LoginResDto.fromJson(Map<String, dynamic> json) {
-    accessToken = json['access_token'];
-    refreshToken = json['refresh_token'];
-    userId = json['userId'];
-    isConfirmed = json['isConfirmed'];
-  }
+  factory LoginResDto.fromJson(Map<String, dynamic> json) => LoginResDto(
+        status: json["status"] == null ? null : json["status"],
+        message: json["message"] == null ? null : json["message"],
+        data: json["data"] == null ? null : json["data"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access_token'] = this.accessToken;
-    data['refresh_token'] = this.refreshToken;
-    data['userId'] = this.userId;
-    data['isConfirmed'] = this.isConfirmed;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "status": status == null ? null : status,
+        "message": message == null ? null : message,
+        "data": data == null ? null : data,
+      };
 }

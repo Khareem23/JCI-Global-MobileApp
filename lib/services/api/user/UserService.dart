@@ -31,12 +31,13 @@ class UserService extends IUserService {
     _dio.interceptors.add(PrettyDioLogger());
   }
   @override
-  Future<LoginResDto> login(email, password) async {
-    final url = 'auth';
+  Future<LoginResDto> login(username, password) async {
+    final url = 'Users/login';
     try {
-      final response = await _dio.post(url,
-          data: {"email": email, "password": password, "rememberMe": true},
-          options: Options());
+      final response = await _dio.post(
+        url,
+        data: {"username": username, "password": password},
+      );
       LoginResDto result = LoginResDto.fromJson(response.data);
       return result;
     } on DioError catch (e) {

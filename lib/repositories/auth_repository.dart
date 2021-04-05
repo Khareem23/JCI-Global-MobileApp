@@ -18,7 +18,7 @@ class AuthRepository {
 
   Future<LoginResDto> login(String username, String password) async {
     final res = await _userService.login(username, password);
-    await StorageUtil.putString(StaticConfig.token, res.accessToken);
+    await StorageUtil.putString(StaticConfig.token, res.data);
     // await StorageUtil.putString(StaticConfig.userId, res.userId);
     return res;
   }
