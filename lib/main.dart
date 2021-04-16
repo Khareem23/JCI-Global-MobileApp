@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,12 +13,22 @@ import 'package:jci_remit_mobile/values/values.dart';
 
 import 'controllers/auth_controller.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() {
+  HttpOverrides.global = new MyHttpOverrides();
   runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-   final _navigatorKey = GlobalKey<NavigatorState>();
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   NavigatorState get _navigator => _navigatorKey.currentState;
   // This widget is the root of your application.
@@ -59,6 +71,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class AuthPageContainer extends HookWidget {
   const AuthPageContainer({Key key}) : super(key: key);
   @override
@@ -76,4 +89,3 @@ class AuthPageContainer extends HookWidget {
     });
   }
 }
-
