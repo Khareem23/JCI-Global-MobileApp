@@ -6,6 +6,7 @@ import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_vm.dart';
 import 'package:jci_remit_mobile/common/cool_stepper/cool_stepper.dart';
 import 'package:jci_remit_mobile/common/cool_stepper/src/models/cool_step.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
+import 'package:jci_remit_mobile/values/values.dart';
 
 import 'register_success.dart';
 import 'screens/basic_info.dart';
@@ -26,25 +27,32 @@ class RegisterScreen extends HookWidget {
       },
       child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(),
-          // resizeToAvoidBottomPadding: true,
-          body: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.all(30),
-              child: CoolStepper(
-                onCompleted: () {},
-                steps: <CoolStep>[
-                  CoolStep(
-                      title: "Basic Information",
-                      subtitle:
-                          "Please fill some of the basic information to get started",
-                      content: BasicInfoScreen(),
-                      validation: () {}),
-                ],
-              ),
+          appBar: AppBar(
+            title: Text(
+              'Register',
+              style: TextStyle(color: AppColors.primaryColor),
             ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  'Sign In',
+                  style: TextStyle(color: AppColors.primaryColor),
+                ),
+              ),
+            ],
+          ),
+          // resizeToAvoidBottomPadding: true,
+          body: CoolStepper(
+            onCompleted: () {},
+            steps: <CoolStep>[
+              CoolStep(
+                  title: "Basic Information",
+                  subtitle:
+                      "Please fill some of the basic information to get started",
+                  content: BasicInfoScreen(),
+                  validation: () {}),
+            ],
           )),
     );
   }

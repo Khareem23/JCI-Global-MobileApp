@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:jci_remit_mobile/services/api/user/models/register_res.dart';
@@ -23,12 +26,19 @@ class UserService extends IUserService {
     BaseOptions options = BaseOptions(
         receiveTimeout: 100000,
         connectTimeout: 100000,
+        // contentType: "application/json-patch+json",
         baseUrl: Globals.apiBaseUrl);
     _dio = Dio(options);
     _dio.interceptors.add(ApiInterceptor());
     // _dio.interceptors.add(CacheInterceptor());
     _dio.interceptors.add(ErrorInterceptor());
     _dio.interceptors.add(PrettyDioLogger());
+    // (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    //     (HttpClient dioClient) {
+    //   dioClient.badCertificateCallback =
+    //       (X509Certificate cert, String host, int port) => true;
+    //   return _dio;
+    // };
   }
   @override
   Future<LoginResDto> login(username, password) async {

@@ -1,3 +1,3 @@
 class Globals {
-  static const apiBaseUrl = 'http://api.jciremit.com/api/';
+  static const apiBaseUrl = 'https://api.jciremit.com/api/';
 }
