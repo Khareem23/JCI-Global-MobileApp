@@ -14,6 +14,46 @@ import 'screens/basic_info.dart';
 class RegisterScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final currentStep = useState(0);
+    final complete = useState(false);
+
+    goTo(int step) {
+      currentStep.value = step;
+    }
+
+    final List<Step> steps = [
+      Step(
+          title: const Text('Account'),
+          isActive: currentStep.value >= 0,
+          state:
+              currentStep.value >= 0 ? StepState.complete : StepState.disabled,
+          content: BasicInfoScreen()),
+      Step(
+          title: const Text('Address'),
+          isActive: currentStep.value >= 0,
+          state:
+              currentStep.value >= 1 ? StepState.complete : StepState.disabled,
+          content: Container()),
+      Step(
+          title: const Text('Security'),
+          isActive: currentStep.value >= 0,
+          state:
+              currentStep.value >= 2 ? StepState.complete : StepState.disabled,
+          content: Container()),
+    ];
+
+    next() {
+      currentStep.value + 1 != steps.length
+          ? goTo(currentStep.value + 1)
+          : complete.value = true;
+    }
+
+    cancel() {
+      if (currentStep.value > 0) {
+        goTo(currentStep.value - 1);
+      }
+    }
+
     return ProviderListener<RegisterState>(
       provider: registerNotifierProvider.state,
       onChange: (context, state) {
@@ -43,17 +83,31 @@ class RegisterScreen extends HookWidget {
             ],
           ),
           // resizeToAvoidBottomPadding: true,
-          body: CoolStepper(
-            onCompleted: () {},
-            steps: <CoolStep>[
-              CoolStep(
-                  title: "Basic Information",
-                  subtitle:
-                      "Please fill some of the basic information to get started",
-                  content: BasicInfoScreen(),
-                  validation: () {}),
+          body: Column(
+            children: [
+              Expanded(
+                  child: Stepper(
+                type: StepperType.horizontal,
+                steps: steps,
+                currentStep: currentStep.value,
+                onStepContinue: next,
+                onStepTapped: (step) => goTo(step),
+                onStepCancel: cancel,
+              ))
             ],
-          )),
+          )
+          // CoolStepper(
+          //   onCompleted: () {},
+          //   steps: <CoolStep>[
+          //     CoolStep(
+          //         title: "Basic Information",
+          //         subtitle:
+          //             "Please fill some of the basic information to get started",
+          //         content: BasicInfoScreen(),
+          //         validation: () {}),
+          //   ],
+          // )
+          ),
     );
   }
 }
