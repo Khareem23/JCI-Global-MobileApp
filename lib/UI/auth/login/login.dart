@@ -52,30 +52,6 @@ class LoginScreen extends HookWidget {
         },
         child: Scaffold(
             backgroundColor: Colors.white,
-            // appBar: AppBar(
-            //   flexibleSpace: Column(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       // SizedBox(
-            //       //   height: ScreenUtil().setHeight(100),
-            //       // ),
-            //       // Text(
-            //       //   'Welcome Back!',
-            //       //   style: theme.headline2,
-            //       // ),
-            //       // SizedBox(
-            //       //   height: ScreenUtil().setHeight(30),
-            //       // ),
-            //       // Text(
-            //       //   'Sign in to continue',
-            //       //   textAlign: TextAlign.center,
-            //       //   style: theme.headline3,
-            //       // ),
-
-            //     ],
-            //   ),
-            // ),
-            // resizeToAvoidBottomPadding: true,
             body: SingleChildScrollView(
               child: Container(
                 height: MediaQuery.of(context).size.height,
@@ -83,17 +59,18 @@ class LoginScreen extends HookWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: ScreenUtil().setHeight(100),
+                      height: ScreenUtil().setHeight(140),
                     ),
                     Text(
-                      'Welcome Back!',
-                      style: theme.headline2,
+                      'JCI Mobile',
+                      style: theme.headline2
+                          .copyWith(color: AppColors.primaryColor),
                     ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(30),
-                    ),
+                    // SizedBox(
+                    //   height: ScreenUtil().setHeight(30),
+                    // ),
                     Text(
-                      'Sign in to continue',
+                      'Send money to accross the world',
                       textAlign: TextAlign.center,
                       style: theme.headline3,
                     ),
