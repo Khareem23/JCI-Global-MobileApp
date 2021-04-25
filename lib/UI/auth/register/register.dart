@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/auth/register/screens/address_info.dart';
 import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_state.dart';
 import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_vm.dart';
 import 'package:jci_remit_mobile/common/cool_stepper/cool_stepper.dart';
 import 'package:jci_remit_mobile/common/cool_stepper/src/models/cool_step.dart';
+import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
@@ -33,7 +35,7 @@ class RegisterScreen extends HookWidget {
           isActive: currentStep.value >= 0,
           state:
               currentStep.value >= 1 ? StepState.complete : StepState.disabled,
-          content: Container()),
+          content: AddressInfo()),
       Step(
           title: const Text('Security'),
           isActive: currentStep.value >= 0,
@@ -93,6 +95,7 @@ class RegisterScreen extends HookWidget {
                 onStepContinue: next,
                 onStepTapped: (step) => goTo(step),
                 onStepCancel: cancel,
+                controlsBuilder: _createEventControlBuilder,
               ))
             ],
           )
@@ -109,5 +112,31 @@ class RegisterScreen extends HookWidget {
           // )
           ),
     );
+  }
+
+  Widget _createEventControlBuilder(BuildContext context,
+      {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+    return CustomButton(
+        width: MediaQuery.of(context).size.width,
+        onPressed: onStepContinue,
+        title: Text(
+          'Continue',
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: Sizes.TEXT_SIZE_16),
+        ));
+    // Row(
+    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //     children: <Widget>[
+    //       FlatButton(
+    //         onPressed: onStepCancel,
+    //         child: const Text('BACK'),
+    //       ),
+    //       FlatButton(
+    //         onPressed: onStepContinue,
+    //         child: const Text('NEXT'),
+    //       ),
+    //     ]);
   }
 }
