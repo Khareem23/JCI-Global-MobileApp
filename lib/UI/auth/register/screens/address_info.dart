@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:jci_remit_mobile/UI/auth/register/register.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 class AddressInfo extends HookWidget {
+  final GlobalKey<FormState> formKey;
+
+  AddressInfo({@required this.formKey});
+  static RegistrationData data = new RegistrationData();
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
         designSize: Size(750, 1334), allowFontScaling: false);
-    final _formKey = useState(GlobalKey<FormState>());
 
     final email = useState();
-    final password = useState();
     final firstName = useState();
     final lastName = useState();
     final userName = useState();
@@ -20,22 +23,17 @@ class AddressInfo extends HookWidget {
     final fnameFocusNode = useFocusNode();
     final lnameFocusNode = useFocusNode();
     final emailFocusNode = useFocusNode();
-    final pwdFocusNode = useFocusNode();
     final userNameFocusNode = useFocusNode();
     final fnameBgColor = useState(Colors.white);
     final lnameBgColor = useState(Colors.white);
     final emailBgColor = useState(Colors.white);
-    final pwdBgColor = useState(Colors.white);
     final userNameBgColor = useState(Colors.white);
-    final ispwdShown = useState(false);
-    final tos = useState(false);
     txtFieldListener(fnameFocusNode, fnameBgColor);
     txtFieldListener(lnameFocusNode, lnameBgColor);
     txtFieldListener(emailFocusNode, emailBgColor);
-    txtFieldListener(pwdFocusNode, pwdBgColor);
     var theme = Theme.of(context).textTheme;
     return Form(
-      key: _formKey.value,
+      key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
