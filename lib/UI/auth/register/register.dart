@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/register/screens/address_info.dart';
+import 'package:jci_remit_mobile/UI/auth/register/screens/security_info.dart';
 import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_state.dart';
 import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_vm.dart';
-import 'package:jci_remit_mobile/common/cool_stepper/cool_stepper.dart';
-import 'package:jci_remit_mobile/common/cool_stepper/src/models/cool_step.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/values/values.dart';
@@ -13,9 +12,34 @@ import 'package:jci_remit_mobile/values/values.dart';
 import 'register_success.dart';
 import 'screens/basic_info.dart';
 
+class RegistrationData {
+  String email = "";
+  String firstName = "";
+  String phoneNumber = "";
+  String lastName = "";
+  String password = "";
+  String pin = "";
+  String country = "";
+  String state = "";
+  String city = "";
+  String postalCode = "";
+  String address = "";
+  String gender = "";
+  String dateOfBirth = "";
+}
+
 class RegisterScreen extends HookWidget {
+  static RegistrationData data = new RegistrationData();
+
   @override
   Widget build(BuildContext context) {
+    List<GlobalKey<FormState>> formKeys = [
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>(),
+      GlobalKey<FormState>()
+    ];
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final currentStep = useState(0);
     final complete = useState(false);
 
@@ -29,25 +53,41 @@ class RegisterScreen extends HookWidget {
           isActive: currentStep.value >= 0,
           state:
               currentStep.value >= 0 ? StepState.complete : StepState.disabled,
-          content: BasicInfoScreen()),
+          content: BasicInfoScreen(
+            formKey: formKeys[0],
+          )),
       Step(
           title: const Text('Address'),
           isActive: currentStep.value >= 0,
           state:
               currentStep.value >= 1 ? StepState.complete : StepState.disabled,
-          content: AddressInfo()),
+          content: AddressInfo(
+            formKey: formKeys[1],
+          )),
       Step(
           title: const Text('Security'),
           isActive: currentStep.value >= 0,
           state:
               currentStep.value >= 2 ? StepState.complete : StepState.disabled,
-          content: Container()),
+          content: SecurityInfoScreen(
+            formKey: formKeys[2],
+          )),
     ];
+    void _submitDetails() {
+      final FormState formState = _formKey.currentState;
+      if (!formState.validate()) {
+      } else {
+        formState.save();
+        print("Name: ${data.firstName}");
+      }
+    }
 
     next() {
-      currentStep.value + 1 != steps.length
-          ? goTo(currentStep.value + 1)
-          : complete.value = true;
+      if (formKeys[currentStep.value].currentState.validate()) {
+        currentStep.value + 1 != steps.length
+            ? goTo(currentStep.value + 1)
+            : complete.value = true;
+      }
     }
 
     cancel() {
@@ -85,19 +125,36 @@ class RegisterScreen extends HookWidget {
             ],
           ),
           // resizeToAvoidBottomPadding: true,
-          body: Column(
-            children: [
-              Expanded(
-                  child: Stepper(
-                type: StepperType.horizontal,
-                steps: steps,
-                currentStep: currentStep.value,
-                onStepContinue: next,
-                onStepTapped: (step) => goTo(step),
-                onStepCancel: cancel,
-                controlsBuilder: _createEventControlBuilder,
-              ))
-            ],
+          body: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Expanded(
+                    child: Stepper(
+                        type: StepperType.horizontal,
+                        steps: steps,
+                        currentStep: currentStep.value,
+                        onStepContinue:
+                            currentStep.value == 2 ? _submitDetails : next,
+                        onStepTapped: (step) => goTo(step),
+                        onStepCancel: cancel,
+                        controlsBuilder: (BuildContext context,
+                                {VoidCallback onStepContinue,
+                                VoidCallback onStepCancel}) =>
+                            CustomButton(
+                                width: MediaQuery.of(context).size.width,
+                                onPressed: onStepContinue,
+                                title: Text(
+                                  currentStep.value == 2
+                                      ? 'Complete'
+                                      : 'Continue',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Sizes.TEXT_SIZE_16),
+                                ))))
+              ],
+            ),
           )
           // CoolStepper(
           //   onCompleted: () {},
@@ -112,31 +169,5 @@ class RegisterScreen extends HookWidget {
           // )
           ),
     );
-  }
-
-  Widget _createEventControlBuilder(BuildContext context,
-      {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-    return CustomButton(
-        width: MediaQuery.of(context).size.width,
-        onPressed: onStepContinue,
-        title: Text(
-          'Continue',
-          style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: Sizes.TEXT_SIZE_16),
-        ));
-    // Row(
-    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //     children: <Widget>[
-    //       FlatButton(
-    //         onPressed: onStepCancel,
-    //         child: const Text('BACK'),
-    //       ),
-    //       FlatButton(
-    //         onPressed: onStepContinue,
-    //         child: const Text('NEXT'),
-    //       ),
-    //     ]);
   }
 }

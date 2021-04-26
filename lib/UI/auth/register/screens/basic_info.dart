@@ -1,63 +1,58 @@
-import 'package:flutter/gestures.dart';
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_state.dart';
-import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_vm.dart';
-import 'package:jci_remit_mobile/common/custom_button.dart';
-import 'package:jci_remit_mobile/common/custom_checkbox.dart';
+import 'package:jci_remit_mobile/UI/auth/register/register.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
-import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 class BasicInfoScreen extends HookWidget {
+  final GlobalKey<FormState> formKey;
+
+  BasicInfoScreen({@required this.formKey});
+  static RegistrationData data = new RegistrationData();
   @override
   Widget build(BuildContext context) {
+    var _genders = ['Male', 'Female'];
+
     ScreenUtil.init(context,
         designSize: Size(750, 1334), allowFontScaling: false);
-    final _formKey = useState(GlobalKey<FormState>());
-
-    final email = useState();
-    final password = useState();
-    final firstName = useState();
-    final lastName = useState();
     final userName = useState();
+    final gender = useState('Male');
 
     final fnameFocusNode = useFocusNode();
     final lnameFocusNode = useFocusNode();
     final emailFocusNode = useFocusNode();
     final phoneFocusNode = useFocusNode();
-    final pwdFocusNode = useFocusNode();
     final userNameFocusNode = useFocusNode();
     final fnameBgColor = useState(Colors.white);
     final lnameBgColor = useState(Colors.white);
     final emailBgColor = useState(Colors.white);
     final phoneBgColor = useState(Colors.white);
-    final pwdBgColor = useState(Colors.white);
     final userNameBgColor = useState(Colors.white);
-    final ispwdShown = useState(false);
-    final tos = useState(false);
     txtFieldListener(phoneFocusNode, phoneBgColor);
     txtFieldListener(fnameFocusNode, fnameBgColor);
     txtFieldListener(lnameFocusNode, lnameBgColor);
     txtFieldListener(emailFocusNode, emailBgColor);
-    txtFieldListener(pwdFocusNode, pwdBgColor);
     var theme = Theme.of(context).textTheme;
     return Form(
-      key: _formKey.value,
+      key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            'Enter your basic information',
+            textAlign: TextAlign.left,
+            overflow: TextOverflow.clip,
+            style: theme.headline3.copyWith(fontSize: 13, color: Colors.grey),
+          ),
           SizedBox(
-            height: ScreenUtil().setHeight(60),
+            height: ScreenUtil().setHeight(20),
           ),
           CustomTextFormField(
-            onChanged: (v) => firstName.value = v,
+            onChanged: (v) => data.firstName = v,
             focusNode: fnameFocusNode,
             fillColor: fnameBgColor.value,
             textInputType: TextInputType.text,
@@ -77,7 +72,7 @@ class BasicInfoScreen extends HookWidget {
           CustomTextFormField(
             focusNode: lnameFocusNode,
             fillColor: lnameBgColor.value,
-            onChanged: (v) => lastName.value = v,
+            onChanged: (v) => data.lastName = v,
             textInputType: TextInputType.text,
             hintText: 'Last Name',
             validator: (String value) {
@@ -92,10 +87,57 @@ class BasicInfoScreen extends HookWidget {
           SizedBox(
             height: ScreenUtil().setHeight(20),
           ),
+          DateTimeFormField(
+            decoration: const InputDecoration(
+              hintStyle: TextStyle(color: Colors.black45),
+              errorStyle: TextStyle(color: Colors.redAccent),
+              hintText: 'Date of birth',
+              filled: true,
+              // fillColor: phoneBgColor.value,
+              contentPadding:
+                  const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(Sizes.RADIUS_8)),
+                borderSide: BorderSide(
+                  color: AppColors.grey,
+                  width: Sizes.WIDTH_1,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(Sizes.RADIUS_8)),
+                borderSide: BorderSide(
+                  color: AppColors.grey,
+                  width: Sizes.WIDTH_1,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(Sizes.RADIUS_8)),
+                borderSide: BorderSide(
+                  color: AppColors.primaryColor,
+                  width: Sizes.WIDTH_1,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              // focusColor: Color(0xFF262624),
+            ),
+            mode: DateTimeFieldPickerMode.date,
+            autovalidateMode: AutovalidateMode.always,
+            validator: (e) =>
+                (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
+            onDateSelected: (DateTime value) {
+              print(value);
+              data.dateOfBirth = value.toIso8601String();
+            },
+          ),
+          SizedBox(
+            height: ScreenUtil().setHeight(20),
+          ),
           CustomTextFormField(
             focusNode: emailFocusNode,
             fillColor: emailBgColor.value,
-            onChanged: (v) => email.value = v,
+            onChanged: (v) => data.email = v,
             textInputType: TextInputType.text,
             hintText: 'Email Address',
             validator: (String value) {
@@ -120,6 +162,7 @@ class BasicInfoScreen extends HookWidget {
             focusNode: phoneFocusNode,
             onInputChanged: (PhoneNumber number) {
               print(number.phoneNumber);
+              data.phoneNumber = number.phoneNumber;
             },
             onInputValidated: (bool value) {
               print(value);
@@ -156,70 +199,40 @@ class BasicInfoScreen extends HookWidget {
           SizedBox(
             height: ScreenUtil().setHeight(20),
           ),
-          CustomTextFormField(
-            focusNode: userNameFocusNode,
-            fillColor: userNameBgColor.value,
-            onChanged: (v) => userName.value = v,
-            textInputType: TextInputType.text,
-            hintText: 'Phone',
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Username is required';
-              }
 
-              // validator has to return something :)
+          DropdownButtonFormField<String>(
+            value: gender.value,
+            hint: Text("Select Gender"),
+            decoration: InputDecoration(
+              hintText: 'Select Gender',
+              filled: true,
+              fillColor: phoneBgColor.value,
+              contentPadding:
+                  const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+              border: Borders.customOutlineInputBorder(),
+              enabledBorder: Borders.customOutlineInputBorder(),
+              focusedBorder: Borders.customOutlineInputBorder(
+                  color: AppColors.primaryColor),
+              // focusColor: AppColors.accentColor.withOpacity(0.8),
+            ),
+            onChanged: (String newValue) {
+              gender.value = newValue;
+            },
+            validator: (String value) {
+              if (value?.isEmpty ?? true) {
+                return 'Please select a gender';
+              }
               return null;
             },
+            items: _genders.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onSaved: (val) => gender.value = val,
           ),
-          SizedBox(
-            height: ScreenUtil().setHeight(20),
-          ),
-          CustomTextFormField(
-            focusNode: pwdFocusNode,
-            fillColor: pwdBgColor.value,
-            onChanged: (v) => password.value = v,
-            textInputType: TextInputType.text,
-            obscured: !ispwdShown.value,
-            hintText: 'Password',
-            hasSuffixIcon: true,
-            suffixIcon: IconButton(
-                icon: Icon(ispwdShown.value ? Feather.eye_off : Feather.eye),
-                onPressed: () => ispwdShown.value = !ispwdShown.value),
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Password is required';
-              }
 
-              // validator has to return something :)
-              return null;
-            },
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(20),
-          ),
-          CustomTextFormField(
-            focusNode: pwdFocusNode,
-            fillColor: pwdBgColor.value,
-            onChanged: (v) => password.value = v,
-            textInputType: TextInputType.text,
-            obscured: !ispwdShown.value,
-            hintText: 'Confirm Password',
-            hasSuffixIcon: true,
-            suffixIcon: IconButton(
-                icon: Icon(ispwdShown.value ? Feather.eye_off : Feather.eye),
-                onPressed: () => ispwdShown.value = !ispwdShown.value),
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Password is required';
-              }
-
-              // validator has to return something :)
-              return null;
-            },
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(10),
-          ),
           // Text(
           //   'Minimum of 8 characters with at least 1 uppercase, 1 lowercase and 1 digit.',
           //   textAlign: TextAlign.left,
