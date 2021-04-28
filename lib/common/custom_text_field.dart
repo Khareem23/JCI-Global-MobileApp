@@ -33,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry contentPadding;
   final EdgeInsetsGeometry textFormFieldMargin;
   final int maxlines;
+  final int maxlength;
   final TextEditingController controller;
   final bool readOnly;
   final VoidCallback onTap;
@@ -73,6 +74,7 @@ class CustomTextFormField extends StatelessWidget {
       this.onTap,
       this.errorText,
       this.focusNode,
+      this.maxlength,
       this.fillColor});
 
   @override
@@ -94,6 +96,7 @@ class CustomTextFormField extends StatelessWidget {
           margin: textFormFieldMargin,
           child: TextFormField(
             autofocus: false,
+            maxLength: maxlength,
             focusNode: focusNode,
             onTap: onTap,
             style: textStyle,

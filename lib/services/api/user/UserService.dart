@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:jci_remit_mobile/UI/auth/register/register.model.dart';
+import 'package:jci_remit_mobile/services/api/user/models/state.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:jci_remit_mobile/services/api/user/models/register_res.dart';
 import 'package:jci_remit_mobile/services/api/user/models/send_otp_res_dto.dart';
@@ -13,6 +15,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../api_interceptor.dart';
 import '../error_interceptor.dart';
 import 'IUserService.dart';
+import 'models/country.dart';
 import 'models/login_res.dart';
 
 final userServiceProvider = Provider<UserService>((ref) {
@@ -62,22 +65,13 @@ class UserService extends IUserService {
   }
 
   @override
-  Future<String> register(
-      email, firstName, lastName, password, String userName) async {
-    final url = 'users';
+  Future<RegisterResDto> register(Register register) async {
+    final url = 'Users/register';
     try {
-      final response = await _dio.post(url,
-          data: {
-            "email": email,
-            "firstName": firstName,
-            "lastName": lastName,
-            "password": password,
-            "userName": userName,
-            "isAdmin": false
-          },
-          options: Options());
+      final response =
+          await _dio.post(url, data: register.toJson(), options: Options());
       RegisterResDto result = RegisterResDto.fromJson(response.data);
-      return result.id;
+      return result;
     } on DioError catch (e) {
       if (e.response != null) {
         Failure result = Failure.fromJson(e.response.data);
@@ -145,6 +139,42 @@ class UserService extends IUserService {
       if (e.response != null && e.response.data != '') {
         // Failure result = Failure.fromJson(e.response.data);
         throw e.response.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  @override
+  Future<Country> getCountries() async {
+    final url = 'Users/getCountries';
+    try {
+      final response = await _dio.get(url);
+      Country result = Country.fromJson(response.data);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        Failure result = Failure.fromJson(e.response.data);
+        throw result.message;
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  @override
+  Future<State> getStates(String countryCode) async {
+    final url = 'Users/getCountryStates/$countryCode';
+    try {
+      final response = await _dio.get(url);
+      State result = State.fromJson(response.data);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        Failure result = Failure.fromJson(e.response.data);
+        throw result.message;
       } else {
         print(e.error);
         throw e.error;

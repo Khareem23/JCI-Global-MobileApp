@@ -1,7 +1,9 @@
+import 'package:jci_remit_mobile/UI/auth/register/register.model.dart';
 import 'package:jci_remit_mobile/helper/static_config.dart';
 import 'package:jci_remit_mobile/services/api/user/UserService.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/services/api/user/models/login_res.dart';
+import 'package:jci_remit_mobile/services/api/user/models/register_res.dart';
 import 'package:jci_remit_mobile/services/api/user/models/user_dto.dart';
 import 'package:jci_remit_mobile/services/storage/shared_prefs.dart';
 import 'package:jci_remit_mobile/utils/utils.dart';
@@ -23,11 +25,9 @@ class AuthRepository {
     return res;
   }
 
-  Future<bool> register(String email, String firstName, String lastName,
-      String password, String userName) async {
-    final id = await _userService.register(
-        email, firstName, lastName, password, userName);
-    return id != null;
+  Future<RegisterResDto> register(Register register) async {
+    final id = await _userService.register(register);
+    return id;
   }
 
   Future<String> sendOtp(String phone) async {
