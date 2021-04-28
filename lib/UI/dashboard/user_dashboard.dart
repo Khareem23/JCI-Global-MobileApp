@@ -33,8 +33,7 @@ class UserDashboard extends HookWidget {
                       height: MediaQuery.of(context).size.height * 0.3,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: AppColors.accentColor,
-                      ),
+                          color: AppColors.primaryColor.withOpacity(0.2)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -61,46 +60,32 @@ class UserDashboard extends HookWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Balance',
-                                  textAlign: TextAlign.center,
-                                  style: theme.headline3
-                                      .copyWith(color: Colors.white),
-                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     RichText(
                                       textAlign: TextAlign.center,
                                       text: TextSpan(
-                                        text: 'NGN ',
+                                        text: 'Send money across the world ',
                                         style: theme.headline3.copyWith(
                                           color: Colors.white,
                                         ),
-                                        children: [
-                                          TextSpan(
-                                            text: user.balance.toString(),
-                                            style: theme.headline2.copyWith(
-                                                color: Colors.white,
-                                                fontSize: 35,
-                                                fontWeight: FontWeight.w500),
-                                          )
-                                        ],
                                       ),
                                     ),
                                     Container(
                                       height: 40,
                                       width: 100,
                                       decoration: BoxDecoration(
-                                          color: AppColors.colorShade1,
+                                          color: AppColors.primaryColor,
                                           borderRadius:
                                               BorderRadius.circular(5),
                                           border: Border.all(
-                                              color: AppColors.colorShade2)),
+                                              color: AppColors.white)),
                                       child: Center(
                                         child: Text(
-                                          'Top up',
+                                          'Send Now',
                                           textAlign: TextAlign.center,
                                           style: theme.headline3
                                               .copyWith(color: Colors.white),
@@ -126,49 +111,49 @@ class UserDashboard extends HookWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Activity',
-                              textAlign: TextAlign.start,
-                              style: theme.headline4,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () =>{},
-                                    child: ActivityCard(
-                                        title: 'Give Cash',
-                                        icon: FontAwesome.location_arrow),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () => {},
-                                    child: ActivityCard(
-                                        title: 'Receive Cash',
-                                        icon: FontAwesome.handshake_o),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: ActivityCard(
-                                      title: 'Transfer',
-                                      icon: FontAwesome.share),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            // Text(
+                            //   'Activity',
+                            //   textAlign: TextAlign.start,
+                            //   style: theme.headline4,
+                            // ),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     Expanded(
+                            //       child: InkWell(
+                            //         onTap: () => {},
+                            //         child: ActivityCard(
+                            //             title: 'Give Cash',
+                            //             icon: FontAwesome.location_arrow),
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     Expanded(
+                            //       child: InkWell(
+                            //         onTap: () => {},
+                            //         child: ActivityCard(
+                            //             title: 'Receive Cash',
+                            //             icon: FontAwesome.handshake_o),
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     Expanded(
+                            //       child: ActivityCard(
+                            //           title: 'Transfer',
+                            //           icon: FontAwesome.share),
+                            //     )
+                            //   ],
+                            // ),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -181,7 +166,7 @@ class UserDashboard extends HookWidget {
                                   'show more',
                                   textAlign: TextAlign.start,
                                   style: theme.headline3
-                                      .copyWith(color: AppColors.colorShade1),
+                                      .copyWith(color: AppColors.primaryColor),
                                 ),
                               ],
                             ),

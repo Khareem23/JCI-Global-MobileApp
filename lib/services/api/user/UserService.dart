@@ -133,7 +133,7 @@ class UserService extends IUserService {
     try {
       final response = await _dio.get(url,
           options: Options(headers: {"requireToken": true}));
-      UserDto result = UserDto.fromJson(response.data);
+      UserDto result = UserDto.fromJson(response.data['data']);
       return result;
     } on DioError catch (e) {
       if (e.response != null && e.response.data != '') {

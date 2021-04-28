@@ -14,7 +14,7 @@ class UserRepository {
     final token = StorageUtil.getString(StaticConfig.token);
     final userMap = util.parseJwtPayLoad(token);
     print(userMap);
-    final userId = userMap['id'];
+    final userId = userMap['nameid'];
     final res = await _userService.getUserProfile(userId);
     return res;
   }
