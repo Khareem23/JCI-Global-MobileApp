@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_state.dart';
+import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_vm.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/values/values.dart';
@@ -120,7 +123,10 @@ class SecurityInfoScreen extends HookWidget {
                 obscured: !ispinShown.value,
                 hintText: 'Enter a 6-digit Pin',
                 hasSuffixIcon: true,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(6),
+                ],
                 suffixIcon: IconButton(
                     icon:
                         Icon(ispinShown.value ? Feather.eye_off : Feather.eye),
@@ -129,6 +135,7 @@ class SecurityInfoScreen extends HookWidget {
                   if (value.isEmpty) {
                     return 'Pin is required';
                   }
+                  if (value.length < 6) return 'Pin can only be 6 digits';
 
                   // validator has to return something :)
                   return null;
@@ -137,30 +144,39 @@ class SecurityInfoScreen extends HookWidget {
               SizedBox(
                 height: ScreenUtil().setHeight(20),
               ),
-              CustomButton(
-                  width: MediaQuery.of(context).size.width,
-                  onPressed: () {
-                    if (!_formKey.value.currentState.validate()) {
-                      return null;
-                    }
-                    _formKey.value.currentState.save();
-                    context.flow<Register>().complete((register) => register
-                        .copyWith(password: password.value, pin: pin.value));
-                    // context.read(registerNotifierProvider).register(
-                    //       context,
-                    //       email.value.trim(),
-                    //       firstName.value.trim(),
-                    //       lastName.value.trim(),
-                    //       userName.value.trim(),
-                    //     );
-                  },
-                  title: Text(
-                    'Continue',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: Sizes.TEXT_SIZE_16),
-                  )),
+              Consumer(
+                builder: (context, watch, child) {
+                  final state = watch(registerNotifierProvider.state);
+                  return CustomButton(
+                      width: MediaQuery.of(context).size.width,
+                      onPressed: state is RegisterLoading
+                          ? null
+                          : () {
+                              if (!_formKey.value.currentState.validate()) {
+                                return null;
+                              }
+                              _formKey.value.currentState.save();
+                              context.flow<Register>().complete((register) =>
+                                  register.copyWith(
+                                      password: password.value,
+                                      pin: pin.value));
+                              // context.read(registerNotifierProvider).register(
+                              //       context,
+                              //       email.value.trim(),
+                              //       firstName.value.trim(),
+                              //       lastName.value.trim(),
+                              //       userName.value.trim(),
+                              //     );
+                            },
+                      title: Text(
+                        state is RegisterLoading ? 'Loading...' : 'Continue',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.TEXT_SIZE_16),
+                      ));
+                },
+              ),
               SizedBox(
                 height: ScreenUtil().setHeight(60),
               ),

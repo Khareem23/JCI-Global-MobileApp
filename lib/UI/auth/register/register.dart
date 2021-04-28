@@ -55,8 +55,6 @@ class RegisterScreen extends HookWidget {
               ];
             },
             onComplete: (state) {
-              print("Name: ${state.firstName}");
-              print("Password: ${state.password}");
               context.read(registerNotifierProvider).register(context, state);
             },
           )),

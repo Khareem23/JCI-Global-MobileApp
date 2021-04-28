@@ -14,6 +14,7 @@ class BasicInfoScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = useState(GlobalKey<FormState>());
+    PhoneNumber number = PhoneNumber(isoCode: 'NG');
     var _genders = ['Male', 'Female'];
     var _accountTypes = ['Individual Account', 'Business Account'];
 
@@ -183,6 +184,7 @@ class BasicInfoScreen extends HookWidget {
                   selectorType: PhoneInputSelectorType.DIALOG,
                 ),
                 ignoreBlank: false,
+                initialValue: number,
                 autoValidateMode: AutovalidateMode.disabled,
                 selectorTextStyle: TextStyle(color: Colors.black),
                 inputDecoration: InputDecoration(
@@ -197,8 +199,6 @@ class BasicInfoScreen extends HookWidget {
                       color: AppColors.primaryColor),
                   focusColor: AppColors.accentColor.withOpacity(0.8),
                 ),
-                // initialValue: number,
-                // textFieldController: controller,
                 formatInput: false,
 
                 // keyboardType:
@@ -296,6 +296,7 @@ class BasicInfoScreen extends HookWidget {
                             dateOfBirth: dob.value,
                             phoneNumber: phoneNumber.value,
                             accountType: accountEnum,
+                            userRole: 0,
                             gender: gender.value));
                   },
                   title: Text(

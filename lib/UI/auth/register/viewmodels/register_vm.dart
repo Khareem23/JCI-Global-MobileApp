@@ -26,8 +26,11 @@ class RegisterController extends StateNotifier<RegisterState> {
     state = RegisterLoading();
     try {
       final res = await authRepository.register(register);
-      if (res) {
+      if (res.data != null) {
         state = RegisterSuccess();
+      } else {
+        state = RegisterError(
+            'An Error occured. Please contact helpdesk for assistance.');
       }
     } catch (e) {
       state = RegisterError(e.toString());

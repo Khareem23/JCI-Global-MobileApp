@@ -65,13 +65,13 @@ class UserService extends IUserService {
   }
 
   @override
-  Future<String> register(Register register) async {
+  Future<RegisterResDto> register(Register register) async {
     final url = 'Users/register';
     try {
       final response =
           await _dio.post(url, data: register.toJson(), options: Options());
       RegisterResDto result = RegisterResDto.fromJson(response.data);
-      return result.id;
+      return result;
     } on DioError catch (e) {
       if (e.response != null) {
         Failure result = Failure.fromJson(e.response.data);
