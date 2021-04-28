@@ -27,7 +27,7 @@ class TransactionCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
                   style: theme.headline4
-                      .copyWith(fontSize: 16, color: AppColors.colorShade1),
+                      .copyWith(fontSize: 16, color: AppColors.blackShade1),
                 ),
                 Text(
                   '5 minutes ago',
