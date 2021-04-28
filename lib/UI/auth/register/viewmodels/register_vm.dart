@@ -5,6 +5,7 @@ import 'package:jci_remit_mobile/services/api/user/UserService.dart';
 import 'package:jci_remit_mobile/services/api/user/models/country.dart';
 import 'package:jci_remit_mobile/services/api/user/models/state.dart' as c;
 
+import '../register.model.dart';
 import 'register_state.dart';
 
 final registerNotifierProvider =
@@ -21,12 +22,10 @@ class RegisterController extends StateNotifier<RegisterState> {
       : authRepository = ref.read(authRepositoryProvider),
         super(RegisterInitial());
 
-  void register(BuildContext context, String email, String firstName,
-      String lastName, String password, String userName) async {
+  void register(BuildContext context, Register register) async {
     state = RegisterLoading();
     try {
-      final res = await authRepository.register(
-          email, firstName, lastName, password, userName);
+      final res = await authRepository.register(register);
       if (res) {
         state = RegisterSuccess();
       }

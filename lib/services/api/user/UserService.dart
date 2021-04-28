@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:jci_remit_mobile/UI/auth/register/register.model.dart';
 import 'package:jci_remit_mobile/services/api/user/models/state.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:jci_remit_mobile/services/api/user/models/register_res.dart';
@@ -64,20 +65,11 @@ class UserService extends IUserService {
   }
 
   @override
-  Future<String> register(
-      email, firstName, lastName, password, String userName) async {
-    final url = 'users';
+  Future<String> register(Register register) async {
+    final url = 'Users/register';
     try {
-      final response = await _dio.post(url,
-          data: {
-            "email": email,
-            "firstName": firstName,
-            "lastName": lastName,
-            "password": password,
-            "userName": userName,
-            "isAdmin": false
-          },
-          options: Options());
+      final response =
+          await _dio.post(url, data: register.toJson(), options: Options());
       RegisterResDto result = RegisterResDto.fromJson(response.data);
       return result.id;
     } on DioError catch (e) {

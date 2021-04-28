@@ -44,7 +44,6 @@ class RegisterScreen extends HookWidget {
               ),
             ],
           ),
-          // resizeToAvoidBottomPadding: true,
           body: FlowBuilder<Register>(
             state: const Register(),
             onGeneratePages: (register, pages) {
@@ -58,51 +57,9 @@ class RegisterScreen extends HookWidget {
             onComplete: (state) {
               print("Name: ${state.firstName}");
               print("Password: ${state.password}");
+              context.read(registerNotifierProvider).register(context, state);
             },
-          )
-          // Form(
-          //   key: _formKey,
-          //   child: Column(
-          //     children: [
-          //       Expanded(
-          //           child: Stepper(
-          //               type: StepperType.horizontal,
-          //               steps: steps,
-          //               currentStep: currentStep.value,
-          //               onStepContinue:
-          //                   currentStep.value == 2 ? _submitDetails : next,
-          //               onStepTapped: (step) => goTo(step),
-          //               onStepCancel: cancel,
-          //               controlsBuilder: (BuildContext context,
-          //                       {VoidCallback onStepContinue,
-          //                       VoidCallback onStepCancel}) =>
-          //                   CustomButton(
-          //                       width: MediaQuery.of(context).size.width,
-          //                       onPressed: onStepContinue,
-          //                       title: Text(
-          //                         currentStep.value == 2
-          //                             ? 'Complete'
-          //                             : 'Continue',
-          //                         style: TextStyle(
-          //                             color: Colors.white,
-          //                             fontWeight: FontWeight.bold,
-          //                             fontSize: Sizes.TEXT_SIZE_16),
-          //                       ))))
-          //     ],
-          //   ),
-          // )
-          // CoolStepper(
-          //   onCompleted: () {},
-          //   steps: <CoolStep>[
-          //     CoolStep(
-          //         title: "Basic Information",
-          //         subtitle:
-          //             "Please fill some of the basic information to get started",
-          //         content: BasicInfoScreen(),
-          //         validation: () {}),
-          //   ],
-          // )
-          ),
+          )),
     );
   }
 }

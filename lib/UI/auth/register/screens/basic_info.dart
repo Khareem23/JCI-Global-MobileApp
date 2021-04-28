@@ -15,6 +15,7 @@ class BasicInfoScreen extends HookWidget {
   Widget build(BuildContext context) {
     final _formKey = useState(GlobalKey<FormState>());
     var _genders = ['Male', 'Female'];
+    var _accountTypes = ['Individual Account', 'Business Account'];
 
     ScreenUtil.init(context,
         designSize: Size(750, 1334), allowFontScaling: false);
@@ -25,6 +26,7 @@ class BasicInfoScreen extends HookWidget {
     final dob = useState();
     final email = useState();
     final phoneNumber = useState();
+    final accountType = useState();
 
     final fnameFocusNode = useFocusNode();
     final lnameFocusNode = useFocusNode();
@@ -239,43 +241,41 @@ class BasicInfoScreen extends HookWidget {
                   );
                 }).toList(),
               ),
+              SizedBox(
+                height: ScreenUtil().setHeight(20),
+              ),
 
-              // Text(
-              //   'Minimum of 8 characters with at least 1 uppercase, 1 lowercase and 1 digit.',
-              //   textAlign: TextAlign.left,
-              //   overflow: TextOverflow.clip,
-              //   style: theme.headline3
-              //       .copyWith(fontSize: 13, color: Colors.grey.shade500),
-              // ),
-              // SizedBox(
-              //   height: ScreenUtil().setHeight(60),
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     Container(
-              //       height: 50,
-              //       child: Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           Container(
-              //               //height: 60,
-              //               // width: MediaQuery.of(context).size.width,
-              //               child: CustomCheckbox(
-              //             isChecked: tos.value,
-              //             selectedColor: AppColors.primaryColor.withOpacity(0.5),
-              //             size: 25,
-              //             onSelect: (bool value) => tos.value = value,
-              //           ))
-              //         ],
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: 10,
-              //     ),
+              DropdownButtonFormField<String>(
+                value: accountType.value,
+                hint: Text("Select Account Type"),
+                decoration: InputDecoration(
+                  hintText: 'Select Account Type',
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  border: Borders.customOutlineInputBorder(),
+                  enabledBorder: Borders.customOutlineInputBorder(),
+                  focusedBorder: Borders.customOutlineInputBorder(
+                      color: AppColors.primaryColor),
+                  // focusColor: AppColors.accentColor.withOpacity(0.8),
+                ),
+                onChanged: (String newValue) {
+                  accountType.value = newValue;
+                },
+                validator: (String value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please select an account type';
+                  }
+                  return null;
+                },
+                items:
+                    _accountTypes.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
 
-              //   ],
-              // ),
               SizedBox(
                 height: ScreenUtil().setHeight(50),
               ),
@@ -286,6 +286,8 @@ class BasicInfoScreen extends HookWidget {
                       return null;
                     }
                     _formKey.value.currentState.save();
+                    final accountEnum =
+                        accountType.value == 'Individual Account' ? 0 : 1;
                     context.flow<Register>().update((register) =>
                         register.copyWith(
                             firstName: firstName.value,
@@ -293,14 +295,8 @@ class BasicInfoScreen extends HookWidget {
                             email: email.value,
                             dateOfBirth: dob.value,
                             phoneNumber: phoneNumber.value,
+                            accountType: accountEnum,
                             gender: gender.value));
-                    // context.read(registerNotifierProvider).register(
-                    //       context,
-                    //       email.value.trim(),
-                    //       firstName.value.trim(),
-                    //       lastName.value.trim(),
-                    //       userName.value.trim(),
-                    //     );
                   },
                   title: Text(
                     'Continue',
