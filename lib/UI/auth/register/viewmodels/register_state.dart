@@ -1,29 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:jci_remit_mobile/repositories/auth_repository.dart';
+import 'package:equatable/equatable.dart';
 
-import 'register_vm.dart';
+abstract class RegisterState extends Equatable {
+  RegisterState();
+}
 
-final registerNotifierProvider =
-    StateNotifierProvider<RegisterController>((ref) => RegisterController(ref));
+class RegisterInitial extends RegisterState {
+  RegisterInitial();
 
-class RegisterController extends StateNotifier<RegisterState> {
-  final AuthRepository authRepository;
-  RegisterController(ProviderReference ref)
-      : authRepository = ref.read(authRepositoryProvider),
-        super(RegisterInitial());
+  @override
+  List<Object> get props => [];
+}
 
-  void register(BuildContext context, String email, String firstName,
-      String lastName, String password, String userName) async {
-    state = RegisterLoading();
-    try {
-      final res = await authRepository.register(
-          email, firstName, lastName, password, userName);
-      if (res) {
-        state = RegisterSuccess();
-      }
-    } catch (e) {
-      state = RegisterError(e.toString());
-    }
-  }
+class RegisterLoading extends RegisterState {
+  RegisterLoading();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RegisterSuccess extends RegisterState {
+  RegisterSuccess();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RegisterError extends RegisterState {
+  final String message;
+  RegisterError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
