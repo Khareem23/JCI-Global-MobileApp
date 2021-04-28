@@ -129,7 +129,7 @@ class UserService extends IUserService {
 
   @override
   Future<UserDto> getUserProfile(String id) async {
-    final url = 'users/$id';
+    final url = 'Users/$id';
     try {
       final response = await _dio.get(url,
           options: Options(headers: {"requireToken": true}));

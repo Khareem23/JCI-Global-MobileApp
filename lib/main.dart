@@ -9,6 +9,7 @@ import 'package:jci_remit_mobile/UI/auth/mobile/mobile_auth_screen.dart';
 import 'package:jci_remit_mobile/UI/dashboard/dashboard_screen.dart';
 import 'package:jci_remit_mobile/UI/splash/splash_screen.dart';
 import 'package:jci_remit_mobile/controllers/auth_state.dart';
+import 'package:jci_remit_mobile/services/storage/shared_prefs.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 import 'controllers/auth_controller.dart';
@@ -22,7 +23,9 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await StorageUtil.getInstance();
   HttpOverrides.global = new MyHttpOverrides();
   runApp(ProviderScope(child: MyApp()));
 }
