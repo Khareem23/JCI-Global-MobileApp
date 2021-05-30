@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/dashboard/viewmodels/user_state.dart';
 import 'package:jci_remit_mobile/repositories/user_repository.dart';
 import 'package:jci_remit_mobile/services/api/user/models/user_dto.dart';
+import 'package:jci_remit_mobile/services/api/user/models/user_transaction.dart';
 
 final dashProvider =
     StateNotifierProvider<UserDashController>((ref) => UserDashController());
@@ -29,4 +30,12 @@ final userProvider = FutureProvider.autoDispose<UserDto>((ref) async {
   final cancelToken = CancelToken();
   ref.onDispose(cancelToken.cancel);
   return await userRepository.getUser();
+});
+
+final userTransactionsProvider =
+    FutureProvider.autoDispose<List<Datum>>((ref) async {
+  final userRepository = UserRepository();
+  final cancelToken = CancelToken();
+  ref.onDispose(cancelToken.cancel);
+  return await userRepository.getUserTransaction();
 });

@@ -4,6 +4,7 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:jci_remit_mobile/UI/auth/register/register.model.dart';
 import 'package:jci_remit_mobile/services/api/user/models/state.dart';
+import 'package:jci_remit_mobile/services/api/user/models/user_transaction.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:jci_remit_mobile/services/api/user/models/register_res.dart';
 import 'package:jci_remit_mobile/services/api/user/models/send_otp_res_dto.dart';
@@ -175,6 +176,25 @@ class UserService extends IUserService {
       if (e.response != null) {
         Failure result = Failure.fromJson(e.response.data);
         throw result.message;
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  @override
+  Future<UserTransaction> getUserTransaction() async {
+    final url = 'Transactions/getCustomertransactions';
+    try {
+      final response = await _dio.get(url,
+          options: Options(headers: {"requireToken": true}));
+      UserTransaction result = UserTransaction.fromJson(response.data);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null && e.response.data != '') {
+        // Failure result = Failure.fromJson(e.response.data);
+        throw e.response.data['message'];
       } else {
         print(e.error);
         throw e.error;

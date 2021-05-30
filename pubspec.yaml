@@ -26,6 +26,7 @@ dependencies:
   liquid_pull_to_refresh: ^2.0.0
   date_field: ^2.0.1
   flow_builder: ^0.0.2
+  date_format: ^2.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
