@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 class AvatarIcon extends StatelessWidget {
   final String text;
@@ -7,7 +8,7 @@ class AvatarIcon extends StatelessWidget {
   const AvatarIcon({Key key, @required this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme;
+    var theme = context.themeData.textTheme;
     return Container(
       height: 50,
       width: 50,

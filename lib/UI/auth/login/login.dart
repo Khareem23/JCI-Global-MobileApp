@@ -11,6 +11,7 @@ import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/controllers/auth_controller.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 class LoginScreen extends HookWidget {
@@ -30,7 +31,7 @@ class LoginScreen extends HookWidget {
     final pwdBgColor = useState(Color(0xFFF7F7F7));
     txtFieldListener(emailFocusNode, emailBgColor);
     txtFieldListener(pwdFocusNode, pwdBgColor);
-    var theme = Theme.of(context).textTheme;
+    var theme = context.themeData.textTheme;
 
     return ProviderListener<LoginState>(
         provider: loginNotifierProvider.state,
@@ -63,7 +64,7 @@ class LoginScreen extends HookWidget {
                     ),
                     Text(
                       'JCI Mobile',
-                      style: theme.headline2
+                      style: context.textTheme.headline2
                           .copyWith(color: AppColors.primaryColor),
                     ),
                     // SizedBox(
@@ -357,11 +358,11 @@ class LoginScreen extends HookWidget {
                     RichText(
                       text: TextSpan(
                         text: 'Don\'t have an account?',
-                        style: Theme.of(context).textTheme.headline3,
+                        style: theme.headline3,
                         children: [
                           TextSpan(
                             text: ' - ',
-                            style: Theme.of(context).textTheme.headline3,
+                            style: theme.headline3,
                           ),
                           TextSpan(
                             recognizer: TapGestureRecognizer()
@@ -373,9 +374,7 @@ class LoginScreen extends HookWidget {
                                                 RegisterScreen()))
                                   },
                             text: "Sign Up",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline3
+                            style: context.textTheme.headline3
                                 .copyWith(fontWeight: FontWeight.w700),
                           )
                         ],

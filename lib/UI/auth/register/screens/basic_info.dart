@@ -7,6 +7,7 @@ import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:flow_builder/flow_builder.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 import '../register.model.dart';
 
@@ -41,7 +42,7 @@ class BasicInfoScreen extends HookWidget {
     txtFieldListener(fnameFocusNode, fnameBgColor);
     txtFieldListener(lnameFocusNode, lnameBgColor);
     txtFieldListener(emailFocusNode, emailBgColor);
-    var theme = Theme.of(context).textTheme;
+    var theme = context.themeData.textTheme;
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(

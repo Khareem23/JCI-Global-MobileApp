@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:jci_remit_mobile/widgets/icon_button.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 class ActivityCard extends StatelessWidget {
   final String title;
@@ -10,7 +11,7 @@ class ActivityCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme;
+    var theme = context.themeData.textTheme;
     return Container(
       height: 120,
       width: 110,

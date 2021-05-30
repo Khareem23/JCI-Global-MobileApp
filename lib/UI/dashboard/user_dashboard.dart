@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/transactions/all_transactions_screen.dart';
 import 'package:jci_remit_mobile/common/empty_state_widget.dart';
+import 'package:jci_remit_mobile/utils/extensions.dart';
+import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:jci_remit_mobile/UI/dashboard/components/activity_card.dart';
 import 'package:jci_remit_mobile/common/network_error_widget.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 import 'components/transaction_card.dart';
 import 'viewmodels/user_dash_vm.dart';
@@ -16,10 +19,11 @@ class UserDashboard extends HookWidget {
       GlobalKey<LiquidPullToRefreshState>();
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme;
+    var theme = context.themeData.textTheme;
 
     return RefreshIndicator(
-      onRefresh: () => context.refresh(userProvider),
+      key: _refreshIndicatorKey,
+      onRefresh: () => context.refresh(userTransactionsProvider),
       child: Column(
         children: [
           Container(
@@ -48,7 +52,7 @@ class UserDashboard extends HookWidget {
                           return Text(
                             'Welcome',
                             textAlign: TextAlign.center,
-                            style: theme.headline3
+                            style: context.textTheme.headline3
                                 .copyWith(color: Colors.white, fontSize: 20),
                           );
                         },
@@ -56,7 +60,7 @@ class UserDashboard extends HookWidget {
                           return Text(
                             '',
                             textAlign: TextAlign.center,
-                            style: theme.headline3
+                            style: context.textTheme.headline3
                                 .copyWith(color: Colors.white, fontSize: 20),
                           );
                         },
@@ -81,7 +85,7 @@ class UserDashboard extends HookWidget {
                             textAlign: TextAlign.center,
                             text: TextSpan(
                               text: 'Send money across the world ',
-                              style: theme.headline3.copyWith(
+                              style: context.textTheme.headline3.copyWith(
                                 color: Colors.white,
                               ),
                             ),
@@ -97,7 +101,7 @@ class UserDashboard extends HookWidget {
                               child: Text(
                                 'Send Now',
                                 textAlign: TextAlign.center,
-                                style: theme.headline3
+                                style: context.textTheme.headline3
                                     .copyWith(color: Colors.white),
                               ),
                             ),
@@ -125,13 +129,16 @@ class UserDashboard extends HookWidget {
                     Text(
                       'Recent Transactions',
                       textAlign: TextAlign.start,
-                      style: theme.headline4,
+                      style: context.textTheme.headline4,
                     ),
-                    Text(
-                      'show more',
-                      textAlign: TextAlign.start,
-                      style: theme.headline3
-                          .copyWith(color: AppColors.primaryColor),
+                    InkWell(
+                      onTap: () => navigator.pushTo(AllTransactionsScreen()),
+                      child: Text(
+                        'show more',
+                        textAlign: TextAlign.start,
+                        style: context.textTheme.headline3
+                            .copyWith(color: AppColors.primaryColor),
+                      ),
                     ),
                   ],
                 ),
@@ -139,7 +146,7 @@ class UserDashboard extends HookWidget {
                   data: (transactions) {
                     return ListView.separated(
                       shrinkWrap: true,
-                      itemCount: 5, // Set transaction limit to 5
+                      itemCount: transactions.length,
                       itemBuilder: (BuildContext context, int index) {
                         if (transactions.length > 0) {
                           final trnx = transactions[index];

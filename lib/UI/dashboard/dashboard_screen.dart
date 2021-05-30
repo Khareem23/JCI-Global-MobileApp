@@ -3,11 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:jci_remit_mobile/UI/dashboard/user_dashboard.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 class DashboardScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme;
+    var theme = context.themeData.textTheme;
     final _selectedIndex = useState(0);
     void _onItemTap(int index) {
       _selectedIndex.value = index;
@@ -21,7 +22,6 @@ class DashboardScreen extends HookWidget {
     ];
 
     return Scaffold(
-        
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex.value,
           selectedItemColor: AppColors.primaryColor,

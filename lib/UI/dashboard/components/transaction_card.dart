@@ -1,7 +1,9 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:jci_remit_mobile/widgets/avatar_icon.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 class TransactionCard extends StatelessWidget {
   final String name, sendingCountry, receivingCounty;
@@ -19,14 +21,13 @@ class TransactionCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme;
     return Container(
       height: 80,
       width: MediaQuery.of(context).size.width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          AvatarIcon(text: 'AT'),
+          AvatarIcon(text: name[0]),
           SizedBox(
             width: 20,
           ),
@@ -40,14 +41,26 @@ class TransactionCard extends StatelessWidget {
                   name,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
-                  style: theme.headline4
+                  style: context.textTheme.headline4
                       .copyWith(fontSize: 16, color: AppColors.blackShade1),
                 ),
-                Text(
-                  formatDate(transactionDate, [dd, ' ', M, ' ', yyyy]),
-                  textAlign: TextAlign.start,
-                  style: theme.headline3
-                      .copyWith(fontSize: 15, fontWeight: FontWeight.w400),
+                Row(
+                  children: [
+                    Text(
+                      formatDate(transactionDate, [dd, ' ', M, ' ', yyyy]),
+                      textAlign: TextAlign.start,
+                      style: context.textTheme.headline3
+                          .copyWith(fontSize: 15, fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon(
+                      Feather.loader,
+                      color: Colors.green,
+                      size: 12,
+                    )
+                  ],
                 ),
               ],
             ),
@@ -60,15 +73,15 @@ class TransactionCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: '',
-                  style: theme.headline3.copyWith(fontSize: 12),
+                  style: context.textTheme.headline3.copyWith(fontSize: 12),
                   children: [
                     TextSpan(
                       text: sendingCountry + ' ',
-                      style: theme.headline3.copyWith(fontSize: 12),
+                      style: context.textTheme.headline3.copyWith(fontSize: 12),
                     ),
                     TextSpan(
                       text: amountToSend.toString(),
-                      style: theme.headline4
+                      style: context.textTheme.headline4
                           .copyWith(fontSize: 18, fontWeight: FontWeight.w400),
                     )
                   ],
@@ -78,15 +91,15 @@ class TransactionCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: '',
-                  style: theme.headline3.copyWith(fontSize: 12),
+                  style: context.textTheme.headline3.copyWith(fontSize: 12),
                   children: [
                     TextSpan(
                       text: receivingCounty + ' ',
-                      style: theme.headline3.copyWith(fontSize: 8),
+                      style: context.textTheme.headline3.copyWith(fontSize: 8),
                     ),
                     TextSpan(
                       text: amountToReceive.toString(),
-                      style: theme.headline4
+                      style: context.textTheme.headline4
                           .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                     )
                   ],
