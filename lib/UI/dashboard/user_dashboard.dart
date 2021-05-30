@@ -139,7 +139,7 @@ class UserDashboard extends HookWidget {
                   data: (transactions) {
                     return ListView.separated(
                       shrinkWrap: true,
-                      itemCount: transactions.length,
+                      itemCount: 5, // Set transaction limit to 5
                       itemBuilder: (BuildContext context, int index) {
                         if (transactions.length > 0) {
                           final trnx = transactions[index];
