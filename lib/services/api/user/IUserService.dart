@@ -1,6 +1,7 @@
 import 'package:jci_remit_mobile/UI/auth/register/register.model.dart';
 import 'package:jci_remit_mobile/services/api/user/models/state.dart';
 import 'package:jci_remit_mobile/services/api/user/models/user_dto.dart';
+import 'package:jci_remit_mobile/services/api/user/models/user_transaction.dart';
 
 import 'models/country.dart';
 import 'models/login_res.dart';
@@ -14,4 +15,5 @@ abstract class IUserService {
   Future<UserDto> getUserProfile(String id);
   Future<Country> getCountries();
   Future<State> getStates(String countryCode);
+  Future<UserTransaction> getUserTransaction();
 }
