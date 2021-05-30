@@ -9,6 +9,7 @@ import 'package:jci_remit_mobile/common/pin_code_fields/pin_code_fields.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/controllers/auth_controller.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 import 'viewmodels/verify_otp_state.dart';
 
@@ -42,7 +43,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme;
+    var theme = context.themeData.textTheme;
     return ProviderListener(
       provider: verifyOtpProvider.state,
       onChange: (context, state) {

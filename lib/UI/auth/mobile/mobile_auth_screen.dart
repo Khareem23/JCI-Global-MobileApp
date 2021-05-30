@@ -8,6 +8,7 @@ import 'package:jci_remit_mobile/UI/auth/mobile/viewmodels/mobile_auth_state.dar
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 import 'viewmodels/mobile_auth_vm.dart';
 
@@ -16,7 +17,7 @@ class MobileAuthScreen extends HookWidget {
   Widget build(BuildContext context) {
     final formKey = useState(GlobalKey<FormState>());
     final phone = useState();
-    var theme = Theme.of(context).textTheme;
+    var theme = context.themeData.textTheme;
     return ProviderListener(
       provider: mobileAuthProvider.state,
       onChange: (context, state) {
