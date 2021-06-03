@@ -16,7 +16,7 @@ class TransactionDetail extends StatelessWidget {
         title: Text('Transaction Summary'),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             height: context.screenHeight(0.1),
@@ -70,7 +70,7 @@ class TransactionDetail extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: context.textTheme.headline3.copyWith(
                       fontWeight: FontWeight.w800,
-                      color: Colors.grey[400],
+                      color: AppColors.accentColor,
                       fontSize: 14),
                 ),
                 SizedBox(
@@ -80,7 +80,7 @@ class TransactionDetail extends StatelessWidget {
                   '12843ubjeihtuehr3984u02340',
                   textAlign: TextAlign.center,
                   style: context.textTheme.headline3.copyWith(
-                      color: AppColors.primaryColor,
+                      color: Colors.blueGrey,
                       fontWeight: FontWeight.w600,
                       fontSize: 16),
                 ),
@@ -132,7 +132,84 @@ class TransactionDetail extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: context.screenWidth(1),
+            padding: EdgeInsets.all(20),
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Status Description',
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.headline3.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.accentColor,
+                      fontSize: 14),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: context.screenWidth(1),
+            padding: EdgeInsets.all(20),
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Receiver's Info",
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.headline3.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.accentColor,
+                      fontSize: 14),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TrnxDetailItem(
+                  title: 'Name',
+                  item: 'Bankolade Bimbo',
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TrnxDetailItem(
+                  title: 'Bank Name',
+                  item: 'First Bank Nigeria',
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TrnxDetailItem(
+                  title: 'Account Number',
+                  item: '09084938749343',
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Have a problem with this summary?\nContact support.',
+            textAlign: TextAlign.center,
+            style: context.textTheme.headline3.copyWith(
+                fontWeight: FontWeight.w800,
+                color: Colors.blueGrey,
+                fontSize: 14),
+          ),
         ],
       ),
     );
@@ -162,8 +239,10 @@ class TrnxDetailItem extends StatelessWidget {
         Text(
           item,
           textAlign: TextAlign.center,
-          style: context.textTheme.headline3
-              .copyWith(fontWeight: FontWeight.w600, fontSize: 14),
+          style: context.textTheme.headline3.copyWith(
+              color: Colors.blueGrey,
+              fontWeight: FontWeight.w600,
+              fontSize: 14),
         ),
       ],
     );
