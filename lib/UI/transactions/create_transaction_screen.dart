@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/utils/extensions.dart';
+import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -103,6 +104,218 @@ class CreateTransactionScreen extends HookWidget {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
+                ),
+              ),
+            ),
+            Spacer(),
+            CustomButton(
+                color: Colors.black,
+                width: MediaQuery.of(context).size.width,
+                onPressed: () {
+                  context.popView();
+                  showBeneficiaryModal(context, purposes, purpose);
+                },
+                title: Text(
+                  'PROCEED',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizes.TEXT_SIZE_16),
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void showBeneficiaryModal(BuildContext context, List<String> purposes,
+      TextEditingController purpose) {
+    showBarModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        padding: EdgeInsets.all(20),
+        // height: context.screenHeight(0.6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Enter Beneficiary Details',
+              textAlign: TextAlign.center,
+              style: context.textTheme.headline3
+                  .copyWith(color: Colors.grey, fontSize: 14),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              // controller: purpose,
+              decoration: InputDecoration(
+                labelText: 'Bank Name',
+                hintText: '',
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              // controller: purpose,
+              decoration: InputDecoration(
+                labelText: 'Account Number / IBAN',
+                hintText: '',
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              // controller: purpose,
+              decoration: InputDecoration(
+                labelText: 'Account Name',
+                hintText: '',
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              // controller: purpose,
+              decoration: InputDecoration(
+                labelText: 'Bank Address',
+                hintText: '',
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    // controller: purpose,
+                    decoration: InputDecoration(
+                      labelText: 'Swift(Optional)',
+                      hintText: '',
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: TextFormField(
+                    // controller: purpose,
+                    decoration: InputDecoration(
+                      labelText: 'BSB(Optional)',
+                      hintText: '',
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 40,
+            ),
+            Text(
+              'Corresponding Bank (Optional)',
+              style: context.textTheme.headline3
+                  .copyWith(color: Colors.grey, fontSize: 14),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextField(
+              controller: purpose,
+              readOnly: true,
+              decoration: InputDecoration(
+                hintText: 'Country',
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                suffixIcon: PopupMenuButton<String>(
+                  icon: const Icon(Icons.arrow_drop_down),
+                  onSelected: (String value) {
+                    purpose.text = value;
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return purposes.map<PopupMenuItem<String>>((String value) {
+                      return new PopupMenuItem(
+                          child: new Text(value), value: value);
+                    }).toList();
+                  },
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              // controller: purpose,
+              decoration: InputDecoration(
+                labelText: 'Bank Name',
+                hintText: '',
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              // controller: purpose,
+              decoration: InputDecoration(
+                labelText: 'Account Number',
+                hintText: '',
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              // controller: purpose,
+              decoration: InputDecoration(
+                labelText: 'Account Name',
+                hintText: '',
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
               ),
             ),
@@ -324,7 +537,8 @@ class CreateTransactionScreen extends HookWidget {
                     color: Colors.black,
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {
-                      showModal(context, purposes, purpose);
+                      // showModal(context, purposes, purpose);
+                      showBeneficiaryModal(context, purposes, purpose);
                     },
                     title: Text(
                       'PROCEED',
