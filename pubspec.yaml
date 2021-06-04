@@ -26,6 +26,7 @@ dependencies:
   date_field: ^2.0.1
   flow_builder: ^0.0.2
   page_transition: ^2.0.2
+  modal_bottom_sheet: ^2.0.0
 
    # Utils
   logger: ^1.0.0
