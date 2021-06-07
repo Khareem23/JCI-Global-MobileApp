@@ -47,13 +47,13 @@ class AllTransactionsScreen extends HookWidget {
                             ));
                           },
                           child: TransactionCard(
-                            amountToReceive: trnx.amountToReceive,
-                            amountToSend: trnx.amountToSend,
-                            name: trnx.fullName,
-                            receivingCounty: trnx.receivingCountry,
-                            sendingCountry: trnx.sendingCountry,
-                            transactionDate: trnx.dateProcessed,
-                          ),
+                              amountToReceive: trnx.amountToReceive,
+                              amountToSend: trnx.amountToSend,
+                              name: trnx.fullName,
+                              receivingCounty: trnx.receivingCountry,
+                              sendingCountry: trnx.sendingCountry,
+                              transactionDate: trnx.dateProcessed,
+                              transactionType: trnx.transactionType),
                         );
                       }
                       return EmptyStateWidget(

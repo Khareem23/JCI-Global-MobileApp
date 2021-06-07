@@ -168,6 +168,7 @@ class UserDashboard extends HookWidget {
                               receivingCounty: trnx.receivingCountry,
                               sendingCountry: trnx.sendingCountry,
                               transactionDate: trnx.dateProcessed,
+                              transactionType: trnx.transactionType,
                             );
                           }
                           return EmptyStateWidget(
