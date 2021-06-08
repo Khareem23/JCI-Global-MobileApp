@@ -17,7 +17,10 @@ class AllTransactionsScreen extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Transactions'),
+        title: Text(
+          'My Transactions',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -47,13 +50,13 @@ class AllTransactionsScreen extends HookWidget {
                             ));
                           },
                           child: TransactionCard(
-                            amountToReceive: trnx.amountToReceive,
-                            amountToSend: trnx.amountToSend,
-                            name: trnx.fullName,
-                            receivingCounty: trnx.receivingCountry,
-                            sendingCountry: trnx.sendingCountry,
-                            transactionDate: trnx.dateProcessed,
-                          ),
+                              amountToReceive: trnx.amountToReceive,
+                              amountToSend: trnx.amountToSend,
+                              name: trnx.fullName,
+                              receivingCounty: trnx.receivingCountry,
+                              sendingCountry: trnx.sendingCountry,
+                              transactionDate: trnx.dateProcessed,
+                              transactionType: trnx.transactionType),
                         );
                       }
                       return EmptyStateWidget(

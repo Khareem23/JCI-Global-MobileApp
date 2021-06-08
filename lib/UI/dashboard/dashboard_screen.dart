@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:jci_remit_mobile/UI/dashboard/user_dashboard.dart';
+import 'package:jci_remit_mobile/UI/invite/invite_screen.dart';
+import 'package:jci_remit_mobile/UI/profile/profile.dart';
+import 'package:jci_remit_mobile/UI/receivers/receivers_screen.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 
@@ -16,9 +19,9 @@ class DashboardScreen extends HookWidget {
 
     final List<Widget> _children = [
       UserDashboard(),
-      Container(),
-      Container(),
-      Container(),
+      ProfileScreen(),
+      ReceiversScreen(),
+      InviteScreen(),
     ];
 
     return Scaffold(
@@ -34,14 +37,14 @@ class DashboardScreen extends HookWidget {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-                icon: Icon(FontAwesome.paper_plane_o), label: 'Transfer'),
-            BottomNavigationBarItem(
-              icon: Icon(AntDesign.folder1),
-              label: 'Services',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(AntDesign.user),
               label: 'Profile',
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Feather.users), label: 'Receivers'),
+            BottomNavigationBarItem(
+              icon: Icon(AntDesign.adduser),
+              label: 'Invite Now',
             ),
           ],
         ),

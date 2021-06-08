@@ -2,11 +2,11 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:jci_remit_mobile/values/values.dart';
-import 'package:jci_remit_mobile/widgets/avatar_icon.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
+import 'package:jci_remit_mobile/widgets/item_icon.dart';
 
 class TransactionCard extends StatelessWidget {
-  final String name, sendingCountry, receivingCounty;
+  final String name, sendingCountry, receivingCounty, transactionType;
   final num amountToSend, amountToReceive;
   final DateTime transactionDate;
 
@@ -17,7 +17,8 @@ class TransactionCard extends StatelessWidget {
       @required this.sendingCountry,
       @required this.receivingCounty,
       @required this.amountToSend,
-      @required this.amountToReceive})
+      @required this.amountToReceive,
+      @required this.transactionType})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,9 @@ class TransactionCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          AvatarIcon(text: name[0]),
+          ItemIcon(
+            text: transactionType,
+          ),
           SizedBox(
             width: 20,
           ),
