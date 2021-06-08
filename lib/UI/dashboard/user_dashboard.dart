@@ -20,20 +20,18 @@ class UserDashboard extends HookWidget {
       GlobalKey<LiquidPullToRefreshState>();
   @override
   Widget build(BuildContext context) {
-    var theme = context.themeData.textTheme;
-
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: () => context.refresh(userTransactionsProvider),
       child: Scaffold(
-        backgroundColor: AppColors.black,
+        backgroundColor: AppColors.primaryColor.withOpacity(0.1),
         body: Column(
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 40),
               height: MediaQuery.of(context).size.height * 0.3,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color: AppColors.black),
+              // decoration: BoxDecoration(color: AppColors.black),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -44,19 +42,17 @@ class UserDashboard extends HookWidget {
                       children: [
                         useProvider(userProvider).when(
                           data: (user) {
-                            return Text(
-                              'Welcome, ${user.firstName} 👍🏽',
-                              textAlign: TextAlign.center,
-                              style: theme.headline3
-                                  .copyWith(color: Colors.white, fontSize: 20),
-                            );
+                            return Text('Welcome, ${user.firstName} 👍🏽',
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline4
+                                    .copyWith(fontSize: 20));
                           },
                           error: (error, stackTrace) {
                             return Text(
                               'Welcome',
                               textAlign: TextAlign.center,
-                              style: context.textTheme.headline3
-                                  .copyWith(color: Colors.white, fontSize: 20),
+                              style: context.textTheme.headline4
+                                  .copyWith(fontSize: 20),
                             );
                           },
                           loading: () {
@@ -64,13 +60,13 @@ class UserDashboard extends HookWidget {
                               '',
                               textAlign: TextAlign.center,
                               style: context.textTheme.headline3
-                                  .copyWith(color: Colors.white, fontSize: 20),
+                                  .copyWith(color: Colors.black, fontSize: 20),
                             );
                           },
                         ),
                         Icon(
                           Feather.bell,
-                          color: Colors.white,
+                          color: Colors.black,
                         )
                       ],
                     ),
@@ -89,7 +85,7 @@ class UserDashboard extends HookWidget {
                               text: TextSpan(
                                 text: 'Send money across the world ',
                                 style: context.textTheme.headline3.copyWith(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),

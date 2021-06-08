@@ -3,13 +3,15 @@ import 'package:jci_remit_mobile/values/values.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final Function refreshCallBack;
-  final String error;
+  final String error, textOnButton, errorTitle;
 
   const EmptyStateWidget(
       {Key key,
       this.refreshCallBack,
       this.error =
-          'You do not have a transaction at the moment. Click on create to get started.'})
+          'You do not have a transaction at the moment. Click on create to get started.',
+      this.textOnButton = 'Retry',
+      this.errorTitle = 'Something is wrong'})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class EmptyStateWidget extends StatelessWidget {
             scale: 1.6,
           ),
           SizedBox(height: 50),
-          Text('Something is wrong', style: headline3),
+          Text(errorTitle, style: headline3),
           Container(
             margin: EdgeInsets.symmetric(vertical: 14.0),
             child:
@@ -36,7 +38,7 @@ class EmptyStateWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               onPressed: refreshCallBack,
               color: AppColors.accentColor,
-              child: Text('Retry', style: btnAccentStyle),
+              child: Text(textOnButton, style: btnAccentStyle),
             ),
           )
         ],

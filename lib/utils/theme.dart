@@ -9,9 +9,11 @@ extension CustomThemeContext on BuildContext {
         backgroundColor: Colors.white,
         textTheme: textTheme,
         appBarTheme: AppBarTheme(
-            color: AppColors.black,
+            color: AppColors.primaryColor.withOpacity(0.1),
+            titleTextStyle: TextStyle(color: Colors.black),
+            centerTitle: true,
             elevation: 0,
-            iconTheme: IconThemeData(color: AppColors.white)),
+            iconTheme: IconThemeData(color: Colors.black)),
         //textTheme: ,
       );
 

@@ -17,7 +17,10 @@ class AllTransactionsScreen extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Transactions'),
+        title: Text(
+          'My Transactions',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,

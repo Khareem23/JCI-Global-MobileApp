@@ -10,7 +10,7 @@ class InviteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: AppColors.primaryColor.withOpacity(0.1),
       body: SafeArea(
         child: Column(
           children: [
@@ -23,6 +23,10 @@ class InviteScreen extends StatelessWidget {
                   Text(
                     'Invite Friends',
                     style: context.textTheme.headline4.copyWith(fontSize: 30),
+                  ),
+                  Text(
+                    'Earn when you invite others ',
+                    style: context.textTheme.headline5.copyWith(fontSize: 12),
                   ),
                 ],
               ),
