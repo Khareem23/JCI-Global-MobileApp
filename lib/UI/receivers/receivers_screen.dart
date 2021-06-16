@@ -4,7 +4,7 @@ import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 class ReceiversScreen extends StatelessWidget {
-  const ReceiversScreen({Key key}) : super(key: key);
+  const ReceiversScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ReceiversScreen extends StatelessWidget {
                       Text(
                         'All Beneficiaries',
                         style:
-                            context.textTheme.headline4.copyWith(fontSize: 30),
+                            context.textTheme.headline4!.copyWith(fontSize: 30),
                       ),
                       Spacer(),
                       Icon(
@@ -35,7 +35,7 @@ class ReceiversScreen extends StatelessWidget {
                   ),
                   Text(
                     'See all your beneficiaries in one place',
-                    style: context.textTheme.headline5.copyWith(fontSize: 12),
+                    style: context.textTheme.headline5!.copyWith(fontSize: 12),
                   ),
                 ],
               ),

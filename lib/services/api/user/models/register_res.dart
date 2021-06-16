@@ -11,9 +11,9 @@ String registerResDtoToJson(RegisterResDto data) => json.encode(data.toJson());
 
 class RegisterResDto {
   RegisterResDto({
-    this.status,
-    this.message,
-    this.data,
+    required this.status,
+    required this.message,
+    required this.data,
   });
 
   String status;
@@ -23,7 +23,7 @@ class RegisterResDto {
   factory RegisterResDto.fromJson(Map<String, dynamic> json) => RegisterResDto(
         status: json["status"] == null ? null : json["status"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        data: Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,7 +35,7 @@ class RegisterResDto {
 
 class Data {
   Data({
-    this.id,
+    required this.id,
     this.email,
     this.firstName,
     this.lastName,
@@ -65,32 +65,32 @@ class Data {
   });
 
   int id;
-  String email;
-  String firstName;
-  String lastName;
-  DateTime createdDate;
-  String userRole;
-  String phoneNumber;
-  String businessName;
-  String businessRegNumber;
-  String pin;
-  String country;
-  String state;
-  String city;
-  String postalCode;
-  String address;
-  String gender;
-  bool isKycCompliancePassed;
-  bool isAmlCompliancePassed;
-  bool isScannedForAml;
-  DateTime dateOfBirth;
-  int age;
-  String resetKey;
-  String referralDiscountCode;
-  String accountType;
-  List<Receiver> receivers;
-  List<Transaction> transactions;
-  CustomerReferredTransaction customerReferredTransaction;
+  String? email;
+  String? firstName;
+  String? lastName;
+  DateTime? createdDate;
+  String? userRole;
+  String? phoneNumber;
+  String? businessName;
+  String? businessRegNumber;
+  String? pin;
+  String? country;
+  String? state;
+  String? city;
+  String? postalCode;
+  String? address;
+  String? gender;
+  bool? isKycCompliancePassed;
+  bool? isAmlCompliancePassed;
+  bool? isScannedForAml;
+  DateTime? dateOfBirth;
+  int? age;
+  String? resetKey;
+  String? referralDiscountCode;
+  String? accountType;
+  List<Receiver>? receivers;
+  List<Transaction>? transactions;
+  CustomerReferredTransaction? customerReferredTransaction;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"] == null ? null : json["id"],
@@ -151,7 +151,7 @@ class Data {
         "firstName": firstName == null ? null : firstName,
         "lastName": lastName == null ? null : lastName,
         "createdDate":
-            createdDate == null ? null : createdDate.toIso8601String(),
+            createdDate == null ? null : createdDate!.toIso8601String(),
         "userRole": userRole == null ? null : userRole,
         "phoneNumber": phoneNumber == null ? null : phoneNumber,
         "businessName": businessName == null ? null : businessName,
@@ -170,7 +170,7 @@ class Data {
             isAmlCompliancePassed == null ? null : isAmlCompliancePassed,
         "isScannedForAML": isScannedForAml == null ? null : isScannedForAml,
         "dateOfBirth":
-            dateOfBirth == null ? null : dateOfBirth.toIso8601String(),
+            dateOfBirth == null ? null : dateOfBirth!.toIso8601String(),
         "age": age == null ? null : age,
         "resetKey": resetKey == null ? null : resetKey,
         "referralDiscountCode":
@@ -178,28 +178,28 @@ class Data {
         "accountType": accountType == null ? null : accountType,
         "receivers": receivers == null
             ? null
-            : List<dynamic>.from(receivers.map((x) => x.toJson())),
+            : List<dynamic>.from(receivers!.map((x) => x.toJson())),
         "transactions": transactions == null
             ? null
-            : List<dynamic>.from(transactions.map((x) => x.toJson())),
+            : List<dynamic>.from(transactions!.map((x) => x.toJson())),
         "customerReferredTransaction": customerReferredTransaction == null
             ? null
-            : customerReferredTransaction.toJson(),
+            : customerReferredTransaction!.toJson(),
       };
 }
 
 class CustomerReferredTransaction {
   CustomerReferredTransaction({
-    this.id,
+    required this.id,
     this.totalNoTransaction,
     this.payoutBalance,
     this.customerId,
   });
 
   int id;
-  int totalNoTransaction;
-  int payoutBalance;
-  int customerId;
+  int? totalNoTransaction;
+  num? payoutBalance;
+  int? customerId;
 
   factory CustomerReferredTransaction.fromJson(Map<String, dynamic> json) =>
       CustomerReferredTransaction(
@@ -223,7 +223,7 @@ class CustomerReferredTransaction {
 
 class Receiver {
   Receiver({
-    this.id,
+    required this.id,
     this.country,
     this.bankCode,
     this.bankName,
@@ -244,23 +244,23 @@ class Receiver {
   });
 
   int id;
-  String country;
-  String bankCode;
-  String bankName;
-  String bankState;
-  String bankPostalCode;
-  String bankCity;
-  String bankAddress;
-  String accountCurrency;
-  String accountNumber;
-  String accountName;
-  String accountSWiftCode;
-  String accountBsbCode;
-  String corresBankCountry;
-  String corresBankName;
-  String corresBankIban;
-  Customer customer;
-  int customerId;
+  String? country;
+  String? bankCode;
+  String? bankName;
+  String? bankState;
+  String? bankPostalCode;
+  String? bankCity;
+  String? bankAddress;
+  String? accountCurrency;
+  String? accountNumber;
+  String? accountName;
+  String? accountSWiftCode;
+  String? accountBsbCode;
+  String? corresBankCountry;
+  String? corresBankName;
+  String? corresBankIban;
+  Customer? customer;
+  int? customerId;
 
   factory Receiver.fromJson(Map<String, dynamic> json) => Receiver(
         id: json["id"] == null ? null : json["id"],
@@ -312,7 +312,7 @@ class Receiver {
             corresBankCountry == null ? null : corresBankCountry,
         "corresBankName": corresBankName == null ? null : corresBankName,
         "corresBankIBAN": corresBankIban == null ? null : corresBankIban,
-        "customer": customer == null ? null : customer.toJson(),
+        "customer": customer == null ? null : customer!.toJson(),
         "customerId": customerId == null ? null : customerId,
       };
 }
@@ -352,37 +352,37 @@ class Customer {
     this.userRole,
   });
 
-  String phoneNumber;
-  String businessName;
-  String businessRegNumber;
-  String pin;
-  String countryOfResidence;
-  String countryOfNationality;
-  String state;
-  String city;
-  String postalCode;
-  String address;
-  String gender;
-  bool isActive;
-  bool isKycCompliancePassed;
-  bool isAmlCompliancePassed;
-  bool isScannedForAml;
-  DateTime dateOfBirth;
-  String resetKey;
-  String referralDiscountCode;
-  String accountType;
-  List<dynamic> receivers;
-  List<dynamic> transactions;
-  CustomerReferredTransaction customerReferredTransaction;
-  int id;
-  String email;
-  String firstName;
-  String lastName;
-  String passwordHash;
-  String passwordSalt;
-  DateTime createdDate;
-  DateTime lastUpdatedDate;
-  String userRole;
+  String? phoneNumber;
+  String? businessName;
+  String? businessRegNumber;
+  String? pin;
+  String? countryOfResidence;
+  String? countryOfNationality;
+  String? state;
+  String? city;
+  String? postalCode;
+  String? address;
+  String? gender;
+  bool? isActive;
+  bool? isKycCompliancePassed;
+  bool? isAmlCompliancePassed;
+  bool? isScannedForAml;
+  DateTime? dateOfBirth;
+  String? resetKey;
+  String? referralDiscountCode;
+  String? accountType;
+  List<dynamic>? receivers;
+  List<dynamic>? transactions;
+  CustomerReferredTransaction? customerReferredTransaction;
+  int? id;
+  String? email;
+  String? firstName;
+  String? lastName;
+  String? passwordHash;
+  String? passwordSalt;
+  DateTime? createdDate;
+  DateTime? lastUpdatedDate;
+  String? userRole;
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
         phoneNumber: json["phoneNumber"] == null ? null : json["phoneNumber"],
@@ -469,20 +469,20 @@ class Customer {
             isAmlCompliancePassed == null ? null : isAmlCompliancePassed,
         "isScannedForAML": isScannedForAml == null ? null : isScannedForAml,
         "dateOfBirth":
-            dateOfBirth == null ? null : dateOfBirth.toIso8601String(),
+            dateOfBirth == null ? null : dateOfBirth!.toIso8601String(),
         "resetKey": resetKey == null ? null : resetKey,
         "referralDiscountCode":
             referralDiscountCode == null ? null : referralDiscountCode,
         "accountType": accountType == null ? null : accountType,
         "receivers": receivers == null
             ? null
-            : List<dynamic>.from(receivers.map((x) => x)),
+            : List<dynamic>.from(receivers!.map((x) => x)),
         "transactions": transactions == null
             ? null
-            : List<dynamic>.from(transactions.map((x) => x)),
+            : List<dynamic>.from(transactions!.map((x) => x)),
         "customerReferredTransaction": customerReferredTransaction == null
             ? null
-            : customerReferredTransaction.toJson(),
+            : customerReferredTransaction!.toJson(),
         "id": id == null ? null : id,
         "email": email == null ? null : email,
         "firstName": firstName == null ? null : firstName,
@@ -490,16 +490,16 @@ class Customer {
         "passwordHash": passwordHash == null ? null : passwordHash,
         "passwordSalt": passwordSalt == null ? null : passwordSalt,
         "createdDate":
-            createdDate == null ? null : createdDate.toIso8601String(),
+            createdDate == null ? null : createdDate!.toIso8601String(),
         "lastUpdatedDate":
-            lastUpdatedDate == null ? null : lastUpdatedDate.toIso8601String(),
+            lastUpdatedDate == null ? null : lastUpdatedDate!.toIso8601String(),
         "userRole": userRole == null ? null : userRole,
       };
 }
 
 class Transaction {
   Transaction({
-    this.id,
+    required this.id,
     this.transactionRefNumber,
     this.transactionType,
     this.sendingCountry,
@@ -525,28 +525,28 @@ class Transaction {
   });
 
   int id;
-  String transactionRefNumber;
-  String transactionType;
-  String sendingCountry;
-  String receivingCountry;
-  String currencyDesc;
-  int amountToSend;
-  int amountToCharge;
-  int amountToReceive;
-  int amountToReceiveNgn;
-  int amountToReceiveUsd;
-  String payInMethod;
-  String paymentPurpose;
-  String paymentDescription;
-  DateTime dateSent;
-  DateTime dateProcessed;
-  String transactionStatus;
-  String paymentConfirmationUrl;
-  bool isPaidIn;
-  Receiver receiver;
-  int receiverId;
-  Customer customer;
-  int customerId;
+  String? transactionRefNumber;
+  String? transactionType;
+  String? sendingCountry;
+  String? receivingCountry;
+  String? currencyDesc;
+  num? amountToSend;
+  num? amountToCharge;
+  num? amountToReceive;
+  num? amountToReceiveNgn;
+  int? amountToReceiveUsd;
+  String? payInMethod;
+  String? paymentPurpose;
+  String? paymentDescription;
+  DateTime? dateSent;
+  DateTime? dateProcessed;
+  String? transactionStatus;
+  String? paymentConfirmationUrl;
+  bool? isPaidIn;
+  Receiver? receiver;
+  int? receiverId;
+  Customer? customer;
+  int? customerId;
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
         id: json["id"] == null ? null : json["id"],
@@ -620,17 +620,17 @@ class Transaction {
         "paymentPurpose": paymentPurpose == null ? null : paymentPurpose,
         "paymentDescription":
             paymentDescription == null ? null : paymentDescription,
-        "dateSent": dateSent == null ? null : dateSent.toIso8601String(),
+        "dateSent": dateSent == null ? null : dateSent!.toIso8601String(),
         "dateProcessed":
-            dateProcessed == null ? null : dateProcessed.toIso8601String(),
+            dateProcessed == null ? null : dateProcessed!.toIso8601String(),
         "transactionStatus":
             transactionStatus == null ? null : transactionStatus,
         "paymentConfirmationURL":
             paymentConfirmationUrl == null ? null : paymentConfirmationUrl,
         "isPaidIn": isPaidIn == null ? null : isPaidIn,
-        "receiver": receiver == null ? null : receiver.toJson(),
+        "receiver": receiver == null ? null : receiver!.toJson(),
         "receiverId": receiverId == null ? null : receiverId,
-        "customer": customer == null ? null : customer.toJson(),
+        "customer": customer == null ? null : customer!.toJson(),
         "customerId": customerId == null ? null : customerId,
       };
 }

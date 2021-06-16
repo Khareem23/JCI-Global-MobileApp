@@ -11,7 +11,7 @@ String sendOtpResDtoToJson(SendOtpResDto data) => json.encode(data.toJson());
 
 class SendOtpResDto {
   SendOtpResDto({
-    this.message,
+    required this.message,
   });
 
   String message;

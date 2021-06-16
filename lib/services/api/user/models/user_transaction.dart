@@ -4,17 +4,17 @@
 
 import 'dart:convert';
 
-UserTransaction userTransactionFromJson(String str) =>
-    UserTransaction.fromJson(json.decode(str));
+UserTransaction userTransactionFromJson(Map<String, dynamic> str) =>
+    UserTransaction.fromJson(str);
 
 String userTransactionToJson(UserTransaction data) =>
     json.encode(data.toJson());
 
 class UserTransaction {
   UserTransaction({
-    this.status,
-    this.message,
-    this.data,
+    required this.status,
+    required this.message,
+    required this.data,
   });
 
   final String status;
@@ -23,11 +23,9 @@ class UserTransaction {
 
   factory UserTransaction.fromJson(Map<String, dynamic> json) =>
       UserTransaction(
-        status: json["status"] == null ? null : json["status"],
-        message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? null
-            : List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -41,7 +39,7 @@ class UserTransaction {
 
 class Datum {
   Datum({
-    this.customerId,
+    required this.customerId,
     this.fullName,
     this.senderEmail,
     this.id,
@@ -73,34 +71,34 @@ class Datum {
   });
 
   final int customerId;
-  final String fullName;
-  final String senderEmail;
-  final int id;
-  final String transactionRefNumber;
-  final String transactionType;
-  final String sendingCountry;
-  final String receivingCountry;
-  final num amountToSend;
-  final num amountToCharge;
-  final num amountToReceive;
-  final num amountToReceiveNgn;
-  final num amountToReceiveUsd;
-  final String payInMethod;
-  final String paymentPurpose;
-  final String paymentDescription;
-  final DateTime dateSent;
-  final DateTime dateProcessed;
-  final String transactionStatus;
-  final String paymentConfirmationUrl;
-  final bool isPaidIn;
-  final num bonus;
-  final String bonusType;
-  final String bonusCode;
-  final double exchangeRate;
+  final String? fullName;
+  final String? senderEmail;
+  final int? id;
+  final String? transactionRefNumber;
+  final String? transactionType;
+  final String? sendingCountry;
+  final String? receivingCountry;
+  final num? amountToSend;
+  final num? amountToCharge;
+  final num? amountToReceive;
+  final num? amountToReceiveNgn;
+  final num? amountToReceiveUsd;
+  final String? payInMethod;
+  final String? paymentPurpose;
+  final String? paymentDescription;
+  final DateTime? dateSent;
+  final DateTime? dateProcessed;
+  final String? transactionStatus;
+  final String? paymentConfirmationUrl;
+  final bool? isPaidIn;
+  final num? bonus;
+  final String? bonusType;
+  final String? bonusCode;
+  final double? exchangeRate;
   final dynamic statusDescription;
-  final int receiverId;
-  final Receiver receiver;
-  final Payment payment;
+  final int? receiverId;
+  final Receiver? receiver;
+  final Payment? payment;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         customerId: json["customerId"] == null ? null : json["customerId"],
@@ -182,9 +180,9 @@ class Datum {
         "paymentPurpose": paymentPurpose == null ? null : paymentPurpose,
         "paymentDescription":
             paymentDescription == null ? null : paymentDescription,
-        "dateSent": dateSent == null ? null : dateSent.toIso8601String(),
+        "dateSent": dateSent == null ? null : dateSent!.toIso8601String(),
         "dateProcessed":
-            dateProcessed == null ? null : dateProcessed.toIso8601String(),
+            dateProcessed == null ? null : dateProcessed!.toIso8601String(),
         "transactionStatus":
             transactionStatus == null ? null : transactionStatus,
         "paymentConfirmationURL":
@@ -196,24 +194,24 @@ class Datum {
         "exchangeRate": exchangeRate == null ? null : exchangeRate,
         "statusDescription": statusDescription,
         "receiverId": receiverId == null ? null : receiverId,
-        "receiver": receiver == null ? null : receiver.toJson(),
-        "payment": payment == null ? null : payment.toJson(),
+        "receiver": receiver == null ? null : receiver!.toJson(),
+        "payment": payment == null ? null : payment!.toJson(),
       };
 }
 
 class Payment {
   Payment({
-    this.transactionId,
+    required this.transactionId,
     this.paymentMethod,
     this.paymentToken,
     this.paymentReferenceNo,
     this.paymentLinkUrl,
   });
 
-  final int transactionId;
-  final int paymentMethod;
+  final int? transactionId;
+  final int? paymentMethod;
   final dynamic paymentToken;
-  final String paymentReferenceNo;
+  final String? paymentReferenceNo;
   final dynamic paymentLinkUrl;
 
   factory Payment.fromJson(Map<String, dynamic> json) => Payment(
@@ -240,7 +238,7 @@ class Payment {
 
 class Receiver {
   Receiver({
-    this.customerId,
+    required this.customerId,
     this.country,
     this.bankName,
     this.bankState,
@@ -258,20 +256,20 @@ class Receiver {
   });
 
   final int customerId;
-  final String country;
-  final String bankName;
-  final String bankState;
-  final String bankPostalCode;
-  final String bankCity;
-  final String bankAddress;
-  final String accountCurrency;
-  final String accountNumber;
-  final String accountName;
-  final String accountSWiftCode;
-  final String accountBsbCode;
-  final String corresBankCountry;
-  final String corresBankName;
-  final String corresBankIban;
+  final String? country;
+  final String? bankName;
+  final String? bankState;
+  final String? bankPostalCode;
+  final String? bankCity;
+  final String? bankAddress;
+  final String? accountCurrency;
+  final String? accountNumber;
+  final String? accountName;
+  final String? accountSWiftCode;
+  final String? accountBsbCode;
+  final String? corresBankCountry;
+  final String? corresBankName;
+  final String? corresBankIban;
 
   factory Receiver.fromJson(Map<String, dynamic> json) => Receiver(
         customerId: json["customerId"] == null ? null : json["customerId"],

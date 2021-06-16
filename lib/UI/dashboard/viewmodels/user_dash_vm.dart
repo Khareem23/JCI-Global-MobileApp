@@ -5,8 +5,8 @@ import 'package:jci_remit_mobile/repositories/user_repository.dart';
 import 'package:jci_remit_mobile/services/api/user/models/user_dto.dart';
 import 'package:jci_remit_mobile/services/api/user/models/user_transaction.dart';
 
-final dashProvider =
-    StateNotifierProvider<UserDashController>((ref) => UserDashController());
+final dashProvider = StateNotifierProvider<UserDashController, UserState>(
+    (ref) => UserDashController());
 
 class UserDashController extends StateNotifier<UserState> {
   UserDashController() : super(UserLoading());

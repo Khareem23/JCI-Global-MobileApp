@@ -7,7 +7,7 @@ class ActivityCard extends StatelessWidget {
   final String title;
   final IconData icon;
 
-  const ActivityCard({Key key, @required this.title, @required this.icon})
+  const ActivityCard({Key? key, required this.title, required this.icon})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ActivityCard extends StatelessWidget {
           Text(
             '$title',
             textAlign: TextAlign.start,
-            style: theme.headline3.copyWith(color: AppColors.colorShade1),
+            style: theme.headline3!.copyWith(color: AppColors.colorShade1),
           ),
         ],
       ),

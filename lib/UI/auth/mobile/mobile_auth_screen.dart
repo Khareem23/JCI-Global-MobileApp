@@ -16,10 +16,10 @@ class MobileAuthScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = useState(GlobalKey<FormState>());
-    final phone = useState();
+    final phone = useState<PhoneNumber>(PhoneNumber());
     var theme = context.themeData.textTheme;
     return ProviderListener(
-      provider: mobileAuthProvider.state,
+      provider: mobileAuthProvider,
       onChange: (context, state) {
         if (state is MobileAuthSent) {
           Navigator.push(
@@ -76,7 +76,7 @@ class MobileAuthScreen extends HookWidget {
                     countries: ['NG'],
                     selectorConfig: SelectorConfig(
                       selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                      backgroundColor: Colors.white,
+                      // backgroundColor: Colors.white,
                     ),
                     inputBorder: InputBorder.none,
                   ),
@@ -86,19 +86,19 @@ class MobileAuthScreen extends HookWidget {
                 height: ScreenUtil().setHeight(150),
               ),
               Consumer(builder: (context, watch, _) {
-                final vm = watch(mobileAuthProvider.state);
+                final vm = watch(mobileAuthProvider);
                 return CustomButton(
                     width: MediaQuery.of(context).size.width,
                     onPressed: vm is MobileAuthSending
-                        ? null
+                        ? () {}
                         : () {
-                            if (!formKey.value.currentState.validate()) {
+                            if (!formKey.value.currentState!.validate()) {
                               return null;
                             }
-                            formKey.value.currentState.save();
+                            formKey.value.currentState!.save();
                             print(phone.value);
                             context
-                                .read(mobileAuthProvider)
+                                .read(mobileAuthProvider.notifier)
                                 .sendOtp(phone.value.toString());
                             // Navigator.push(
                             //     context,

@@ -3,8 +3,9 @@ import 'package:jci_remit_mobile/repositories/auth_repository.dart';
 
 import 'verify_otp_state.dart';
 
-final verifyOtpProvider = StateNotifierProvider<VerifyOtpController>(
-    (ref) => VerifyOtpController(ref));
+final verifyOtpProvider =
+    StateNotifierProvider<VerifyOtpController, VerifyOtpState>(
+        (ref) => VerifyOtpController(ref));
 
 class VerifyOtpController extends StateNotifier<VerifyOtpState> {
   final AuthRepository authRepository;

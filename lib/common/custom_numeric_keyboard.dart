@@ -4,18 +4,18 @@ import 'package:jci_remit_mobile/utils/size_util.dart';
 typedef KeyboardTapCallback = void Function(String text);
 
 class NumericKeyboard extends StatefulWidget {
-  final Color textColor;
-  final Icon rightIcon;
-  final Function() rightButtonFn;
-  final Icon leftIcon;
+  final Color? textColor;
+  final Icon? rightIcon;
+  final Function()? rightButtonFn;
+  final Icon? leftIcon;
   final bool addDecimal;
-  final Function() leftButtonFn;
+  final Function()? leftButtonFn;
   final KeyboardTapCallback onKeyboardTap;
   final MainAxisAlignment mainAxisAlignment;
 
   NumericKeyboard(
-      {Key key,
-      @required this.onKeyboardTap,
+      {Key? key,
+      required this.onKeyboardTap,
       this.textColor = Colors.black,
       this.rightButtonFn,
       this.rightIcon,

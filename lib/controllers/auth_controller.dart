@@ -10,7 +10,8 @@ enum AuthenticationStatus {
   notVerified
 }
 
-final authControllerProvider = StateNotifierProvider<AuthController>((ref) {
+final authControllerProvider =
+    StateNotifierProvider<AuthController, AuthState>((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
 
   return AuthController(authRepository);
@@ -18,7 +19,7 @@ final authControllerProvider = StateNotifierProvider<AuthController>((ref) {
 
 class AuthController extends StateNotifier<AuthState> {
   final AuthRepository _authRepository;
-  AuthController(this._authRepository, [AuthState state])
+  AuthController(this._authRepository, [AuthState? state])
       : super(state ?? AuthUnknown());
 
   void auth(AuthenticationStatus status) async {

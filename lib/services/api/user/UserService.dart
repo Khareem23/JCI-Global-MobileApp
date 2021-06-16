@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:jci_remit_mobile/UI/auth/register/register.model.dart';
 import 'package:jci_remit_mobile/services/api/user/models/state.dart';
@@ -24,7 +21,7 @@ final userServiceProvider = Provider<UserService>((ref) {
 });
 
 class UserService extends IUserService {
-  Dio _dio;
+  late Dio _dio;
 
   UserService() {
     BaseOptions options = BaseOptions(
@@ -56,7 +53,7 @@ class UserService extends IUserService {
       return result;
     } on DioError catch (e) {
       if (e.response != null) {
-        Failure result = Failure.fromJson(e.response.data);
+        Failure result = Failure.fromJson(e.response!.data);
         throw result.message;
       } else {
         print(e.error);
@@ -75,7 +72,7 @@ class UserService extends IUserService {
       return result;
     } on DioError catch (e) {
       if (e.response != null) {
-        Failure result = Failure.fromJson(e.response.data);
+        Failure result = Failure.fromJson(e.response!.data);
         throw result.message;
       } else {
         print(e.error);
@@ -96,8 +93,8 @@ class UserService extends IUserService {
       SendOtpResDto result = SendOtpResDto.fromJson(response.data);
       return result.message;
     } on DioError catch (e) {
-      if (e.response != null && e.response.data != '') {
-        Failure result = Failure.fromJson(e.response.data);
+      if (e.response != null && e.response!.data != '') {
+        Failure result = Failure.fromJson(e.response!.data);
         throw result.message;
       } else {
         print(e.error);
@@ -118,8 +115,8 @@ class UserService extends IUserService {
       SendOtpResDto result = SendOtpResDto.fromJson(response.data);
       return result.message;
     } on DioError catch (e) {
-      if (e.response != null && e.response.data != '') {
-        Failure result = Failure.fromJson(e.response.data);
+      if (e.response != null && e.response!.data != '') {
+        Failure result = Failure.fromJson(e.response!.data);
         throw result.message;
       } else {
         print(e.error);
@@ -137,9 +134,9 @@ class UserService extends IUserService {
       UserDto result = UserDto.fromJson(response.data['data']);
       return result;
     } on DioError catch (e) {
-      if (e.response != null && e.response.data != '') {
-        // Failure result = Failure.fromJson(e.response.data);
-        throw e.response.data['message'];
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
       } else {
         print(e.error);
         throw e.error;
@@ -156,7 +153,7 @@ class UserService extends IUserService {
       return result;
     } on DioError catch (e) {
       if (e.response != null) {
-        Failure result = Failure.fromJson(e.response.data);
+        Failure result = Failure.fromJson(e.response!.data);
         throw result.message;
       } else {
         print(e.error);
@@ -174,7 +171,7 @@ class UserService extends IUserService {
       return result;
     } on DioError catch (e) {
       if (e.response != null) {
-        Failure result = Failure.fromJson(e.response.data);
+        Failure result = Failure.fromJson(e.response!.data);
         throw result.message;
       } else {
         print(e.error);
@@ -189,12 +186,12 @@ class UserService extends IUserService {
     try {
       final response = await _dio.get(url,
           options: Options(headers: {"requireToken": true}));
-      UserTransaction result = UserTransaction.fromJson(response.data);
+      final result = userTransactionFromJson(response.data);
       return result;
     } on DioError catch (e) {
-      if (e.response != null && e.response.data != '') {
-        // Failure result = Failure.fromJson(e.response.data);
-        throw e.response.data['message'];
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
       } else {
         print(e.error);
         throw e.error;

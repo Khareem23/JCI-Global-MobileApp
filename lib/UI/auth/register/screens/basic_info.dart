@@ -1,7 +1,6 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
@@ -18,17 +17,14 @@ class BasicInfoScreen extends HookWidget {
     PhoneNumber number = PhoneNumber(isoCode: 'NG');
     var _genders = ['Male', 'Female'];
     var _accountTypes = ['Individual Account', 'Business Account'];
+    final gender = useState('');
 
-    ScreenUtil.init(context,
-        designSize: Size(750, 1334), allowFontScaling: false);
-    final gender = useState();
-
-    final firstName = useState();
-    final lastName = useState();
-    final dob = useState();
-    final email = useState();
-    final phoneNumber = useState();
-    final accountType = useState();
+    final firstName = useState('');
+    final lastName = useState('');
+    final dob = useState<DateTime>(DateTime.now());
+    final email = useState('');
+    final phoneNumber = useState('');
+    final accountType = useState('');
 
     final fnameFocusNode = useFocusNode();
     final lnameFocusNode = useFocusNode();
@@ -57,10 +53,10 @@ class BasicInfoScreen extends HookWidget {
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.clip,
                 style:
-                    theme.headline3.copyWith(fontSize: 13, color: Colors.grey),
+                    theme.headline3!.copyWith(fontSize: 13, color: Colors.grey),
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               CustomTextFormField(
                 onChanged: (v) => firstName.value = v,
@@ -68,8 +64,8 @@ class BasicInfoScreen extends HookWidget {
                 fillColor: fnameBgColor.value,
                 textInputType: TextInputType.text,
                 hintText: 'First Name',
-                validator: (String value) {
-                  if (value.isEmpty) {
+                validator: (String? value) {
+                  if (value!.isEmpty) {
                     return 'First Name is required';
                   }
 
@@ -78,7 +74,7 @@ class BasicInfoScreen extends HookWidget {
                 },
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               CustomTextFormField(
                 focusNode: lnameFocusNode,
@@ -86,8 +82,8 @@ class BasicInfoScreen extends HookWidget {
                 onChanged: (v) => lastName.value = v,
                 textInputType: TextInputType.text,
                 hintText: 'Last Name',
-                validator: (String value) {
-                  if (value.isEmpty) {
+                validator: (String? value) {
+                  if (value!.isEmpty) {
                     return 'Last Name is required';
                   }
 
@@ -96,7 +92,7 @@ class BasicInfoScreen extends HookWidget {
                 },
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               DateTimeFormField(
                 decoration: const InputDecoration(
@@ -146,7 +142,7 @@ class BasicInfoScreen extends HookWidget {
                 },
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               CustomTextFormField(
                 focusNode: emailFocusNode,
@@ -154,8 +150,8 @@ class BasicInfoScreen extends HookWidget {
                 onChanged: (v) => email.value = v,
                 textInputType: TextInputType.text,
                 hintText: 'Email Address',
-                validator: (String value) {
-                  if (value.isEmpty) {
+                validator: (String? value) {
+                  if (value!.isEmpty) {
                     return 'Email Address is required';
                   }
 
@@ -170,13 +166,13 @@ class BasicInfoScreen extends HookWidget {
                 },
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               InternationalPhoneNumberInput(
                 focusNode: phoneFocusNode,
                 onInputChanged: (PhoneNumber number) {
                   print(number.phoneNumber);
-                  phoneNumber.value = number.phoneNumber;
+                  phoneNumber.value = number.phoneNumber!;
                 },
                 onInputValidated: (bool value) {
                   print(value);
@@ -210,7 +206,7 @@ class BasicInfoScreen extends HookWidget {
                 },
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
 
               DropdownButtonFormField<String>(
@@ -226,10 +222,10 @@ class BasicInfoScreen extends HookWidget {
                       color: AppColors.primaryColor),
                   // focusColor: AppColors.accentColor.withOpacity(0.8),
                 ),
-                onChanged: (String newValue) {
-                  gender.value = newValue;
+                onChanged: (String? newValue) {
+                  gender.value = newValue!;
                 },
-                validator: (String value) {
+                validator: (String? value) {
                   if (value?.isEmpty ?? true) {
                     return 'Please select a gender';
                   }
@@ -243,7 +239,7 @@ class BasicInfoScreen extends HookWidget {
                 }).toList(),
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
 
               DropdownButtonFormField<String>(
@@ -259,10 +255,10 @@ class BasicInfoScreen extends HookWidget {
                       color: AppColors.primaryColor),
                   // focusColor: AppColors.accentColor.withOpacity(0.8),
                 ),
-                onChanged: (String newValue) {
-                  accountType.value = newValue;
+                onChanged: (String? newValue) {
+                  accountType.value = newValue!;
                 },
-                validator: (String value) {
+                validator: (String? value) {
                   if (value?.isEmpty ?? true) {
                     return 'Please select an account type';
                   }
@@ -278,15 +274,15 @@ class BasicInfoScreen extends HookWidget {
               ),
 
               SizedBox(
-                height: ScreenUtil().setHeight(50),
+                height: 50,
               ),
               CustomButton(
                   width: MediaQuery.of(context).size.width,
                   onPressed: () {
-                    if (!_formKey.value.currentState.validate()) {
+                    if (!_formKey.value.currentState!.validate()) {
                       return null;
                     }
-                    _formKey.value.currentState.save();
+                    _formKey.value.currentState!.save();
                     final accountEnum =
                         accountType.value == 'Individual Account' ? 0 : 1;
                     context.flow<Register>().update((register) =>
@@ -325,7 +321,7 @@ class BasicInfoScreen extends HookWidget {
               //         style: Theme.of(context)
               //             .textTheme
               //             .headline3
-              //             .copyWith(fontWeight: FontWeight.w700),
+              //             !.copyWith(fontWeight: FontWeight.w700),
               //       )
               //     ],
               //   ),

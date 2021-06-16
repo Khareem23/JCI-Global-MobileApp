@@ -6,7 +6,7 @@ class PinCodeTextField extends StatefulWidget {
   final BuildContext appContext;
 
   ///Box Shadow for Pincode
-  final List<BoxShadow> boxShadows;
+  final List<BoxShadow>? boxShadows;
 
   /// length of how many cells there should be. 3-8 is recommended by me
   final int length;
@@ -25,17 +25,17 @@ class PinCodeTextField extends StatefulWidget {
   final ValueChanged<String> onChanged;
 
   /// returns the typed text when all pins are set
-  final ValueChanged<String> onCompleted;
+  final ValueChanged<String>? onCompleted;
 
   /// returns the typed text when user presses done/next action on the keyboard
-  final ValueChanged<String> onSubmitted;
+  final ValueChanged<String>? onSubmitted;
 
   /// the style of the text, default is [ fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold]
   final TextStyle textStyle;
 
   /// the style of the pasted text, default is [fontWeight: FontWeight.bold] while
   /// [TextStyle.color] is [ThemeData.accentColor]
-  final TextStyle pastedTextStyle;
+  final TextStyle? pastedTextStyle;
 
   /// background color for the whole row of pin code fields. Default is [Colors.white]
   final Color backgroundColor;
@@ -59,7 +59,7 @@ class PinCodeTextField extends StatefulWidget {
   final bool autoFocus;
 
   /// Should pass a [FocusNode] to manage it from the parent
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
 
   /// A list of [TextInputFormatter] that goes to the TextField
   final List<TextInputFormatter> inputFormatters;
@@ -68,7 +68,7 @@ class PinCodeTextField extends StatefulWidget {
   final bool enabled;
 
   /// [TextEditingController] to control the text manually. Sets a default [TextEditingController()] object if none given
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   /// Enabled Color fill for individual pin fields, default is [false]
   final bool enableActiveFill;
@@ -88,18 +88,18 @@ class PinCodeTextField extends StatefulWidget {
   final TextInputAction textInputAction;
 
   /// Triggers the error animation
-  final StreamController<ErrorAnimationType> errorAnimationController;
+  final StreamController<ErrorAnimationType>? errorAnimationController;
 
   /// Callback method to validate if text can be pasted. This is helpful when we need to validate text before pasting.
   /// e.g. validate if text is number. Default will be pasted as received.
-  final bool Function(String text) beforeTextPaste;
+  final bool Function(String text)? beforeTextPaste;
 
   /// Method for detecting a pin_code form tap
   /// work with all form windows
   final Function onTap;
 
   /// Configuration for paste dialog. Read more [DialogConfig]
-  final DialogConfig dialogConfig;
+  final DialogConfig? dialogConfig;
 
   /// Theme for the pin cells. Read more [PinTheme]
   final PinTheme pinTheme;
@@ -108,11 +108,11 @@ class PinCodeTextField extends StatefulWidget {
   final Brightness keyboardAppearance;
 
   /// Validator for the [TextFormField]
-  final FormFieldValidator<String> validator;
+  final FormFieldValidator<String>? validator;
 
   /// An optional method to call with the final value when the form is saved via
   /// [FormState.save].
-  final FormFieldSetter<String> onSaved;
+  final FormFieldSetter<String>? onSaved;
 
   /// enables auto validation for the [TextFormField]
   /// Default is false
@@ -132,22 +132,22 @@ class PinCodeTextField extends StatefulWidget {
   final bool showCursor;
 
   /// The color of the cursor, default to Theme.of(context).accentColor
-  final Color cursorColor;
+  final Color? cursorColor;
 
   /// width of the cursor, default to 2
   final double cursorWidth;
 
   /// Height of the cursor, default to FontSize + 8;
-  final double cursorHeight;
+  final double? cursorHeight;
 
   PinCodeTextField({
-    Key key,
-    @required this.appContext,
-    @required this.length,
+    Key? key,
+    required this.appContext,
+    required this.length,
     this.controller,
     this.obscureText = false,
     this.obscuringCharacter = '●',
-    @required this.onChanged,
+    required this.onChanged,
     this.onCompleted,
     this.backgroundColor = Colors.white,
     this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
@@ -157,7 +157,7 @@ class PinCodeTextField extends StatefulWidget {
     this.keyboardType = TextInputType.visiblePassword,
     this.autoFocus = false,
     this.focusNode,
-    this.onTap,
+    required this.onTap,
     this.enabled = true,
     this.inputFormatters = const <TextInputFormatter>[],
     this.textStyle = const TextStyle(
@@ -196,31 +196,31 @@ class PinCodeTextField extends StatefulWidget {
 
 class _PinCodeTextFieldState extends State<PinCodeTextField>
     with TickerProviderStateMixin {
-  TextEditingController _textEditingController;
-  FocusNode _focusNode;
-  List<String> _inputList;
+  late TextEditingController _textEditingController;
+  late FocusNode _focusNode;
+  List<String> _inputList = [];
   int _selectedIndex = 0;
-  BorderRadius borderRadius;
+  late BorderRadius borderRadius;
 
   // AnimationController for the error animation
-  AnimationController _controller;
+  late AnimationController _controller;
 
-  AnimationController _cursorController;
+  late AnimationController _cursorController;
 
-  StreamSubscription<ErrorAnimationType> _errorAnimationSubscription;
+  late StreamSubscription<ErrorAnimationType> _errorAnimationSubscription;
 
   // Animation for the error animation
-  Animation<Offset> _offsetAnimation;
+  late Animation<Offset> _offsetAnimation;
 
-  Animation<double> _cursorAnimation;
+  late Animation<double> _cursorAnimation;
   DialogConfig get _dialogConfig => widget.dialogConfig == null
       ? DialogConfig()
       : DialogConfig(
-          affirmativeText: widget.dialogConfig.affirmativeText,
-          dialogContent: widget.dialogConfig.dialogContent,
-          dialogTitle: widget.dialogConfig.dialogTitle,
-          negativeText: widget.dialogConfig.negativeText);
-  PinTheme get _pinTheme => widget.pinTheme ?? PinTheme();
+          affirmativeText: widget.dialogConfig!.affirmativeText,
+          dialogContent: widget.dialogConfig!.dialogContent,
+          dialogTitle: widget.dialogConfig!.dialogTitle,
+          negativeText: widget.dialogConfig!.negativeText);
+  PinTheme get _pinTheme => widget.pinTheme;
 
   @override
   void initState() {
@@ -239,7 +239,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
     _focusNode.addListener(() {
       setState(() {});
     }); // Rebuilds on every change to reflect the correct color on each field.
-    _inputList = List<String>(widget.length);
+    _inputList = List.empty(growable: true);
     _initializeValues();
 
     _cursorController = AnimationController(
@@ -273,7 +273,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
 
     if (widget.errorAnimationController != null) {
       _errorAnimationSubscription =
-          widget.errorAnimationController.stream.listen((errorAnimation) {
+          widget.errorAnimationController!.stream.listen((errorAnimation) {
         if (errorAnimation == ErrorAnimationType.shake) {
           _controller.forward();
         }
@@ -301,13 +301,13 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
     assert(widget.keyboardType != null);
     assert(widget.autoFocus != null);
     assert(_dialogConfig.affirmativeText != null &&
-        _dialogConfig.affirmativeText.isNotEmpty);
+        _dialogConfig.affirmativeText!.isNotEmpty);
     assert(_dialogConfig.negativeText != null &&
-        _dialogConfig.negativeText.isNotEmpty);
+        _dialogConfig.negativeText!.isNotEmpty);
     assert(_dialogConfig.dialogTitle != null &&
-        _dialogConfig.dialogTitle.isNotEmpty);
+        _dialogConfig.dialogTitle!.isNotEmpty);
     assert(_dialogConfig.dialogContent != null &&
-        _dialogConfig.dialogContent.isNotEmpty);
+        _dialogConfig.dialogContent!.isNotEmpty);
     assert(widget.enableActiveFill != null);
     assert(_pinTheme.activeFillColor != null);
     assert(_pinTheme.inactiveFillColor != null);
@@ -325,7 +325,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
     if (widget.controller == null) {
       _textEditingController = TextEditingController();
     } else {
-      _textEditingController = widget.controller;
+      _textEditingController = widget.controller!;
     }
     _textEditingController.addListener(() {
       var currentText = _textEditingController.text;
@@ -339,7 +339,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
             }
             //  delay the onComplete event handler to give the onChange event handler enough time to complete
             Future.delayed(Duration(milliseconds: 300),
-                () => widget.onCompleted(currentText));
+                () => widget.onCompleted!(currentText));
           }
           if (widget.autoDismissKeyboard) _focusNode.unfocus();
         }
@@ -363,7 +363,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
       // }
     }
 
-    _errorAnimationSubscription?.cancel();
+    _errorAnimationSubscription.cancel();
 
     _cursorController.dispose();
 
@@ -415,7 +415,8 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
         widget.showCursor) {
       final cursorColor =
           widget.cursorColor ?? Theme.of(widget.appContext).cursorColor;
-      final cursorHeight = widget.cursorHeight ?? widget.textStyle.fontSize + 8;
+      final cursorHeight =
+          widget.cursorHeight ?? widget.textStyle.fontSize! + 8;
 
       if ((_selectedIndex == index + 1 && index + 1 == widget.length)) {
         return Stack(
@@ -423,7 +424,8 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
           children: [
             Center(
               child: Padding(
-                padding: EdgeInsets.only(left: widget.textStyle.fontSize / 1.5),
+                padding:
+                    EdgeInsets.only(left: widget.textStyle.fontSize! / 1.5),
                 child: FadeTransition(
                   opacity: _cursorAnimation,
                   child: CustomPaint(
@@ -483,12 +485,12 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
       useRootNavigator: true,
       builder: (context) => _dialogConfig.platform == Platform.iOS
           ? CupertinoAlertDialog(
-              title: Text(_dialogConfig.dialogTitle),
+              title: Text(_dialogConfig.dialogTitle!),
               content: RichText(
                 text: TextSpan(
                   text: _dialogConfig.dialogContent,
                   style: TextStyle(
-                    color: Theme.of(context).textTheme.button.color,
+                    color: Theme.of(context).textTheme.button!.color,
                   ),
                   children: [
                     TextSpan(
@@ -498,7 +500,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
                     TextSpan(
                       text: "?",
                       style: TextStyle(
-                        color: Theme.of(context).textTheme.button.color,
+                        color: Theme.of(context).textTheme.button!.color,
                       ),
                     )
                   ],
@@ -510,12 +512,12 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              title: Text(_dialogConfig.dialogTitle),
+              title: Text(_dialogConfig.dialogTitle!),
               content: RichText(
                 text: TextSpan(
                   text: _dialogConfig.dialogContent,
                   style: TextStyle(
-                      color: Theme.of(context).textTheme.button.color),
+                      color: Theme.of(context).textTheme.button!.color),
                   children: [
                     TextSpan(
                       text: formattedPastedText,
@@ -524,7 +526,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
                     TextSpan(
                       text: " ?",
                       style: TextStyle(
-                        color: Theme.of(context).textTheme.button.color,
+                        color: Theme.of(context).textTheme.button!.color,
                       ),
                     )
                   ],
@@ -611,11 +613,11 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
                         var data = await Clipboard.getData("text/plain");
                         if (data?.text?.isNotEmpty ?? false) {
                           if (widget.beforeTextPaste != null) {
-                            if (widget.beforeTextPaste(data.text)) {
-                              _showPasteDialog(data.text);
+                            if (widget.beforeTextPaste!(data!.text ?? '')) {
+                              _showPasteDialog(data.text!);
                             }
                           } else {
-                            _showPasteDialog(data.text);
+                            _showPasteDialog(data?.text! ?? '');
                           }
                         }
                       }
@@ -711,7 +713,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
   }
 
   void _setTextToInput(String data) async {
-    var replaceInputList = List<String>(widget.length);
+    var replaceInputList = List<String>.empty(growable: true);
 
     for (int i = 0; i < widget.length; i++) {
       replaceInputList[i] = data.length > i ? data[i] : "";
@@ -728,13 +730,13 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
     if (_dialogConfig.platform == Platform.iOS) {
       resultList.addAll([
         CupertinoDialogAction(
-          child: Text(_dialogConfig.negativeText),
+          child: Text(_dialogConfig.negativeText!),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop();
           },
         ),
         CupertinoDialogAction(
-          child: Text(_dialogConfig.affirmativeText),
+          child: Text(_dialogConfig.affirmativeText!),
           onPressed: () {
             _textEditingController.text = pastedText;
             Navigator.of(context, rootNavigator: true).pop();
@@ -744,13 +746,13 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
     } else {
       resultList.addAll([
         FlatButton(
-          child: Text(_dialogConfig.negativeText),
+          child: Text(_dialogConfig.negativeText!),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop();
           },
         ),
         FlatButton(
-          child: Text(_dialogConfig.affirmativeText),
+          child: Text(_dialogConfig.affirmativeText!),
           onPressed: () {
             _textEditingController.text = pastedText;
             Navigator.of(context, rootNavigator: true).pop();

@@ -9,7 +9,7 @@ import 'package:jci_remit_mobile/values/values.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ProfileScreen extends HookWidget {
-  const ProfileScreen({Key key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,11 @@ class ProfileScreen extends HookWidget {
                 children: [
                   Text(
                     'My Profile',
-                    style: context.textTheme.headline4.copyWith(fontSize: 30),
+                    style: context.textTheme.headline4!.copyWith(fontSize: 30),
                   ),
                   Text(
                     'See all your details in one place',
-                    style: context.textTheme.headline5.copyWith(fontSize: 12),
+                    style: context.textTheme.headline5!.copyWith(fontSize: 12),
                   ),
                 ],
               ),
@@ -56,12 +56,12 @@ class ProfileScreen extends HookWidget {
                               children: [
                                 Text(
                                   'Ajiboye Temitope',
-                                  style: context.textTheme.headline4
+                                  style: context.textTheme.headline4!
                                       .copyWith(fontSize: 16),
                                 ),
                                 Text(
                                   'Verified',
-                                  style: context.textTheme.headline5.copyWith(
+                                  style: context.textTheme.headline5!.copyWith(
                                       fontSize: 16,
                                       color: AppColors.primaryColor),
                                 ),
@@ -76,7 +76,7 @@ class ProfileScreen extends HookWidget {
                             leading: Icon(AntDesign.user),
                             title: Text(
                               'Personal Data',
-                              style: context.textTheme.headline5
+                              style: context.textTheme.headline5!
                                   .copyWith(fontSize: 16),
                             ),
                             trailing: Icon(
@@ -88,7 +88,7 @@ class ProfileScreen extends HookWidget {
                             leading: Icon(AntDesign.bank),
                             title: Text(
                               'Bank Account',
-                              style: context.textTheme.headline5
+                              style: context.textTheme.headline5!
                                   .copyWith(fontSize: 16),
                             ),
                             trailing: Icon(
@@ -100,7 +100,7 @@ class ProfileScreen extends HookWidget {
                                 color: AppColors.primaryColor),
                             title: Text(
                               'Logout',
-                              style: context.textTheme.headline5
+                              style: context.textTheme.headline5!
                                   .copyWith(fontSize: 16),
                             ),
                             trailing: Icon(
@@ -135,7 +135,7 @@ class ProfileScreen extends HookWidget {
                           Text(
                             'Enter Bank Details',
                             textAlign: TextAlign.center,
-                            style: context.textTheme.headline3
+                            style: context.textTheme.headline3!
                                 .copyWith(color: Colors.grey, fontSize: 14),
                           ),
                           SizedBox(

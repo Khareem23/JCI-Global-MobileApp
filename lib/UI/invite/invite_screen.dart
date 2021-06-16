@@ -5,7 +5,7 @@ import 'package:jci_remit_mobile/values/values.dart';
 import 'package:jci_remit_mobile/widgets/avatar_icon.dart';
 
 class InviteScreen extends StatelessWidget {
-  const InviteScreen({Key key}) : super(key: key);
+  const InviteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +22,11 @@ class InviteScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Invite Friends',
-                    style: context.textTheme.headline4.copyWith(fontSize: 30),
+                    style: context.textTheme.headline4!.copyWith(fontSize: 30),
                   ),
                   Text(
                     'Earn when you invite others ',
-                    style: context.textTheme.headline5.copyWith(fontSize: 12),
+                    style: context.textTheme.headline5!.copyWith(fontSize: 12),
                   ),
                 ],
               ),
@@ -54,7 +54,7 @@ class InviteScreen extends StatelessWidget {
                       ),
                       Text(
                         'Invite Friends',
-                        style: context.textTheme.headline4
+                        style: context.textTheme.headline4!
                             .copyWith(fontSize: 30, color: Colors.blueGrey),
                       ),
                       SizedBox(
@@ -63,7 +63,7 @@ class InviteScreen extends StatelessWidget {
                       Text(
                         'You earn whenever you invite friends\nand they perform a transaction',
                         textAlign: TextAlign.center,
-                        style: context.textTheme.headline5.copyWith(
+                        style: context.textTheme.headline5!.copyWith(
                             fontWeight: FontWeight.w300, fontSize: 14),
                       ),
                       SizedBox(
@@ -72,7 +72,7 @@ class InviteScreen extends StatelessWidget {
                       Text(
                         'Referral Code',
                         style:
-                            context.textTheme.headline4.copyWith(fontSize: 18),
+                            context.textTheme.headline4!.copyWith(fontSize: 18),
                       ),
                       SizedBox(
                         height: 10,
@@ -84,7 +84,7 @@ class InviteScreen extends StatelessWidget {
                           children: [
                             Text(
                               'REF-5689873678',
-                              style: context.textTheme.headline4.copyWith(
+                              style: context.textTheme.headline4!.copyWith(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400),

@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_state.dart';
 import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_vm.dart';
@@ -17,13 +16,11 @@ import 'package:jci_remit_mobile/values/values.dart';
 class LoginScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = useTabController(initialLength: 2);
-    ScreenUtil.init(context,
-        designSize: Size(750, 1334), allowFontScaling: false);
+    final _tabController = useTabController(initialLength: 2);
     final ispwdShown = useState(false);
     final _formKey = useState(GlobalKey<FormState>());
-    final username = useState();
-    final password = useState();
+    final username = useState('');
+    final password = useState('');
 
     final emailFocusNode = useFocusNode();
     final pwdFocusNode = useFocusNode();
@@ -34,11 +31,11 @@ class LoginScreen extends HookWidget {
     var theme = context.themeData.textTheme;
 
     return ProviderListener<LoginState>(
-        provider: loginNotifierProvider.state,
+        provider: loginNotifierProvider,
         onChange: (context, state) {
           if (state is LoginSuccess) {
             return context
-                .read(authControllerProvider)
+                .read(authControllerProvider.notifier)
                 .auth(AuthenticationStatus.authenticated);
           }
           if (state is LoginError) {
@@ -47,7 +44,7 @@ class LoginScreen extends HookWidget {
           }
           if (state is UserNotConfirmed) {
             return context
-                .read(authControllerProvider)
+                .read(authControllerProvider.notifier)
                 .auth(AuthenticationStatus.notVerified);
           }
         },
@@ -60,11 +57,11 @@ class LoginScreen extends HookWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: ScreenUtil().setHeight(140),
+                      height: 140,
                     ),
                     Text(
                       'JCI Mobile',
-                      style: context.textTheme.headline2
+                      style: context.textTheme.headline2!
                           .copyWith(color: AppColors.primaryColor),
                     ),
                     // SizedBox(
@@ -76,7 +73,7 @@ class LoginScreen extends HookWidget {
                       style: theme.headline3,
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(80),
+                      height: 80,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -119,7 +116,7 @@ class LoginScreen extends HookWidget {
                                   // mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      height: ScreenUtil().setHeight(20),
+                                      height: 20,
                                     ),
                                     Row(
                                       mainAxisAlignment:
@@ -142,8 +139,8 @@ class LoginScreen extends HookWidget {
                                           {username.value = value},
                                       textInputType: TextInputType.text,
                                       hintText: 'Email Address',
-                                      validator: (String value) {
-                                        if (value.isEmpty) {
+                                      validator: (String? value) {
+                                        if (value!.isEmpty) {
                                           return 'Email is required';
                                         }
 
@@ -158,7 +155,7 @@ class LoginScreen extends HookWidget {
                                       },
                                     ),
                                     SizedBox(
-                                      height: ScreenUtil().setHeight(20),
+                                      height: 20,
                                     ),
                                     CustomTextFormField(
                                       focusNode: pwdFocusNode,
@@ -175,8 +172,8 @@ class LoginScreen extends HookWidget {
                                               : Feather.eye),
                                           onPressed: () => ispwdShown.value =
                                               !ispwdShown.value),
-                                      validator: (String value) {
-                                        if (value.isEmpty) {
+                                      validator: (String? value) {
+                                        if (value!.isEmpty) {
                                           return 'Password is required';
                                         }
 
@@ -185,11 +182,10 @@ class LoginScreen extends HookWidget {
                                       },
                                     ),
                                     SizedBox(
-                                      height: ScreenUtil().setHeight(50),
+                                      height: 50,
                                     ),
                                     Consumer(builder: (context, watch, _) {
-                                      final vm =
-                                          watch(loginNotifierProvider.state);
+                                      final vm = watch(loginNotifierProvider);
                                       return CustomButton(
                                           width:
                                               MediaQuery.of(context).size.width,
@@ -197,15 +193,16 @@ class LoginScreen extends HookWidget {
                                               ? null
                                               : () {
                                                   if (!_formKey
-                                                      .value.currentState
+                                                      .value.currentState!
                                                       .validate()) {
                                                     return null;
                                                   }
-                                                  _formKey.value.currentState
+                                                  _formKey.value.currentState!
                                                       .save();
                                                   context
                                                       .read(
-                                                          loginNotifierProvider)
+                                                          loginNotifierProvider
+                                                              .notifier)
                                                       .login(
                                                           context,
                                                           username.value.trim(),
@@ -241,7 +238,7 @@ class LoginScreen extends HookWidget {
                                   // mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      height: ScreenUtil().setHeight(20),
+                                      height: 20,
                                     ),
                                     Row(
                                       mainAxisAlignment:
@@ -272,8 +269,8 @@ class LoginScreen extends HookWidget {
                                               : Feather.eye),
                                           onPressed: () => ispwdShown.value =
                                               !ispwdShown.value),
-                                      validator: (String value) {
-                                        if (value.isEmpty) {
+                                      validator: (String? value) {
+                                        if (value!.isEmpty) {
                                           return 'Pin is required';
                                         }
 
@@ -282,11 +279,11 @@ class LoginScreen extends HookWidget {
                                       },
                                     ),
                                     SizedBox(
-                                      height: ScreenUtil().setHeight(50),
+                                      height: 50,
                                     ),
                                     Consumer(builder: (context, watch, _) {
-                                      final vm =
-                                          watch(loginNotifierProvider.state);
+                                      final vm = watch(loginNotifierProvider);
+                                      print(vm);
                                       return CustomButton(
                                           width:
                                               MediaQuery.of(context).size.width,
@@ -294,15 +291,16 @@ class LoginScreen extends HookWidget {
                                               ? null
                                               : () {
                                                   if (!_formKey
-                                                      .value.currentState
+                                                      .value.currentState!
                                                       .validate()) {
                                                     return null;
                                                   }
-                                                  _formKey.value.currentState
+                                                  _formKey.value.currentState!
                                                       .save();
                                                   context
                                                       .read(
-                                                          loginNotifierProvider)
+                                                          loginNotifierProvider
+                                                              .notifier)
                                                       .login(
                                                           context,
                                                           username.value.trim(),
@@ -333,13 +331,15 @@ class LoginScreen extends HookWidget {
                           'Verify Account',
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.clip,
-                          style: theme.headline3.copyWith(
-                              fontSize: 13, fontWeight: FontWeight.bold),
+                          style: theme.headline3!.copyWith(
+                              color: AppColors.primaryColor,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(40),
+                      height: 40,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -348,12 +348,13 @@ class LoginScreen extends HookWidget {
                           'Forgot Password?',
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.clip,
-                          style: theme.headline3.copyWith(fontSize: 13),
+                          style: theme.headline3!.copyWith(
+                              fontSize: 13, color: AppColors.primaryColor),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(40),
+                      height: 40,
                     ),
                     RichText(
                       text: TextSpan(
@@ -374,14 +375,15 @@ class LoginScreen extends HookWidget {
                                                 RegisterScreen()))
                                   },
                             text: "Sign Up",
-                            style: context.textTheme.headline3
-                                .copyWith(fontWeight: FontWeight.w700),
+                            style: context.textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primaryColor),
                           )
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(80),
+                      height: 80,
                     ),
                   ],
                 ),

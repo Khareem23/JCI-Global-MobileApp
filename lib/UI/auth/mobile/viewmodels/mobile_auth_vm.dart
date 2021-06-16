@@ -3,8 +3,9 @@ import 'package:jci_remit_mobile/repositories/auth_repository.dart';
 
 import 'mobile_auth_state.dart';
 
-final mobileAuthProvider = StateNotifierProvider<MobileAuthController>(
-    (ref) => MobileAuthController(ref));
+final mobileAuthProvider =
+    StateNotifierProvider<MobileAuthController, MobileAuthState>(
+        (ref) => MobileAuthController(ref));
 
 class MobileAuthController extends StateNotifier<MobileAuthState> {
   final AuthRepository authRepository;

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 class CustomCheckbox extends StatefulWidget {
-  final bool isChecked;
-  final double size;
-  final double iconSize;
-  final Color selectedColor;
-  final Color selectedIconColor;
+  final bool? isChecked;
+  final double? size;
+  final double? iconSize;
+  final Color? selectedColor;
+  final Color? selectedIconColor;
   final ValueChanged<bool> onSelect;
 
   CustomCheckbox(
       {this.isChecked,
-      @required this.onSelect,
+      required this.onSelect,
       this.size,
       this.iconSize,
       this.selectedColor,

@@ -3,41 +3,41 @@ import 'package:flutter/services.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
   final TextStyle hintTextStyle;
-  final TextStyle labelStyle;
-  final TextStyle titleStyle;
-  final Widget prefixIcon;
-  final Widget suffixIcon;
-  final String hintText;
-  final String labelText;
-  final String errorText;
-  final String title;
+  final TextStyle? labelStyle;
+  final TextStyle? titleStyle;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final String? hintText;
+  final String? labelText;
+  final String? errorText;
+  final String? title;
   final bool obscured;
   final bool hasPrefixIcon;
   final bool hasSuffixIcon;
   final bool hasTitle;
   final bool hasTitleIcon;
-  final Widget titleIcon;
-  final FocusNode focusNode;
-  final Color fillColor;
-  final TextInputType textInputType;
-  final ValueChanged<String> onChanged;
-  final FormFieldValidator<String> validator;
-  final List<TextInputFormatter> inputFormatters;
+  final Widget? titleIcon;
+  final FocusNode? focusNode;
+  final Color? fillColor;
+  final TextInputType? textInputType;
+  final ValueChanged<String>? onChanged;
+  final FormFieldValidator<String>? validator;
+  final List<TextInputFormatter>? inputFormatters;
   final InputBorder border;
   final InputBorder enabledBorder;
   final InputBorder focusedBorder;
-  final double width;
-  final double height;
-  final EdgeInsetsGeometry contentPadding;
-  final EdgeInsetsGeometry textFormFieldMargin;
+  final double? width;
+  final double? height;
+  final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? textFormFieldMargin;
   final int maxlines;
-  final int maxlength;
-  final TextEditingController controller;
+  final int? maxlength;
+  final TextEditingController? controller;
   final bool readOnly;
-  final VoidCallback onTap;
-  final Key key;
+  final VoidCallback? onTap;
+  final Key? key;
 
   CustomTextFormField(
       {this.prefixIcon,
@@ -84,8 +84,8 @@ class CustomTextFormField extends StatelessWidget {
       children: <Widget>[
         Row(
           children: <Widget>[
-            hasTitleIcon ? titleIcon : Container(),
-            hasTitle ? Text(title, style: titleStyle) : Container(),
+            hasTitleIcon ? titleIcon! : Container(),
+            hasTitle ? Text(title!, style: titleStyle) : Container(),
           ],
         ),
 //        hasTitle ? SpaceH4() : Container(),

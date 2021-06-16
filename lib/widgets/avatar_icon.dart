@@ -5,7 +5,7 @@ import 'package:jci_remit_mobile/utils/theme.dart';
 class AvatarIcon extends StatelessWidget {
   final String text;
 
-  const AvatarIcon({Key key, @required this.text}) : super(key: key);
+  const AvatarIcon({Key? key, required this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var theme = context.themeData.textTheme;
@@ -26,7 +26,7 @@ class AvatarIcon extends StatelessWidget {
         child: Text(
           text,
           textAlign: TextAlign.start,
-          style: theme.headline3.copyWith(color: AppColors.primaryColor),
+          style: theme.headline3!.copyWith(color: AppColors.primaryColor),
         ),
       ),
     );

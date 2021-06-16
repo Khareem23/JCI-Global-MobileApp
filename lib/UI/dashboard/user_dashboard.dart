@@ -44,14 +44,14 @@ class UserDashboard extends HookWidget {
                           data: (user) {
                             return Text('Welcome, ${user.firstName} 👍🏽',
                                 textAlign: TextAlign.center,
-                                style: context.textTheme.headline4
+                                style: context.textTheme.headline4!
                                     .copyWith(fontSize: 20));
                           },
                           error: (error, stackTrace) {
                             return Text(
                               'Welcome',
                               textAlign: TextAlign.center,
-                              style: context.textTheme.headline4
+                              style: context.textTheme.headline4!
                                   .copyWith(fontSize: 20),
                             );
                           },
@@ -59,7 +59,7 @@ class UserDashboard extends HookWidget {
                             return Text(
                               '',
                               textAlign: TextAlign.center,
-                              style: context.textTheme.headline3
+                              style: context.textTheme.headline3!
                                   .copyWith(color: Colors.black, fontSize: 20),
                             );
                           },
@@ -84,7 +84,7 @@ class UserDashboard extends HookWidget {
                               textAlign: TextAlign.center,
                               text: TextSpan(
                                 text: 'Send money across the world ',
-                                style: context.textTheme.headline3.copyWith(
+                                style: context.textTheme.headline3!.copyWith(
                                   color: Colors.black,
                                 ),
                               ),
@@ -103,7 +103,7 @@ class UserDashboard extends HookWidget {
                                   child: Text(
                                     'Send Now',
                                     textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3
+                                    style: context.textTheme.headline3!
                                         .copyWith(color: Colors.white),
                                   ),
                                 ),
@@ -143,7 +143,7 @@ class UserDashboard extends HookWidget {
                         child: Text(
                           'show more',
                           textAlign: TextAlign.start,
-                          style: context.textTheme.headline3
+                          style: context.textTheme.headline3!
                               .copyWith(color: AppColors.primaryColor),
                         ),
                       ),
@@ -158,13 +158,13 @@ class UserDashboard extends HookWidget {
                           if (transactions.length > 0) {
                             final trnx = transactions[index];
                             return TransactionCard(
-                              amountToReceive: trnx.amountToReceive,
-                              amountToSend: trnx.amountToSend,
-                              name: trnx.fullName,
-                              receivingCounty: trnx.receivingCountry,
-                              sendingCountry: trnx.sendingCountry,
-                              transactionDate: trnx.dateProcessed,
-                              transactionType: trnx.transactionType,
+                              amountToReceive: trnx.amountToReceive!,
+                              amountToSend: trnx.amountToSend!,
+                              name: trnx.fullName!,
+                              receivingCounty: trnx.receivingCountry!,
+                              sendingCountry: trnx.sendingCountry!,
+                              transactionDate: trnx.dateProcessed!,
+                              transactionType: trnx.transactionType!,
                             );
                           }
                           return EmptyStateWidget(
@@ -179,7 +179,7 @@ class UserDashboard extends HookWidget {
                         },
                       );
                     },
-                    error: (Object error, StackTrace stackTrace) {
+                    error: (Object? error, StackTrace? stackTrace) {
                       return Center(
                           child: NetworkErrorWidget(
                         error:

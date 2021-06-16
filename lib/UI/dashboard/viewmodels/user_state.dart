@@ -15,7 +15,7 @@ class UserLoading extends UserState {
 
 class UserSuccess extends UserState {
   final UserDto user;
-  UserSuccess({@required this.user});
+  UserSuccess({required this.user});
 
   @override
   List<Object> get props => [user];

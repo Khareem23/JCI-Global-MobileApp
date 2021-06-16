@@ -4,12 +4,12 @@ class User {
     this.lastName,
   });
 
-  String firstname;
-  String lastName;
+  String? firstname;
+  String? lastName;
 
   User copyWith({
-    String firstname,
-    String lastName,
+    String? firstname,
+    String? lastName,
   }) =>
       User(
         firstname: firstname ?? this.firstname,

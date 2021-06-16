@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:logger/logger.dart';
 
 var logger = Logger(
-  printer: SimpleLogPrinter(className: 'PlantShop'),
+  printer: SimpleLogPrinter(className: 'JCIMobile'),
 );
 
 class SimpleLogPrinter extends LogPrinter {
-  final String className;
+  final String? className;
   SimpleLogPrinter({this.className});
 
   @override
@@ -18,7 +18,7 @@ class SimpleLogPrinter extends LogPrinter {
     final message = stringifyMessage(event.message);
 
     return [
-      Platform.isIOS ? '$emoji$message\n' : color('$emoji$message\n'),
+      Platform.isIOS ? '$emoji$message\n' : color!('$emoji$message\n'),
     ];
   }
 

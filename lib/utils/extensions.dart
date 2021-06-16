@@ -12,7 +12,7 @@ extension CustomContext on BuildContext {
 
 extension PostFrameCallback on VoidCallback {
   void withPostFrameCallback() =>
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
         this();
       });
 }

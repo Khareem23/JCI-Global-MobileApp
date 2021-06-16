@@ -16,14 +16,14 @@ import 'viewmodels/verify_otp_state.dart';
 class VerifyOTPScreen extends StatefulWidget {
   final String phone;
 
-  const VerifyOTPScreen({Key key, @required this.phone}) : super(key: key);
+  const VerifyOTPScreen({Key? key, required this.phone}) : super(key: key);
   @override
   _VerifyOTPScreenState createState() => _VerifyOTPScreenState();
 }
 
 class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
   final formKey = GlobalKey<FormState>();
-  StreamController<ErrorAnimationType> errorController;
+  late StreamController<ErrorAnimationType> errorController;
   TextEditingController textEditingController = TextEditingController();
   String text = '';
   String currentText = "";
@@ -45,12 +45,12 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
   Widget build(BuildContext context) {
     var theme = context.themeData.textTheme;
     return ProviderListener(
-      provider: verifyOtpProvider.state,
+      provider: verifyOtpProvider,
       onChange: (context, state) {
         if (state is VerifyOtpSent) {
           Navigator.of(context).pop();
           context
-              .read(authControllerProvider)
+              .read(authControllerProvider.notifier)
               .auth(AuthenticationStatus.authenticated);
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (context) => MobileAuthScreen()));
@@ -83,8 +83,8 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                   children: [
                     TextSpan(
                       text: "${widget.phone}",
-                      style:
-                          theme.headline3.copyWith(fontWeight: FontWeight.w700),
+                      style: theme.headline3!
+                          .copyWith(fontWeight: FontWeight.w700),
                     )
                   ],
                 ),
@@ -97,7 +97,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                 child: PinCodeTextField(
                   length: 6,
                   cursorColor: AppColors.accentColor,
-                  textStyle: theme.headline2,
+                  textStyle: theme.headline2!,
                   //obsecureText: false,
                   //autoFocus: true,
                   keyboardType: TextInputType.number,
@@ -140,7 +140,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                     print("Allowing to paste $text");
                     return false;
                   },
-                  appContext: context,
+                  appContext: context, onTap: () {},
                 ),
               ),
               SizedBox(
@@ -157,7 +157,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
               Text(
                 'Resend Code',
                 textAlign: TextAlign.center,
-                style: theme.headline3.copyWith(
+                style: theme.headline3!.copyWith(
                     fontSize: 18,
                     decoration: TextDecoration.underline,
                     fontWeight: FontWeight.w600,
@@ -165,23 +165,23 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
               ),
               Spacer(),
               Consumer(builder: (context, watch, _) {
-                final vm = watch(verifyOtpProvider.state);
+                final vm = watch(verifyOtpProvider);
                 return CustomButton(
                     width: MediaQuery.of(context).size.width,
                     onPressed: vm is VerifyOtpSending
-                        ? null
+                        ? () {}
                         : () {
-                            if (!formKey.currentState.validate()) {
+                            if (!formKey.currentState!.validate()) {
                               return null;
                             }
-                            formKey.currentState.save();
+                            formKey.currentState!.save();
                             if (!isCompleted)
                               return AppSnackBar.showErrorSnackBar(context,
                                   message:
                                       'Looks like you didn\'t enter your OTP correctly');
 
                             context
-                                .read(verifyOtpProvider)
+                                .read(verifyOtpProvider.notifier)
                                 .validateOtp(currentText);
                           },
                     title: Text(
@@ -205,7 +205,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                   children: [
                     TextSpan(
                       text: "Privacy Policy",
-                      style: theme.headline3.copyWith(
+                      style: theme.headline3!.copyWith(
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w700,
                           color: AppColors.primaryColor),
@@ -216,7 +216,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                     ),
                     TextSpan(
                       text: "Terms and conditions",
-                      style: theme.headline3.copyWith(
+                      style: theme.headline3!.copyWith(
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w700,
                           color: AppColors.primaryColor),

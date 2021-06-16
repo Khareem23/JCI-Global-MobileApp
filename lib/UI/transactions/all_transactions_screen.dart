@@ -50,13 +50,13 @@ class AllTransactionsScreen extends HookWidget {
                             ));
                           },
                           child: TransactionCard(
-                              amountToReceive: trnx.amountToReceive,
-                              amountToSend: trnx.amountToSend,
-                              name: trnx.fullName,
-                              receivingCounty: trnx.receivingCountry,
-                              sendingCountry: trnx.sendingCountry,
-                              transactionDate: trnx.dateProcessed,
-                              transactionType: trnx.transactionType),
+                              amountToReceive: trnx.amountToReceive!,
+                              amountToSend: trnx.amountToSend!,
+                              name: trnx.fullName!,
+                              receivingCounty: trnx.receivingCountry!,
+                              sendingCountry: trnx.sendingCountry!,
+                              transactionDate: trnx.dateProcessed!,
+                              transactionType: trnx.transactionType!),
                         );
                       }
                       return EmptyStateWidget(
@@ -71,7 +71,7 @@ class AllTransactionsScreen extends HookWidget {
                     },
                   );
                 },
-                error: (Object error, StackTrace stackTrace) {
+                error: (Object? error, StackTrace? stackTrace) {
                   return Center(
                       child: NetworkErrorWidget(
                     error:

@@ -16,20 +16,30 @@ import 'package:jci_remit_mobile/values/values.dart';
 import 'controllers/auth_controller.dart';
 import 'utils/navigator.dart';
 
-class MyHttpOverrides extends HttpOverrides {
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//   }
+// }
+class Logger extends ProviderObserver {
   @override
-  HttpClient createHttpClient(SecurityContext context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+  void didUpdateProvider(ProviderBase provider, Object? newValue) {
+    print('''
+{
+  "provider": "${provider.name ?? provider.runtimeType}",
+  "newValue": "$newValue"
+}''');
   }
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageUtil.getInstance();
-  HttpOverrides.global = new MyHttpOverrides();
-  runApp(ProviderScope(child: MyApp()));
+  // HttpOverrides.global = new MyHttpOverrides();
+  runApp(ProviderScope(observers: [Logger()], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -48,10 +58,10 @@ class MyApp extends StatelessWidget {
 }
 
 class AuthPageContainer extends HookWidget {
-  const AuthPageContainer({Key key}) : super(key: key);
+  const AuthPageContainer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final state = useProvider(authControllerProvider.state);
+    final state = useProvider(authControllerProvider);
     return Consumer(builder: (context, watch, child) {
       if (state is AuthAuthenticated) {
         return DashboardScreen();

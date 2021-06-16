@@ -4,7 +4,7 @@ import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_state.dart';
 import 'package:jci_remit_mobile/repositories/auth_repository.dart';
 
 final loginNotifierProvider =
-    StateNotifierProvider<LoginController>((ref) => LoginController(ref));
+    StateNotifierProvider<LoginController, LoginState>((ref) => LoginController(ref));
 
 class LoginController extends StateNotifier<LoginState> {
   final AuthRepository authRepository;

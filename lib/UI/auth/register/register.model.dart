@@ -29,42 +29,42 @@ class Register {
     this.userRole,
   });
 
-  final String email;
-  final String firstName;
-  final String phoneNumber;
-  final String lastName;
-  final String password;
-  final String pin;
-  final String country;
-  final String state;
-  final String city;
-  final String postalCode;
-  final String address;
-  final String gender;
-  final DateTime dateOfBirth;
-  final String businessName;
-  final String businessRegNumber;
-  final int accountType;
-  final int userRole;
+  final String? email;
+  final String? firstName;
+  final String? phoneNumber;
+  final String? lastName;
+  final String? password;
+  final String? pin;
+  final String? country;
+  final String? state;
+  final String? city;
+  final String? postalCode;
+  final String? address;
+  final String? gender;
+  final DateTime? dateOfBirth;
+  final String? businessName;
+  final String? businessRegNumber;
+  final int? accountType;
+  final int? userRole;
 
   Register copyWith({
-    String email,
-    String firstName,
-    String phoneNumber,
-    String lastName,
-    String password,
-    String pin,
-    String country,
-    String state,
-    String city,
-    String postalCode,
-    String address,
-    String gender,
-    DateTime dateOfBirth,
-    String businessName,
-    String businessRegNumber,
-    int accountType,
-    int userRole,
+    String? email,
+    String? firstName,
+    String? phoneNumber,
+    String? lastName,
+    String? password,
+    String? pin,
+    String? country,
+    String? state,
+    String? city,
+    String? postalCode,
+    String? address,
+    String? gender,
+    DateTime? dateOfBirth,
+    String? businessName,
+    String? businessRegNumber,
+    int? accountType,
+    int? userRole,
   }) =>
       Register(
         email: email ?? this.email,
@@ -99,9 +99,7 @@ class Register {
         postalCode: json["postalCode"] == null ? null : json["postalCode"],
         address: json["address"] == null ? null : json["address"],
         gender: json["gender"] == null ? null : json["gender"],
-        dateOfBirth: json["dateOfBirth"] == null
-            ? null
-            : DateTime.parse(json["dateOfBirth"]),
+        dateOfBirth: json["dateOfBirth"],
         businessName:
             json["businessName"] == null ? null : json["businessName"],
         businessRegNumber: json["businessRegNumber"] == null
@@ -125,7 +123,7 @@ class Register {
         "address": address == null ? null : address,
         "gender": gender == null ? null : gender,
         "dateOfBirth":
-            dateOfBirth == null ? null : dateOfBirth.toIso8601String(),
+            dateOfBirth == null ? null : dateOfBirth!.toIso8601String(),
         "businessName": businessName == null ? null : businessName,
         "businessRegNumber":
             businessRegNumber == null ? null : businessRegNumber,

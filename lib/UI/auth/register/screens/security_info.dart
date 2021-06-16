@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_state.dart';
 import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_vm.dart';
@@ -18,12 +17,10 @@ class SecurityInfoScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = useState(GlobalKey<FormState>());
-    ScreenUtil.init(context,
-        designSize: Size(750, 1334), allowFontScaling: false);
 
-    final password = useState();
-    final confirmPassword = useState();
-    final pin = useState();
+    final password = useState('');
+    final confirmPassword = useState('');
+    final pin = useState('');
 
     final confirmPasswordFocusNode = useFocusNode();
     final pinFocusNode = useFocusNode();
@@ -52,11 +49,11 @@ class SecurityInfoScreen extends HookWidget {
                 'Secure your account',
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.clip,
-                style: theme.headline3
+                style: theme.headline3!
                     .copyWith(fontSize: 13, color: Colors.grey.shade500),
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               CustomTextFormField(
                 focusNode: pwdFocusNode,
@@ -70,8 +67,8 @@ class SecurityInfoScreen extends HookWidget {
                     icon:
                         Icon(ispwdShown.value ? Feather.eye_off : Feather.eye),
                     onPressed: () => ispwdShown.value = !ispwdShown.value),
-                validator: (String value) {
-                  if (value.isEmpty) {
+                validator: (String? value) {
+                  if (value!.isEmpty) {
                     return 'Password is required';
                   }
 
@@ -83,11 +80,11 @@ class SecurityInfoScreen extends HookWidget {
                 'Minimum of 8 characters with at least 1 uppercase, 1 lowercase and 1 digit.',
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.clip,
-                style: theme.headline3
+                style: theme.headline3!
                     .copyWith(fontSize: 13, color: Colors.grey.shade500),
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               CustomTextFormField(
                 focusNode: confirmPasswordFocusNode,
@@ -101,8 +98,8 @@ class SecurityInfoScreen extends HookWidget {
                     icon:
                         Icon(iscpwdShown.value ? Feather.eye_off : Feather.eye),
                     onPressed: () => iscpwdShown.value = !iscpwdShown.value),
-                validator: (String value) {
-                  if (value.isEmpty) {
+                validator: (String? value) {
+                  if (value!.isEmpty) {
                     return 'Password is required';
                   }
                   if (value != password.value) {
@@ -114,7 +111,7 @@ class SecurityInfoScreen extends HookWidget {
                 },
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               CustomTextFormField(
                 focusNode: pinFocusNode,
@@ -132,8 +129,8 @@ class SecurityInfoScreen extends HookWidget {
                     icon:
                         Icon(ispinShown.value ? Feather.eye_off : Feather.eye),
                     onPressed: () => ispinShown.value = !ispinShown.value),
-                validator: (String value) {
-                  if (value.isEmpty) {
+                validator: (String? value) {
+                  if (value!.isEmpty) {
                     return 'Pin is required';
                   }
                   if (value.length < 6) return 'Pin can only be 6 digits';
@@ -143,20 +140,20 @@ class SecurityInfoScreen extends HookWidget {
                 },
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(20),
+                height: 20,
               ),
               Consumer(
                 builder: (context, watch, child) {
-                  final state = watch(registerNotifierProvider.state);
+                  final state = watch(registerNotifierProvider);
                   return CustomButton(
                       width: MediaQuery.of(context).size.width,
                       onPressed: state is RegisterLoading
-                          ? null
+                          ? () {}
                           : () {
-                              if (!_formKey.value.currentState.validate()) {
+                              if (!_formKey.value.currentState!.validate()) {
                                 return null;
                               }
-                              _formKey.value.currentState.save();
+                              _formKey.value.currentState!.save();
                               context.flow<Register>().complete((register) =>
                                   register.copyWith(
                                       password: password.value,
@@ -179,7 +176,7 @@ class SecurityInfoScreen extends HookWidget {
                 },
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(60),
+                height: 60,
               ),
             ],
           ),

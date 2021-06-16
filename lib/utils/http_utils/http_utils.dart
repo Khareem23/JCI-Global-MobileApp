@@ -30,32 +30,32 @@ class HttpUtils {
 
   static Future<DioError> buildErrorResponse(DioError err) async {
     switch (err.type) {
-      case DioErrorType.CONNECT_TIMEOUT:
+      case DioErrorType.connectTimeout:
         if (await ConnectionUtils.getActiveStatus()) {
           err.error = HttpErrorStrings.CONNECTION_TIMEOUT_ACTIVE;
         } else {
           err.error = HttpErrorStrings.CONNECTION_TIMEOUT_NOT_ACTIVE;
         }
         break;
-      case DioErrorType.SEND_TIMEOUT:
+      case DioErrorType.sendTimeout:
         err.error = HttpErrorStrings.SEND_TIMEOUT;
         break;
-      case DioErrorType.RECEIVE_TIMEOUT:
+      case DioErrorType.receiveTimeout:
         err.error = HttpErrorStrings.RECEIVE_TIMEOUT;
         break;
-      case DioErrorType.RESPONSE:
-        if (err.response.statusCode == HttpStatus.badRequest) {
-          err.error = err.response.data.toString();
-        } else if (err.response.statusCode == HttpStatus.unauthorized) {
+      case DioErrorType.response:
+        if (err.response!.statusCode == HttpStatus.badRequest) {
+          err.error = err.response!.data.toString();
+        } else if (err.response!.statusCode == HttpStatus.unauthorized) {
           err.error = 'Unauthorized';
         } else {
           err.error = HttpErrorStrings.BAD_RESPONSE;
         }
         break;
-      case DioErrorType.CANCEL:
+      case DioErrorType.cancel:
         err.error = HttpErrorStrings.OPERATION_CANCELLED;
         break;
-      case DioErrorType.DEFAULT:
+      case DioErrorType.other:
         if (!await ConnectionUtils.getActiveStatus()) {
           err.error = HttpErrorStrings.DEFAULT;
         } else {
