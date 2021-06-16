@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/currency_model.dart';
 import 'package:jci_remit_mobile/utils/extensions.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import 'vm/transaction_vm.dart';
 
 class CreateTransactionScreen extends HookWidget {
   void showModal(BuildContext context, List<String> purposes,
@@ -342,11 +347,16 @@ class CreateTransactionScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var purposes = ['Expert', 'Noob', 'Intermediate'];
-    var items = ['USD', 'AUD'];
-    var receivingCountries = ['USD', 'AUD'];
+    final rateParam = useState<RateParam>(
+        RateParam(sendCurrency: 'AUD', receiveCurrency: 'NGN'));
     final sendingCountry = useState('USD');
     final receivingCountry = useState('AUD');
+    final defaultSendingCountryFlag =
+        useState('https://restcountries.eu/data/aus.svg');
+    final defaultReceivingCountryFlag =
+        useState('https://restcountries.eu/data/aus.svg');
     final purpose = useTextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.red.shade50,
       appBar: AppBar(
@@ -373,69 +383,101 @@ class CreateTransactionScreen extends HookWidget {
                   style: context.textTheme.headline3!
                       .copyWith(color: Colors.grey, fontSize: 14),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      sendingCountry.value,
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54),
-                    ),
-                    PopupMenuButton<String>(
-                      padding: EdgeInsets.symmetric(horizontal: 2, vertical: 8),
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: AppColors.primaryColor,
-                      ),
-                      onSelected: (String value) {
-                        sendingCountry.value = value;
-                      },
-                      itemBuilder: (BuildContext context) {
-                        return items.map<PopupMenuItem<String>>((String value) {
-                          return new PopupMenuItem(
-                              child: new Text(value), value: value);
-                        }).toList();
-                      },
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign
-                            .end, //Setting this attribute to true does the trick
-                        style: new TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54),
-                        decoration: InputDecoration(
-                          hintText: '0.00',
-                          hintStyle: TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black38),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              style: BorderStyle.none,
+                useProvider(sendingCurrency).when(
+                    data: (data) {
+                      final currencies = data.data;
+                      return Row(
+                        children: [
+                          SvgPicture.network(
+                            defaultSendingCountryFlag.value,
+                            width: 20,
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            currencies![0].currency,
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54),
+                          ),
+                          PopupMenuButton<Datum>(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 2, vertical: 8),
+                            icon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: AppColors.primaryColor,
+                            ),
+                            onSelected: (Datum value) {
+                              sendingCountry.value = value.currency;
+                              defaultSendingCountryFlag.value = value.flag;
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return currencies
+                                  .map<PopupMenuItem<Datum>>((Datum value) {
+                                return PopupMenuItem(
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.network(
+                                          value.flag,
+                                          width: 10,
+                                          height: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(value.currency),
+                                      ],
+                                    ),
+                                    value: value);
+                              }).toList();
+                            },
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign
+                                  .end, //Setting this attribute to true does the trick
+                              style: new TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54),
+                              decoration: InputDecoration(
+                                hintText: '0.00',
+                                hintStyle: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38),
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              style: BorderStyle.none,
-                            ),
-                          ),
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              style: BorderStyle.none,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                        ],
+                      );
+                    },
+                    loading: () => CircularProgressIndicator(),
+                    error: (error, stackTrace) {
+                      return Text('Error loading currencies');
+                    }),
                 SizedBox(
                   height: 20,
                 ),
@@ -467,13 +509,19 @@ class CreateTransactionScreen extends HookWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            'N500.00 = \$1',
-                            textAlign: TextAlign.center,
-                            style: context.textTheme.headline3!.copyWith(
-                                color: AppColors.accentColor.withOpacity(0.9),
-                                fontSize: 14),
-                          ),
+                          useProvider(getRatesProvider(rateParam.value)).when(
+                              data: (data) {
+                                return Text(
+                                  '${rateParam.value.sendCurrency} ${data.amount} = ${rateParam.value.receiveCurrency} 1',
+                                  textAlign: TextAlign.center,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.accentColor
+                                          .withOpacity(0.9),
+                                      fontSize: 14),
+                                );
+                              },
+                              loading: () => Text('fetching rates'),
+                              error: (error, _) => Text("can't fetch rates"))
                         ],
                       ),
                     ),
@@ -498,51 +546,110 @@ class CreateTransactionScreen extends HookWidget {
                   style: context.textTheme.headline3!
                       .copyWith(color: Colors.grey, fontSize: 14),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      receivingCountry.value,
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54),
-                    ),
-                    PopupMenuButton<String>(
-                      padding: EdgeInsets.symmetric(horizontal: 2, vertical: 8),
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: AppColors.primaryColor,
-                      ),
-                      onSelected: (String value) {
-                        receivingCountry.value = value;
-                      },
-                      itemBuilder: (BuildContext context) {
-                        return items.map<PopupMenuItem<String>>((String value) {
-                          return new PopupMenuItem(
-                              child: new Text(value), value: value);
-                        }).toList();
-                      },
-                    ),
-                    Spacer(),
-                    Text(
-                      '79.58',
-                      textAlign: TextAlign.center,
-                      style: context.textTheme.headline3!.copyWith(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.black),
-                    ),
-                  ],
-                ),
+                useProvider(sendingCurrency).when(
+                    data: (data) {
+                      final currencies = data.data;
+                      return Row(
+                        children: [
+                          SvgPicture.network(
+                            defaultReceivingCountryFlag.value,
+                            width: 20,
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            currencies![0].currency,
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54),
+                          ),
+                          PopupMenuButton<Datum>(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 2, vertical: 8),
+                            icon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: AppColors.primaryColor,
+                            ),
+                            onSelected: (Datum value) {
+                              sendingCountry.value = value.currency;
+                              defaultReceivingCountryFlag.value = value.flag;
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return currencies
+                                  .map<PopupMenuItem<Datum>>((Datum value) {
+                                return PopupMenuItem(
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.network(
+                                          value.flag,
+                                          width: 10,
+                                          height: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(value.currency),
+                                      ],
+                                    ),
+                                    value: value);
+                              }).toList();
+                            },
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign
+                                  .end, //Setting this attribute to true does the trick
+                              style: new TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54),
+                              decoration: InputDecoration(
+                                hintText: '0.00',
+                                hintStyle: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38),
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    loading: () => CircularProgressIndicator(),
+                    error: (error, stackTrace) {
+                      return Text('Error loading currencies');
+                    }),
                 Spacer(),
                 CustomButton(
                     color: Colors.black,
                     width: MediaQuery.of(context).size.width,
-                    onPressed: () {
-                      // showModal(context, purposes, purpose);
-                      showBeneficiaryModal(context, purposes, purpose);
-                    },
+                    onPressed: null,
+                    //  () {
+                    //   // showModal(context, purposes, purpose);
+                    //   showBeneficiaryModal(context, purposes, purpose);
+                    // },
                     title: Text(
                       'PROCEED',
                       style: TextStyle(

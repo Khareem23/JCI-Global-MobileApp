@@ -13,7 +13,7 @@ class TransactionDetail extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('Transaction Summary'),
+        title: Text('Transaction Summary', style: TextStyle(color: Colors.black),),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

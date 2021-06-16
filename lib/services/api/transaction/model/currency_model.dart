@@ -8,8 +8,8 @@ import 'dart:convert';
 part 'currency_model.freezed.dart';
 part 'currency_model.g.dart';
 
-CurrencyModel currencyModelFromJson(String str) =>
-    CurrencyModel.fromJson(json.decode(str));
+CurrencyModel currencyModelFromJson(Map<String, dynamic> str) =>
+    CurrencyModel.fromJson(str);
 
 String currencyModelToJson(CurrencyModel data) => json.encode(data.toJson());
 
