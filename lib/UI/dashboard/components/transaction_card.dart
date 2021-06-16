@@ -11,14 +11,14 @@ class TransactionCard extends StatelessWidget {
   final DateTime transactionDate;
 
   const TransactionCard(
-      {Key key,
-      @required this.name,
-      @required this.transactionDate,
-      @required this.sendingCountry,
-      @required this.receivingCounty,
-      @required this.amountToSend,
-      @required this.amountToReceive,
-      @required this.transactionType})
+      {Key? key,
+      required this.name,
+      required this.transactionDate,
+      required this.sendingCountry,
+      required this.receivingCounty,
+      required this.amountToSend,
+      required this.amountToReceive,
+      required this.transactionType})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class TransactionCard extends StatelessWidget {
                   name,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
-                  style: context.textTheme.headline4
+                  style: context.textTheme.headline4!
                       .copyWith(fontSize: 16, color: AppColors.blackShade1),
                 ),
                 Row(
@@ -52,7 +52,7 @@ class TransactionCard extends StatelessWidget {
                     Text(
                       formatDate(transactionDate, [dd, ' ', M, ' ', yyyy]),
                       textAlign: TextAlign.start,
-                      style: context.textTheme.headline3
+                      style: context.textTheme.headline3!
                           .copyWith(fontSize: 15, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(
@@ -76,15 +76,16 @@ class TransactionCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: '',
-                  style: context.textTheme.headline3.copyWith(fontSize: 12),
+                  style: context.textTheme.headline3!.copyWith(fontSize: 12),
                   children: [
                     TextSpan(
                       text: sendingCountry + ' ',
-                      style: context.textTheme.headline3.copyWith(fontSize: 12),
+                      style:
+                          context.textTheme.headline3!.copyWith(fontSize: 12),
                     ),
                     TextSpan(
                       text: amountToSend.toString(),
-                      style: context.textTheme.headline4
+                      style: context.textTheme.headline4!
                           .copyWith(fontSize: 18, fontWeight: FontWeight.w400),
                     )
                   ],
@@ -94,15 +95,15 @@ class TransactionCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: '',
-                  style: context.textTheme.headline3.copyWith(fontSize: 12),
+                  style: context.textTheme.headline3!.copyWith(fontSize: 12),
                   children: [
                     TextSpan(
                       text: receivingCounty + ' ',
-                      style: context.textTheme.headline3.copyWith(fontSize: 8),
+                      style: context.textTheme.headline3!.copyWith(fontSize: 8),
                     ),
                     TextSpan(
                       text: amountToReceive.toString(),
-                      style: context.textTheme.headline4
+                      style: context.textTheme.headline4!
                           .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                     )
                   ],
@@ -113,7 +114,7 @@ class TransactionCard extends StatelessWidget {
           // Text(
           //   '+ NGN2,000',
           //   style: theme.headline4
-          //       .copyWith(fontSize: 18, fontWeight: FontWeight.w400),
+          //       !.copyWith(fontSize: 18, fontWeight: FontWeight.w400),
           // ),
         ],
       ),

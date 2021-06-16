@@ -6,19 +6,19 @@ import 'network_error_widget.dart';
 class BodyBuilder extends StatelessWidget {
   final Widget child;
   final Widget loadingWidget;
-  final Widget errorWidget;
+  final Widget? errorWidget;
   final Function reload;
   final APIRequestStatus apiRequestStatus;
   final String error;
 
   const BodyBuilder(
-      {Key key,
-      this.loadingWidget,
-      this.reload,
-      this.child,
+      {Key? key,
+      required this.loadingWidget,
+      required this.reload,
+      required this.child,
       this.errorWidget,
-      this.apiRequestStatus,
-      this.error})
+      required this.apiRequestStatus,
+      required this.error})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -29,22 +29,17 @@ class BodyBuilder extends StatelessWidget {
     switch (apiRequestStatus) {
       case APIRequestStatus.loading:
         return loadingWidget;
-        break;
       case APIRequestStatus.unInitialized:
         return loadingWidget;
-        break;
       case APIRequestStatus.connectionError:
         return NetworkErrorWidget(refreshCallBack: reload);
-        break;
       case APIRequestStatus.error:
         return NetworkErrorWidget(
           refreshCallBack: reload,
           error: error,
         );
-        break;
       case APIRequestStatus.loaded:
         return child;
-        break;
       default:
         return loadingWidget;
     }

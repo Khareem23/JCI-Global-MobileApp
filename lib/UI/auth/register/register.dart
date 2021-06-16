@@ -17,7 +17,7 @@ class RegisterScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderListener<RegisterState>(
-      provider: registerNotifierProvider.state,
+      provider: registerNotifierProvider,
       onChange: (context, state) {
         if (state is RegisterSuccess) {
           Navigator.pushReplacement(context,
@@ -55,7 +55,9 @@ class RegisterScreen extends HookWidget {
               ];
             },
             onComplete: (state) {
-              context.read(registerNotifierProvider).register(context, state);
+              context
+                  .read(registerNotifierProvider.notifier)
+                  .register(context, state);
             },
           )),
     );

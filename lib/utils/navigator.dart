@@ -10,7 +10,7 @@ class Nav {
   final key = GlobalKey<NavigatorState>();
 
   /// Navigator's current state
-  NavigatorState get state => key.currentState;
+  NavigatorState get state => key.currentState!;
 
   /// Navigator's current context
   BuildContext get context => state.context;
@@ -146,7 +146,7 @@ extension MyNavigator on BuildContext {
 }
 
 class FadeInRoute<T> extends MaterialPageRoute<T> {
-  FadeInRoute({@required WidgetBuilder builder, RouteSettings settings})
+  FadeInRoute({required WidgetBuilder builder, RouteSettings? settings})
       : super(builder: builder, settings: settings);
 
   @override
@@ -161,8 +161,8 @@ class FadeInRoute<T> extends MaterialPageRoute<T> {
 
 class TransparentRoute extends PageRoute<void> {
   TransparentRoute({
-    @required this.builder,
-    RouteSettings settings,
+    required this.builder,
+    RouteSettings? settings,
   }) : super(settings: settings, fullscreenDialog: false);
 
   final WidgetBuilder builder;
@@ -171,10 +171,10 @@ class TransparentRoute extends PageRoute<void> {
   bool get opaque => false;
 
   @override
-  Color get barrierColor => null;
+  Color? get barrierColor => null;
 
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   @override
   bool get maintainState => true;

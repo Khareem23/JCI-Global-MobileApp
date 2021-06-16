@@ -5,7 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiInterceptor extends Interceptor {
   @override
-  Future<dynamic> onRequest(RequestOptions options) async {
+  Future<dynamic> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
 
@@ -17,8 +18,6 @@ class ApiInterceptor extends Interceptor {
       options.headers.remove('requireToken');
     }
 
-    print(
-        "--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${"" + (options.baseUrl ?? "") + (options.path ?? "")}");
     print("Headers:");
     options.headers.forEach((k, v) => print('$k: $v'));
     if (options.queryParameters != null) {
@@ -33,18 +32,17 @@ class ApiInterceptor extends Interceptor {
 
     // options.headers.addAll({"X-Api-Key": "${Globals.xAPIKey}"});
 
-    return options;
+    return super.onRequest(options, handler);
   }
 }
 
 @override
-FutureOr<dynamic> onResponse(Response response) async {
-  print(
-      "<-- ${response.statusCode} ${(response.request != null ? (response.request.baseUrl + response.request.path) : 'URL')}");
+Future onResponse(Response response, ResponseInterceptorHandler handler) async {
+  // print('RESPONSE[${response.statusCode}] => PATH: ${response.request?.path}');
   print("Headers:");
-  response.headers?.forEach((k, v) => print('$k: $v'));
+  response.headers.forEach((k, v) => print('$k: $v'));
   print("Response: ${response.data}");
   print("<-- END HTTP");
   // }
-  return response;
+  return handler.next(response);
 }

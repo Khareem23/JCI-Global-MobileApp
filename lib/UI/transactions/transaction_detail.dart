@@ -7,7 +7,7 @@ import 'package:jci_remit_mobile/values/values.dart';
 class TransactionDetail extends StatelessWidget {
   final Datum data;
 
-  const TransactionDetail({Key key, @required this.data}) : super(key: key);
+  const TransactionDetail({Key? key, required this.data}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,16 +30,17 @@ class TransactionDetail extends StatelessWidget {
                     textAlign: TextAlign.left,
                     text: TextSpan(
                       text: '',
-                      style: context.textTheme.headline3.copyWith(fontSize: 12),
+                      style:
+                          context.textTheme.headline3!.copyWith(fontSize: 12),
                       children: [
                         TextSpan(
                           text: 'AUD ',
-                          style: context.textTheme.headline3
+                          style: context.textTheme.headline3!
                               .copyWith(fontSize: 12),
                         ),
                         TextSpan(
                           text: '12.99',
-                          style: context.textTheme.headline4.copyWith(
+                          style: context.textTheme.headline4!.copyWith(
                               fontSize: 40, fontWeight: FontWeight.w400),
                         )
                       ],
@@ -48,7 +49,7 @@ class TransactionDetail extends StatelessWidget {
                   Text(
                     'September 24, 2021',
                     textAlign: TextAlign.center,
-                    style: context.textTheme.headline3
+                    style: context.textTheme.headline3!
                         .copyWith(color: Colors.grey, fontSize: 14),
                   )
                 ],
@@ -68,7 +69,7 @@ class TransactionDetail extends StatelessWidget {
                 Text(
                   'Reference Number',
                   textAlign: TextAlign.center,
-                  style: context.textTheme.headline3.copyWith(
+                  style: context.textTheme.headline3!.copyWith(
                       fontWeight: FontWeight.w800,
                       color: AppColors.accentColor,
                       fontSize: 14),
@@ -79,7 +80,7 @@ class TransactionDetail extends StatelessWidget {
                 Text(
                   '12843ubjeihtuehr3984u02340',
                   textAlign: TextAlign.center,
-                  style: context.textTheme.headline3.copyWith(
+                  style: context.textTheme.headline3!.copyWith(
                       color: Colors.blueGrey,
                       fontWeight: FontWeight.w600,
                       fontSize: 16),
@@ -146,7 +147,7 @@ class TransactionDetail extends StatelessWidget {
                 Text(
                   'Status Description',
                   textAlign: TextAlign.center,
-                  style: context.textTheme.headline3.copyWith(
+                  style: context.textTheme.headline3!.copyWith(
                       fontWeight: FontWeight.w800,
                       color: AppColors.accentColor,
                       fontSize: 14),
@@ -170,7 +171,7 @@ class TransactionDetail extends StatelessWidget {
                 Text(
                   "Receiver's Info",
                   textAlign: TextAlign.center,
-                  style: context.textTheme.headline3.copyWith(
+                  style: context.textTheme.headline3!.copyWith(
                       fontWeight: FontWeight.w800,
                       color: AppColors.accentColor,
                       fontSize: 14),
@@ -205,7 +206,7 @@ class TransactionDetail extends StatelessWidget {
           Text(
             'Have a problem with this summary?\nContact support.',
             textAlign: TextAlign.center,
-            style: context.textTheme.headline3.copyWith(
+            style: context.textTheme.headline3!.copyWith(
                 fontWeight: FontWeight.w800,
                 color: Colors.blueGrey,
                 fontSize: 14),
@@ -220,9 +221,9 @@ class TrnxDetailItem extends StatelessWidget {
   final String title;
   final String item;
   const TrnxDetailItem({
-    Key key,
-    @required this.title,
-    @required this.item,
+    Key? key,
+    required this.title,
+    required this.item,
   }) : super(key: key);
 
   @override
@@ -232,14 +233,14 @@ class TrnxDetailItem extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: context.textTheme.headline3.copyWith(
+          style: context.textTheme.headline3!.copyWith(
               color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 13),
         ),
         Spacer(),
         Text(
           item,
           textAlign: TextAlign.center,
-          style: context.textTheme.headline3.copyWith(
+          style: context.textTheme.headline3!.copyWith(
               color: Colors.blueGrey,
               fontWeight: FontWeight.w600,
               fontSize: 14),

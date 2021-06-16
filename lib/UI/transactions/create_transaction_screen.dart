@@ -24,7 +24,7 @@ class CreateTransactionScreen extends HookWidget {
             Text(
               'Purpose of Payment',
               textAlign: TextAlign.center,
-              style: context.textTheme.headline3
+              style: context.textTheme.headline3!
                   .copyWith(color: Colors.grey, fontSize: 14),
             ),
             SizedBox(
@@ -62,7 +62,7 @@ class CreateTransactionScreen extends HookWidget {
             Text(
               'Description of Transaction',
               textAlign: TextAlign.center,
-              style: context.textTheme.headline3
+              style: context.textTheme.headline3!
                   .copyWith(color: Colors.grey, fontSize: 14),
             ),
             SizedBox(
@@ -88,7 +88,7 @@ class CreateTransactionScreen extends HookWidget {
             Text(
               'Discount',
               textAlign: TextAlign.center,
-              style: context.textTheme.headline3
+              style: context.textTheme.headline3!
                   .copyWith(color: Colors.grey, fontSize: 14),
             ),
             SizedBox(
@@ -146,7 +146,7 @@ class CreateTransactionScreen extends HookWidget {
             Text(
               'Enter Beneficiary Details',
               textAlign: TextAlign.center,
-              style: context.textTheme.headline3
+              style: context.textTheme.headline3!
                   .copyWith(color: Colors.grey, fontSize: 14),
             ),
             SizedBox(
@@ -248,7 +248,7 @@ class CreateTransactionScreen extends HookWidget {
             ),
             Text(
               'Corresponding Bank (Optional)',
-              style: context.textTheme.headline3
+              style: context.textTheme.headline3!
                   .copyWith(color: Colors.grey, fontSize: 14),
             ),
             SizedBox(
@@ -350,7 +350,10 @@ class CreateTransactionScreen extends HookWidget {
     return Scaffold(
       backgroundColor: Colors.red.shade50,
       appBar: AppBar(
-        title: Text('Send Money'),
+        title: Text(
+          'Send Money',
+          style: TextStyle(color: Colors.black87),
+        ),
       ),
       body: Column(
         children: [
@@ -367,7 +370,7 @@ class CreateTransactionScreen extends HookWidget {
                 Text(
                   'Enter Amount',
                   textAlign: TextAlign.center,
-                  style: context.textTheme.headline3
+                  style: context.textTheme.headline3!
                       .copyWith(color: Colors.grey, fontSize: 14),
                 ),
                 Row(
@@ -448,7 +451,7 @@ class CreateTransactionScreen extends HookWidget {
                               color: AppColors.primaryColor.withOpacity(0.5)),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey[400],
+                              color: Colors.grey[400]!,
                               offset: Offset(1.0, 0.0), //(x,y)
                               blurRadius: 1.0,
                             ),
@@ -467,7 +470,7 @@ class CreateTransactionScreen extends HookWidget {
                           Text(
                             'N500.00 = \$1',
                             textAlign: TextAlign.center,
-                            style: context.textTheme.headline3.copyWith(
+                            style: context.textTheme.headline3!.copyWith(
                                 color: AppColors.accentColor.withOpacity(0.9),
                                 fontSize: 14),
                           ),
@@ -492,7 +495,7 @@ class CreateTransactionScreen extends HookWidget {
                 Text(
                   'Amount To Receive',
                   textAlign: TextAlign.center,
-                  style: context.textTheme.headline3
+                  style: context.textTheme.headline3!
                       .copyWith(color: Colors.grey, fontSize: 14),
                 ),
                 Row(
@@ -525,7 +528,7 @@ class CreateTransactionScreen extends HookWidget {
                     Text(
                       '79.58',
                       textAlign: TextAlign.center,
-                      style: context.textTheme.headline3.copyWith(
+                      style: context.textTheme.headline3!.copyWith(
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: AppColors.black),

@@ -5,7 +5,7 @@ import 'package:jci_remit_mobile/values/values.dart';
 class ItemIcon extends StatelessWidget {
   final String text;
 
-  const ItemIcon({Key key, @required this.text}) : super(key: key);
+  const ItemIcon({Key? key, required this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_vm.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
@@ -17,14 +16,12 @@ class AddressInfo extends HookWidget {
   Widget build(BuildContext context) {
     final _formKey = useState(GlobalKey<FormState>());
     final countryModel = useProvider(countryProvider);
-    ScreenUtil.init(context,
-        designSize: Size(750, 1334), allowFontScaling: false);
 
-    final country = useState();
-    final state = useState();
-    final city = useState();
-    final address = useState();
-    final postcode = useState();
+    final country = useState('');
+    final state = useState('');
+    final city = useState('');
+    final address = useState('');
+    final postcode = useState('');
 
     final fnameFocusNode = useFocusNode();
     final lnameFocusNode = useFocusNode();
@@ -57,7 +54,7 @@ class AddressInfo extends HookWidget {
                         'Enter your address information',
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.clip,
-                        style: theme.headline3.copyWith(
+                        style: theme.headline3!.copyWith(
                             fontSize: 13, color: Colors.grey.shade500),
                       ),
                       SizedBox(
@@ -79,15 +76,15 @@ class AddressInfo extends HookWidget {
                                 color: AppColors.primaryColor),
                             // focusColor: AppColors.accentColor.withOpacity(0.8),
                           ),
-                          onChanged: (newValue) {
-                            country.value = newValue;
+                          onChanged: (String? newValue) {
+                            country.value = newValue!;
                             context.read(statesProvider(country.value));
-                            state.value = null;
+                            state.value = '';
 
                             print(country.value);
                           },
-                          validator: (value) {
-                            if (value?.isEmpty ?? true) {
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
                               return 'Please select a country';
                             }
                             return null;
@@ -96,7 +93,7 @@ class AddressInfo extends HookWidget {
                               .map<DropdownMenuItem<String>>(
                                   (value) => DropdownMenuItem(
                                         value: value.alpha3Code,
-                                        child: Text(value.country),
+                                        child: Text(value.country!),
                                       ))
                               .toList()),
                       SizedBox(
@@ -134,13 +131,13 @@ class AddressInfo extends HookWidget {
                                                         AppColors.primaryColor),
                                             // focusColor: AppColors.accentColor.withOpacity(0.8),
                                           ),
-                                          onChanged: (newValue) {
-                                            state.value = newValue;
+                                          onChanged: (String? newValue) {
+                                            state.value = newValue!;
 
                                             print(state.value);
                                           },
-                                          validator: (value) {
-                                            if (value?.isEmpty ?? true) {
+                                          validator: (String? value) {
+                                            if (value!.isEmpty) {
                                               return 'Please select a state';
                                             }
                                             return null;
@@ -180,7 +177,7 @@ class AddressInfo extends HookWidget {
                       //   },
                       // ),
                       SizedBox(
-                        height: ScreenUtil().setHeight(20),
+                        height: 20,
                       ),
                       CustomTextFormField(
                         focusNode: cityFocusNode,
@@ -188,8 +185,8 @@ class AddressInfo extends HookWidget {
                         onChanged: (v) => city.value = v,
                         textInputType: TextInputType.text,
                         hintText: 'City',
-                        validator: (String value) {
-                          if (value.isEmpty) {
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
                             return 'City is required';
                           }
 
@@ -198,7 +195,7 @@ class AddressInfo extends HookWidget {
                         },
                       ),
                       SizedBox(
-                        height: ScreenUtil().setHeight(20),
+                        height: 20,
                       ),
                       CustomTextFormField(
                         focusNode: emailFocusNode,
@@ -206,8 +203,8 @@ class AddressInfo extends HookWidget {
                         onChanged: (v) => address.value = v,
                         textInputType: TextInputType.text,
                         hintText: 'Address',
-                        validator: (String value) {
-                          if (value.isEmpty) {
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
                             return 'Address is required';
                           }
 
@@ -216,7 +213,7 @@ class AddressInfo extends HookWidget {
                         },
                       ),
                       SizedBox(
-                        height: ScreenUtil().setHeight(20),
+                        height: 20,
                       ),
                       CustomTextFormField(
                         focusNode: userNameFocusNode,
@@ -227,8 +224,8 @@ class AddressInfo extends HookWidget {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         hintText: 'Postal Code',
-                        validator: (String value) {
-                          if (value.isEmpty) {
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
                             return 'Postal Code is required';
                           }
 
@@ -237,15 +234,15 @@ class AddressInfo extends HookWidget {
                         },
                       ),
                       SizedBox(
-                        height: ScreenUtil().setHeight(20),
+                        height: 20,
                       ),
                       CustomButton(
                           width: MediaQuery.of(context).size.width,
                           onPressed: () {
-                            if (!_formKey.value.currentState.validate()) {
+                            if (!_formKey.value.currentState!.validate()) {
                               return null;
                             }
-                            _formKey.value.currentState.save();
+                            _formKey.value.currentState!.save();
                             context.flow<Register>().update((register) =>
                                 register.copyWith(
                                     country: country.value,
@@ -269,7 +266,7 @@ class AddressInfo extends HookWidget {
                                 fontSize: Sizes.TEXT_SIZE_16),
                           )),
                       SizedBox(
-                        height: ScreenUtil().setHeight(60),
+                        height: 20,
                       ),
                     ],
                   ),

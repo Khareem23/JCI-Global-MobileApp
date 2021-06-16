@@ -3,7 +3,7 @@ import 'package:jci_remit_mobile/values/values.dart';
 
 class CustomButton extends StatelessWidget {
   CustomButton({
-    @required this.title,
+    required this.title,
     this.onPressed,
     this.width = Sizes.WIDTH_100,
     this.height = Sizes.HEIGHT_60,
@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
     this.textStyle,
   });
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double width;
   final double height;
   final double elevation;
@@ -22,7 +22,7 @@ class CustomButton extends StatelessWidget {
   final Widget title;
   final Color color;
   final BorderSide borderSide;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {

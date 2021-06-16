@@ -1,11 +1,10 @@
 class Failure {
   String message;
 
-  Failure({this.message});
+  Failure({required this.message});
 
-  Failure.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-  }
+  factory Failure.fromJson(Map<String, dynamic> json) =>
+      Failure(message: json['message']);
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

@@ -64,7 +64,7 @@ class RegisterSuccessScreen extends HookWidget {
               children: [
                 TextSpan(
                   text: "Privacy Policy",
-                  style: theme.headline3.copyWith(
+                  style: theme.headline3!.copyWith(
                       decoration: TextDecoration.underline,
                       fontWeight: FontWeight.w700,
                       color: AppColors.primaryColor),
@@ -75,7 +75,7 @@ class RegisterSuccessScreen extends HookWidget {
                 ),
                 TextSpan(
                   text: "Terms and conditions",
-                  style: theme.headline3.copyWith(
+                  style: theme.headline3!.copyWith(
                       decoration: TextDecoration.underline,
                       fontWeight: FontWeight.w700,
                       color: AppColors.primaryColor),

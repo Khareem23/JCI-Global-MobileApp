@@ -11,9 +11,9 @@ String loginResDtoToJson(LoginResDto data) => json.encode(data.toJson());
 
 class LoginResDto {
   LoginResDto({
-    this.status,
-    this.message,
-    this.data,
+    required this.status,
+    required this.message,
+    required this.data,
   });
 
   final String status;

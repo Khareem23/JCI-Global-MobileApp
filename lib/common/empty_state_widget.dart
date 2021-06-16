@@ -6,8 +6,8 @@ class EmptyStateWidget extends StatelessWidget {
   final String error, textOnButton, errorTitle;
 
   const EmptyStateWidget(
-      {Key key,
-      this.refreshCallBack,
+      {Key? key,
+      required this.refreshCallBack,
       this.error =
           'You do not have a transaction at the moment. Click on create to get started.',
       this.textOnButton = 'Retry',
@@ -36,7 +36,7 @@ class EmptyStateWidget extends StatelessWidget {
           Container(
             child: RaisedButton(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              onPressed: refreshCallBack,
+              onPressed: () => refreshCallBack,
               color: AppColors.accentColor,
               child: Text(textOnButton, style: btnAccentStyle),
             ),

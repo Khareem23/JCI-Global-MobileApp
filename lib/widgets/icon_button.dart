@@ -4,7 +4,7 @@ import 'package:jci_remit_mobile/values/values.dart';
 class IconButtonAction extends StatelessWidget {
   final IconData icon;
 
-  const IconButtonAction({Key key, @required this.icon}) : super(key: key);
+  const IconButtonAction({Key? key, required this.icon}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(

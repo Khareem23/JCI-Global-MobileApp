@@ -6,7 +6,7 @@ import 'package:jci_remit_mobile/services/storage/shared_prefs.dart';
 import 'package:jci_remit_mobile/utils/utils.dart';
 
 class UserRepository {
-  UserService _userService;
+  late UserService _userService;
   UserRepository() {
     _userService = UserService();
   }

@@ -7,7 +7,9 @@ class NetworkErrorWidget extends StatelessWidget {
   final String error;
 
   const NetworkErrorWidget(
-      {Key key, this.refreshCallBack, this.error = HttpErrorStrings.DEFAULT})
+      {Key? key,
+      required this.refreshCallBack,
+      this.error = HttpErrorStrings.DEFAULT})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -25,14 +27,14 @@ class NetworkErrorWidget extends StatelessWidget {
           Text('Something is wrong', style: headline3),
           Container(
             margin: EdgeInsets.symmetric(vertical: 14.0),
-            child: Text(error ?? HttpErrorStrings.DEFAULT,
-                textAlign: TextAlign.center, style: descTextStyle),
+            child:
+                Text(error, textAlign: TextAlign.center, style: descTextStyle),
           ),
           SizedBox(height: 30),
           Container(
             child: RaisedButton(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              onPressed: refreshCallBack,
+              onPressed: () => refreshCallBack,
               color: AppColors.accentColor,
               child: Text('Retry', style: btnAccentStyle),
             ),

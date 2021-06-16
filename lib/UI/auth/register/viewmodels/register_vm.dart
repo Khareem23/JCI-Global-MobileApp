@@ -9,7 +9,8 @@ import '../register.model.dart';
 import 'register_state.dart';
 
 final registerNotifierProvider =
-    StateNotifierProvider<RegisterController>((ref) => RegisterController(ref));
+    StateNotifierProvider<RegisterController, RegisterState>(
+        (ref) => RegisterController(ref));
 
 final countryProvider =
     FutureProvider<Country>((_) => UserService().getCountries());
