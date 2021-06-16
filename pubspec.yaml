@@ -35,6 +35,7 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   shared_preferences: ^2.0.6
   top_snackbar_flutter: ^1.0.0
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   flutter_test:
