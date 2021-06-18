@@ -6,7 +6,6 @@ part 'request_state_notifier.freezed.dart';
 class RequestStateNotifier<T> extends StateNotifier<RequestState<T>> {
   RequestStateNotifier() : super(RequestState.idle());
 
-  //It returns a Future with state if you want to avoid ProviderListener
   Future<RequestState<T>> makeRequest(Future<T> Function() function) async {
     try {
       state = RequestState<T>.loading();

@@ -17,10 +17,13 @@ class _$RateParamTearOff {
   const _$RateParamTearOff();
 
   _RateParam call(
-      {required String sendCurrency, required String receiveCurrency}) {
+      {required String sendCurrency,
+      required String receiveCurrency,
+      required num amountToSend}) {
     return _RateParam(
       sendCurrency: sendCurrency,
       receiveCurrency: receiveCurrency,
+      amountToSend: amountToSend,
     );
   }
 }
@@ -32,6 +35,7 @@ const $RateParam = _$RateParamTearOff();
 mixin _$RateParam {
   String get sendCurrency => throw _privateConstructorUsedError;
   String get receiveCurrency => throw _privateConstructorUsedError;
+  num get amountToSend => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RateParamCopyWith<RateParam> get copyWith =>
@@ -42,7 +46,7 @@ mixin _$RateParam {
 abstract class $RateParamCopyWith<$Res> {
   factory $RateParamCopyWith(RateParam value, $Res Function(RateParam) then) =
       _$RateParamCopyWithImpl<$Res>;
-  $Res call({String sendCurrency, String receiveCurrency});
+  $Res call({String sendCurrency, String receiveCurrency, num amountToSend});
 }
 
 /// @nodoc
@@ -57,6 +61,7 @@ class _$RateParamCopyWithImpl<$Res> implements $RateParamCopyWith<$Res> {
   $Res call({
     Object? sendCurrency = freezed,
     Object? receiveCurrency = freezed,
+    Object? amountToSend = freezed,
   }) {
     return _then(_value.copyWith(
       sendCurrency: sendCurrency == freezed
@@ -67,6 +72,10 @@ class _$RateParamCopyWithImpl<$Res> implements $RateParamCopyWith<$Res> {
           ? _value.receiveCurrency
           : receiveCurrency // ignore: cast_nullable_to_non_nullable
               as String,
+      amountToSend: amountToSend == freezed
+          ? _value.amountToSend
+          : amountToSend // ignore: cast_nullable_to_non_nullable
+              as num,
     ));
   }
 }
@@ -77,7 +86,7 @@ abstract class _$RateParamCopyWith<$Res> implements $RateParamCopyWith<$Res> {
           _RateParam value, $Res Function(_RateParam) then) =
       __$RateParamCopyWithImpl<$Res>;
   @override
-  $Res call({String sendCurrency, String receiveCurrency});
+  $Res call({String sendCurrency, String receiveCurrency, num amountToSend});
 }
 
 /// @nodoc
@@ -93,6 +102,7 @@ class __$RateParamCopyWithImpl<$Res> extends _$RateParamCopyWithImpl<$Res>
   $Res call({
     Object? sendCurrency = freezed,
     Object? receiveCurrency = freezed,
+    Object? amountToSend = freezed,
   }) {
     return _then(_RateParam(
       sendCurrency: sendCurrency == freezed
@@ -103,6 +113,10 @@ class __$RateParamCopyWithImpl<$Res> extends _$RateParamCopyWithImpl<$Res>
           ? _value.receiveCurrency
           : receiveCurrency // ignore: cast_nullable_to_non_nullable
               as String,
+      amountToSend: amountToSend == freezed
+          ? _value.amountToSend
+          : amountToSend // ignore: cast_nullable_to_non_nullable
+              as num,
     ));
   }
 }
@@ -110,16 +124,21 @@ class __$RateParamCopyWithImpl<$Res> extends _$RateParamCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RateParam implements _RateParam {
-  _$_RateParam({required this.sendCurrency, required this.receiveCurrency});
+  _$_RateParam(
+      {required this.sendCurrency,
+      required this.receiveCurrency,
+      required this.amountToSend});
 
   @override
   final String sendCurrency;
   @override
   final String receiveCurrency;
+  @override
+  final num amountToSend;
 
   @override
   String toString() {
-    return 'RateParam(sendCurrency: $sendCurrency, receiveCurrency: $receiveCurrency)';
+    return 'RateParam(sendCurrency: $sendCurrency, receiveCurrency: $receiveCurrency, amountToSend: $amountToSend)';
   }
 
   @override
@@ -131,14 +150,18 @@ class _$_RateParam implements _RateParam {
                     .equals(other.sendCurrency, sendCurrency)) &&
             (identical(other.receiveCurrency, receiveCurrency) ||
                 const DeepCollectionEquality()
-                    .equals(other.receiveCurrency, receiveCurrency)));
+                    .equals(other.receiveCurrency, receiveCurrency)) &&
+            (identical(other.amountToSend, amountToSend) ||
+                const DeepCollectionEquality()
+                    .equals(other.amountToSend, amountToSend)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(sendCurrency) ^
-      const DeepCollectionEquality().hash(receiveCurrency);
+      const DeepCollectionEquality().hash(receiveCurrency) ^
+      const DeepCollectionEquality().hash(amountToSend);
 
   @JsonKey(ignore: true)
   @override
@@ -149,12 +172,15 @@ class _$_RateParam implements _RateParam {
 abstract class _RateParam implements RateParam {
   factory _RateParam(
       {required String sendCurrency,
-      required String receiveCurrency}) = _$_RateParam;
+      required String receiveCurrency,
+      required num amountToSend}) = _$_RateParam;
 
   @override
   String get sendCurrency => throw _privateConstructorUsedError;
   @override
   String get receiveCurrency => throw _privateConstructorUsedError;
+  @override
+  num get amountToSend => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$RateParamCopyWith<_RateParam> get copyWith =>

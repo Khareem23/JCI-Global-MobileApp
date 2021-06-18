@@ -62,10 +62,16 @@ class TransactionService {
     }
   }
 
-  Future<RateModel> getRateList() async {
-    final url = 'Rates/getRateList';
+  Future<RateModel> getRate(
+      String sendCurrencyCode, String receiveCurrencyCode, num amount) async {
+    final url = 'Transactions/convertSendingToReceiving';
     try {
-      final response = await _dio.get(url,
+      final response = await _dio.post(url,
+          data: {
+            "sendCountry": sendCurrencyCode,
+            "receieveCountry": receiveCurrencyCode,
+            "amountToSend": amount
+          },
           options: Options(headers: {"requireToken": true}));
       final result = rateModelFromJson(response.data);
       return result;

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,7 +12,9 @@ import 'package:jci_remit_mobile/utils/extensions.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+import 'package:just_debounce_it/just_debounce_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart';
 
 import 'vm/transaction_vm.dart';
 
@@ -347,8 +352,6 @@ class CreateTransactionScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var purposes = ['Expert', 'Noob', 'Intermediate'];
-    final rateParam = useState<RateParam>(
-        RateParam(sendCurrency: 'AUD', receiveCurrency: 'NGN'));
     final sendingCountry = useState('USD');
     final receivingCountry = useState('AUD');
     final defaultSendingCountryFlag =
@@ -356,6 +359,10 @@ class CreateTransactionScreen extends HookWidget {
     final defaultReceivingCountryFlag =
         useState('https://restcountries.eu/data/aus.svg');
     final purpose = useTextEditingController();
+    final rateParam = useState<RateParam>(RateParam(
+        sendCurrency: 'AUS', receiveCurrency: 'NGA', amountToSend: 1));
+    final sendAmountController = useTextEditingController(text: '1');
+    final amount = _useDecouncedSearch(sendAmountController);
 
     return Scaffold(
       backgroundColor: Colors.red.shade50,
@@ -397,7 +404,9 @@ class CreateTransactionScreen extends HookWidget {
                             width: 10,
                           ),
                           Text(
-                            currencies![0].currency,
+                            sendingCountry.value == ''
+                                ? currencies![0].currency
+                                : sendingCountry.value,
                             style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
@@ -411,11 +420,11 @@ class CreateTransactionScreen extends HookWidget {
                               color: AppColors.primaryColor,
                             ),
                             onSelected: (Datum value) {
-                              sendingCountry.value = value.currency;
+                              sendingCountry.value = value.alpha3Code;
                               defaultSendingCountryFlag.value = value.flag;
                             },
                             itemBuilder: (BuildContext context) {
-                              return currencies
+                              return currencies!
                                   .map<PopupMenuItem<Datum>>((Datum value) {
                                 return PopupMenuItem(
                                     child: Row(
@@ -438,6 +447,7 @@ class CreateTransactionScreen extends HookWidget {
                           Expanded(
                             flex: 2,
                             child: TextFormField(
+                              controller: sendAmountController,
                               keyboardType: TextInputType.number,
                               textAlign: TextAlign
                                   .end, //Setting this attribute to true does the trick
@@ -469,6 +479,16 @@ class CreateTransactionScreen extends HookWidget {
                                   ),
                                 ),
                               ),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              onChanged: (String value) {
+                                // Debounce.milliseconds(1000, () {
+                                //   context
+                                //       .read(getRatesProvider.notifier)
+                                //       .getRate(rateParam.value);
+                                // });
+                              },
                             ),
                           ),
                         ],
@@ -481,52 +501,27 @@ class CreateTransactionScreen extends HookWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: context.screenWidth(0.5),
-                      height: context.screenHeight(0.03),
-                      decoration: BoxDecoration(
-                          color: Colors.red.shade50,
-                          border: Border.all(
-                              color: AppColors.primaryColor.withOpacity(0.5)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey[400]!,
-                              offset: Offset(1.0, 0.0), //(x,y)
-                              blurRadius: 1.0,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Feather.trending_up,
-                            color: AppColors.primaryColor.withOpacity(0.9),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          useProvider(getRatesProvider(rateParam.value)).when(
-                              data: (data) {
-                                return Text(
-                                  '${rateParam.value.sendCurrency} ${data.amount} = ${rateParam.value.receiveCurrency} 1',
-                                  textAlign: TextAlign.center,
-                                  style: context.textTheme.headline3!.copyWith(
-                                      color: AppColors.accentColor
-                                          .withOpacity(0.9),
-                                      fontSize: 14),
-                                );
-                              },
-                              loading: () => Text('fetching rates'),
-                              error: (error, _) => Text("can't fetch rates"))
-                        ],
-                      ),
-                    ),
-                  ],
-                )
+                // Consumer(
+                //   builder: (BuildContext context, watch, Widget? child) {
+                //     final rateVm = watch(getRatesProvider);
+                //     return rateVm.when(
+                //         idle: () => Center(
+                //             child: Text('Select currencies to see rates')),
+                //         loading: () => RateLoading(),
+                //         success: (success) => RateSuccess(),
+                //         error: (error, _) =>
+                //             Center(child: Text(error.toString())));
+                //   },
+                // ),
+                useProvider(getRatesParam(RateParam(
+                        sendCurrency: sendingCountry.value,
+                        receiveCurrency: receivingCountry.value,
+                        amountToSend: num.parse(amount))))
+                    .when(
+                        data: (data) => RateSuccess(rate: data),
+                        loading: () => RateLoading(),
+                        error: (error, _) =>
+                            Center(child: Text(error.toString())))
               ],
             ),
           ),
@@ -560,7 +555,9 @@ class CreateTransactionScreen extends HookWidget {
                             width: 10,
                           ),
                           Text(
-                            currencies![0].currency,
+                            receivingCountry.value == ''
+                                ? currencies![0].currency
+                                : receivingCountry.value,
                             style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
@@ -574,11 +571,11 @@ class CreateTransactionScreen extends HookWidget {
                               color: AppColors.primaryColor,
                             ),
                             onSelected: (Datum value) {
-                              sendingCountry.value = value.currency;
+                              receivingCountry.value = value.alpha3Code;
                               defaultReceivingCountryFlag.value = value.flag;
                             },
                             itemBuilder: (BuildContext context) {
-                              return currencies
+                              return currencies!
                                   .map<PopupMenuItem<Datum>>((Datum value) {
                                 return PopupMenuItem(
                                     child: Row(
@@ -598,42 +595,28 @@ class CreateTransactionScreen extends HookWidget {
                               }).toList();
                             },
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign
-                                  .end, //Setting this attribute to true does the trick
-                              style: new TextStyle(
+                          Spacer(),
+                          useProvider(getRatesParam(RateParam(
+                        sendCurrency: sendingCountry.value,
+                        receiveCurrency: receivingCountry.value,
+                        amountToSend: num.tryParse(amount) ?? 0)))
+                    .when(
+                        data: (data) => Text('${(data.rate * num.parse(amount)).round()}', style: TextStyle(
                                   fontSize: 40,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
-                              decoration: InputDecoration(
-                                hintText: '0.00',
-                                hintStyle: TextStyle(
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black38),
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    style: BorderStyle.none,
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    style: BorderStyle.none,
-                                  ),
-                                ),
-                                border: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    style: BorderStyle.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                                  color: Colors.black54)),
+                        loading: () => Text('0', style: TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54)),
+                        error: (error, _) =>
+                            Center(child: Text('0', style: TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54))))
+                          
+                            
+                            
                         ],
                       );
                     },
@@ -665,6 +648,130 @@ class CreateTransactionScreen extends HookWidget {
           ))
         ],
       ),
+    );
+  }
+}
+
+String _useDecouncedSearch(TextEditingController textEditingController) {
+  final search = useState(textEditingController.text);
+  useEffect(() {
+    Timer? timer;
+    void listener() {
+      timer?.cancel();
+      timer = Timer(
+        const Duration(milliseconds: 200),
+        () => search.value = textEditingController.text,
+      );
+    }
+
+    textEditingController.addListener(listener);
+    return () {
+      timer?.cancel();
+      textEditingController.removeListener(listener);
+    };
+  }, [textEditingController]);
+
+  return search.value;
+}
+
+class RateSuccess extends StatelessWidget {
+  final RateData rate;
+  const RateSuccess({
+    Key? key, required this.rate
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: context.screenWidth(0.5),
+          height: context.screenHeight(0.03),
+          decoration: BoxDecoration(
+              color: Colors.red.shade50,
+              border:
+                  Border.all(color: AppColors.primaryColor.withOpacity(0.5)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[400]!,
+                  offset: Offset(1.0, 0.0), //(x,y)
+                  blurRadius: 1.0,
+                ),
+              ],
+              borderRadius: BorderRadius.circular(20)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Feather.trending_up,
+                color: AppColors.primaryColor.withOpacity(0.9),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                rate.rate.toString(),
+                textAlign: TextAlign.center,
+                style: context.textTheme.headline3!.copyWith(
+                    color:
+                        AppColors.accentColor.withOpacity(0.9),
+                    fontSize: 14),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class RateLoading extends StatelessWidget {
+  const RateLoading({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: context.screenWidth(0.5),
+          height: context.screenHeight(0.03),
+          decoration: BoxDecoration(
+              color: Colors.red.shade50,
+              border:
+                  Border.all(color: AppColors.primaryColor.withOpacity(0.5)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[400]!,
+                  offset: Offset(1.0, 0.0), //(x,y)
+                  blurRadius: 1.0,
+                ),
+              ],
+              borderRadius: BorderRadius.circular(20)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Feather.trending_up,
+                color: AppColors.primaryColor.withOpacity(0.9),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                'fetching rates...',
+                textAlign: TextAlign.center,
+                style: context.textTheme.headline3!.copyWith(
+                    color: AppColors.accentColor.withOpacity(0.9),
+                    fontSize: 14),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
