@@ -28,7 +28,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.0"
+    version: "2.6.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -424,6 +424,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.3"
+  just_debounce_it:
+    dependency: "direct main"
+    description:
+      name: just_debounce_it
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0+2"
   libphonenumber:
     dependency: transitive
     description:

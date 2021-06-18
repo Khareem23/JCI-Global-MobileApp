@@ -23,13 +23,11 @@ class TransactionRepository {
     return await _transactionService.getAllSendingCurrency();
   }
 
-  Future<r.Datum> getRates(
-      [String sendCurrencyCode = 'AUD',
-      String receiveCurrencyCode = 'NGN']) async {
-    final result = await _transactionService.getRateList();
+  Future<r.RateData> getRates(
+      sendCurrencyCode, receiveCurrencyCode, num amount) async {
+    final result = await _transactionService.getRate(
+        sendCurrencyCode, receiveCurrencyCode, amount);
 
-    return result.data!.firstWhere((e) =>
-        (e.sendCurrencyCode == sendCurrencyCode &&
-            e.receiveCurrencyCode == receiveCurrencyCode));
+    return result.data!;
   }
 }

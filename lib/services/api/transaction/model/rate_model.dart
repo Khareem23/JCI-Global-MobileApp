@@ -18,7 +18,7 @@ abstract class RateModel with _$RateModel {
   const factory RateModel({
     required String status,
     required String message,
-    List<Datum>? data,
+    RateData? data,
   }) = _RateModel;
 
   factory RateModel.fromJson(Map<String, dynamic> json) =>
@@ -26,18 +26,15 @@ abstract class RateModel with _$RateModel {
 }
 
 @freezed
-abstract class Datum with _$Datum {
-  const factory Datum({
-    required int id,
-    String? currencyDesc,
-    int? rateType,
-    String? sendCurrencyCode,
-    String? receiveCurrencyCode,
-    bool? isUsdDisplay,
-    bool? isActive,
-    double? amount,
-    double? amountNgaUsd,
-  }) = _Datum;
+abstract class RateData with _$RateData {
+  const factory RateData({
+    required num amountToSend,
+    required num totalAmountToCharge,
+    required double amountToReceive,
+    @Default(0) dynamic amountToReceiveNgaUsd,
+    required double rate,
+  }) = _RateData;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
+  factory RateData.fromJson(Map<String, dynamic> json) =>
+      _$RateDataFromJson(json);
 }

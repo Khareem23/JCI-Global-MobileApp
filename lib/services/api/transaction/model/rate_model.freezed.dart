@@ -21,7 +21,7 @@ class _$RateModelTearOff {
   const _$RateModelTearOff();
 
   _RateModel call(
-      {required String status, required String message, List<Datum>? data}) {
+      {required String status, required String message, RateData? data}) {
     return _RateModel(
       status: status,
       message: message,
@@ -41,7 +41,7 @@ const $RateModel = _$RateModelTearOff();
 mixin _$RateModel {
   String get status => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
-  List<Datum>? get data => throw _privateConstructorUsedError;
+  RateData? get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +53,9 @@ mixin _$RateModel {
 abstract class $RateModelCopyWith<$Res> {
   factory $RateModelCopyWith(RateModel value, $Res Function(RateModel) then) =
       _$RateModelCopyWithImpl<$Res>;
-  $Res call({String status, String message, List<Datum>? data});
+  $Res call({String status, String message, RateData? data});
+
+  $RateDataCopyWith<$Res>? get data;
 }
 
 /// @nodoc
@@ -82,8 +84,19 @@ class _$RateModelCopyWithImpl<$Res> implements $RateModelCopyWith<$Res> {
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Datum>?,
+              as RateData?,
     ));
+  }
+
+  @override
+  $RateDataCopyWith<$Res>? get data {
+    if (_value.data == null) {
+      return null;
+    }
+
+    return $RateDataCopyWith<$Res>(_value.data!, (value) {
+      return _then(_value.copyWith(data: value));
+    });
   }
 }
 
@@ -93,7 +106,10 @@ abstract class _$RateModelCopyWith<$Res> implements $RateModelCopyWith<$Res> {
           _RateModel value, $Res Function(_RateModel) then) =
       __$RateModelCopyWithImpl<$Res>;
   @override
-  $Res call({String status, String message, List<Datum>? data});
+  $Res call({String status, String message, RateData? data});
+
+  @override
+  $RateDataCopyWith<$Res>? get data;
 }
 
 /// @nodoc
@@ -123,7 +139,7 @@ class __$RateModelCopyWithImpl<$Res> extends _$RateModelCopyWithImpl<$Res>
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Datum>?,
+              as RateData?,
     ));
   }
 }
@@ -141,7 +157,7 @@ class _$_RateModel implements _RateModel {
   @override
   final String message;
   @override
-  final List<Datum>? data;
+  final RateData? data;
 
   @override
   String toString() {
@@ -183,7 +199,7 @@ abstract class _RateModel implements RateModel {
   const factory _RateModel(
       {required String status,
       required String message,
-      List<Datum>? data}) = _$_RateModel;
+      RateData? data}) = _$_RateModel;
 
   factory _RateModel.fromJson(Map<String, dynamic> json) =
       _$_RateModel.fromJson;
@@ -193,354 +209,258 @@ abstract class _RateModel implements RateModel {
   @override
   String get message => throw _privateConstructorUsedError;
   @override
-  List<Datum>? get data => throw _privateConstructorUsedError;
+  RateData? get data => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$RateModelCopyWith<_RateModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-Datum _$DatumFromJson(Map<String, dynamic> json) {
-  return _Datum.fromJson(json);
+RateData _$RateDataFromJson(Map<String, dynamic> json) {
+  return _RateData.fromJson(json);
 }
 
 /// @nodoc
-class _$DatumTearOff {
-  const _$DatumTearOff();
+class _$RateDataTearOff {
+  const _$RateDataTearOff();
 
-  _Datum call(
-      {required int id,
-      String? currencyDesc,
-      int? rateType,
-      String? sendCurrencyCode,
-      String? receiveCurrencyCode,
-      bool? isUsdDisplay,
-      bool? isActive,
-      double? amount,
-      double? amountNgaUsd}) {
-    return _Datum(
-      id: id,
-      currencyDesc: currencyDesc,
-      rateType: rateType,
-      sendCurrencyCode: sendCurrencyCode,
-      receiveCurrencyCode: receiveCurrencyCode,
-      isUsdDisplay: isUsdDisplay,
-      isActive: isActive,
-      amount: amount,
-      amountNgaUsd: amountNgaUsd,
+  _RateData call(
+      {required num amountToSend,
+      required num totalAmountToCharge,
+      required double amountToReceive,
+      dynamic amountToReceiveNgaUsd = 0,
+      required double rate}) {
+    return _RateData(
+      amountToSend: amountToSend,
+      totalAmountToCharge: totalAmountToCharge,
+      amountToReceive: amountToReceive,
+      amountToReceiveNgaUsd: amountToReceiveNgaUsd,
+      rate: rate,
     );
   }
 
-  Datum fromJson(Map<String, Object> json) {
-    return Datum.fromJson(json);
+  RateData fromJson(Map<String, Object> json) {
+    return RateData.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Datum = _$DatumTearOff();
+const $RateData = _$RateDataTearOff();
 
 /// @nodoc
-mixin _$Datum {
-  int get id => throw _privateConstructorUsedError;
-  String? get currencyDesc => throw _privateConstructorUsedError;
-  int? get rateType => throw _privateConstructorUsedError;
-  String? get sendCurrencyCode => throw _privateConstructorUsedError;
-  String? get receiveCurrencyCode => throw _privateConstructorUsedError;
-  bool? get isUsdDisplay => throw _privateConstructorUsedError;
-  bool? get isActive => throw _privateConstructorUsedError;
-  double? get amount => throw _privateConstructorUsedError;
-  double? get amountNgaUsd => throw _privateConstructorUsedError;
+mixin _$RateData {
+  num get amountToSend => throw _privateConstructorUsedError;
+  num get totalAmountToCharge => throw _privateConstructorUsedError;
+  double get amountToReceive => throw _privateConstructorUsedError;
+  dynamic get amountToReceiveNgaUsd => throw _privateConstructorUsedError;
+  double get rate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DatumCopyWith<Datum> get copyWith => throw _privateConstructorUsedError;
+  $RateDataCopyWith<RateData> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DatumCopyWith<$Res> {
-  factory $DatumCopyWith(Datum value, $Res Function(Datum) then) =
-      _$DatumCopyWithImpl<$Res>;
+abstract class $RateDataCopyWith<$Res> {
+  factory $RateDataCopyWith(RateData value, $Res Function(RateData) then) =
+      _$RateDataCopyWithImpl<$Res>;
   $Res call(
-      {int id,
-      String? currencyDesc,
-      int? rateType,
-      String? sendCurrencyCode,
-      String? receiveCurrencyCode,
-      bool? isUsdDisplay,
-      bool? isActive,
-      double? amount,
-      double? amountNgaUsd});
+      {num amountToSend,
+      num totalAmountToCharge,
+      double amountToReceive,
+      dynamic amountToReceiveNgaUsd,
+      double rate});
 }
 
 /// @nodoc
-class _$DatumCopyWithImpl<$Res> implements $DatumCopyWith<$Res> {
-  _$DatumCopyWithImpl(this._value, this._then);
+class _$RateDataCopyWithImpl<$Res> implements $RateDataCopyWith<$Res> {
+  _$RateDataCopyWithImpl(this._value, this._then);
 
-  final Datum _value;
+  final RateData _value;
   // ignore: unused_field
-  final $Res Function(Datum) _then;
+  final $Res Function(RateData) _then;
 
   @override
   $Res call({
-    Object? id = freezed,
-    Object? currencyDesc = freezed,
-    Object? rateType = freezed,
-    Object? sendCurrencyCode = freezed,
-    Object? receiveCurrencyCode = freezed,
-    Object? isUsdDisplay = freezed,
-    Object? isActive = freezed,
-    Object? amount = freezed,
-    Object? amountNgaUsd = freezed,
+    Object? amountToSend = freezed,
+    Object? totalAmountToCharge = freezed,
+    Object? amountToReceive = freezed,
+    Object? amountToReceiveNgaUsd = freezed,
+    Object? rate = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      currencyDesc: currencyDesc == freezed
-          ? _value.currencyDesc
-          : currencyDesc // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rateType: rateType == freezed
-          ? _value.rateType
-          : rateType // ignore: cast_nullable_to_non_nullable
-              as int?,
-      sendCurrencyCode: sendCurrencyCode == freezed
-          ? _value.sendCurrencyCode
-          : sendCurrencyCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      receiveCurrencyCode: receiveCurrencyCode == freezed
-          ? _value.receiveCurrencyCode
-          : receiveCurrencyCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isUsdDisplay: isUsdDisplay == freezed
-          ? _value.isUsdDisplay
-          : isUsdDisplay // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isActive: isActive == freezed
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      amount: amount == freezed
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double?,
-      amountNgaUsd: amountNgaUsd == freezed
-          ? _value.amountNgaUsd
-          : amountNgaUsd // ignore: cast_nullable_to_non_nullable
-              as double?,
+      amountToSend: amountToSend == freezed
+          ? _value.amountToSend
+          : amountToSend // ignore: cast_nullable_to_non_nullable
+              as num,
+      totalAmountToCharge: totalAmountToCharge == freezed
+          ? _value.totalAmountToCharge
+          : totalAmountToCharge // ignore: cast_nullable_to_non_nullable
+              as num,
+      amountToReceive: amountToReceive == freezed
+          ? _value.amountToReceive
+          : amountToReceive // ignore: cast_nullable_to_non_nullable
+              as double,
+      amountToReceiveNgaUsd: amountToReceiveNgaUsd == freezed
+          ? _value.amountToReceiveNgaUsd
+          : amountToReceiveNgaUsd // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      rate: rate == freezed
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
-  factory _$DatumCopyWith(_Datum value, $Res Function(_Datum) then) =
-      __$DatumCopyWithImpl<$Res>;
+abstract class _$RateDataCopyWith<$Res> implements $RateDataCopyWith<$Res> {
+  factory _$RateDataCopyWith(_RateData value, $Res Function(_RateData) then) =
+      __$RateDataCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int id,
-      String? currencyDesc,
-      int? rateType,
-      String? sendCurrencyCode,
-      String? receiveCurrencyCode,
-      bool? isUsdDisplay,
-      bool? isActive,
-      double? amount,
-      double? amountNgaUsd});
+      {num amountToSend,
+      num totalAmountToCharge,
+      double amountToReceive,
+      dynamic amountToReceiveNgaUsd,
+      double rate});
 }
 
 /// @nodoc
-class __$DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res>
-    implements _$DatumCopyWith<$Res> {
-  __$DatumCopyWithImpl(_Datum _value, $Res Function(_Datum) _then)
-      : super(_value, (v) => _then(v as _Datum));
+class __$RateDataCopyWithImpl<$Res> extends _$RateDataCopyWithImpl<$Res>
+    implements _$RateDataCopyWith<$Res> {
+  __$RateDataCopyWithImpl(_RateData _value, $Res Function(_RateData) _then)
+      : super(_value, (v) => _then(v as _RateData));
 
   @override
-  _Datum get _value => super._value as _Datum;
+  _RateData get _value => super._value as _RateData;
 
   @override
   $Res call({
-    Object? id = freezed,
-    Object? currencyDesc = freezed,
-    Object? rateType = freezed,
-    Object? sendCurrencyCode = freezed,
-    Object? receiveCurrencyCode = freezed,
-    Object? isUsdDisplay = freezed,
-    Object? isActive = freezed,
-    Object? amount = freezed,
-    Object? amountNgaUsd = freezed,
+    Object? amountToSend = freezed,
+    Object? totalAmountToCharge = freezed,
+    Object? amountToReceive = freezed,
+    Object? amountToReceiveNgaUsd = freezed,
+    Object? rate = freezed,
   }) {
-    return _then(_Datum(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      currencyDesc: currencyDesc == freezed
-          ? _value.currencyDesc
-          : currencyDesc // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rateType: rateType == freezed
-          ? _value.rateType
-          : rateType // ignore: cast_nullable_to_non_nullable
-              as int?,
-      sendCurrencyCode: sendCurrencyCode == freezed
-          ? _value.sendCurrencyCode
-          : sendCurrencyCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      receiveCurrencyCode: receiveCurrencyCode == freezed
-          ? _value.receiveCurrencyCode
-          : receiveCurrencyCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isUsdDisplay: isUsdDisplay == freezed
-          ? _value.isUsdDisplay
-          : isUsdDisplay // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isActive: isActive == freezed
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      amount: amount == freezed
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double?,
-      amountNgaUsd: amountNgaUsd == freezed
-          ? _value.amountNgaUsd
-          : amountNgaUsd // ignore: cast_nullable_to_non_nullable
-              as double?,
+    return _then(_RateData(
+      amountToSend: amountToSend == freezed
+          ? _value.amountToSend
+          : amountToSend // ignore: cast_nullable_to_non_nullable
+              as num,
+      totalAmountToCharge: totalAmountToCharge == freezed
+          ? _value.totalAmountToCharge
+          : totalAmountToCharge // ignore: cast_nullable_to_non_nullable
+              as num,
+      amountToReceive: amountToReceive == freezed
+          ? _value.amountToReceive
+          : amountToReceive // ignore: cast_nullable_to_non_nullable
+              as double,
+      amountToReceiveNgaUsd: amountToReceiveNgaUsd == freezed
+          ? _value.amountToReceiveNgaUsd
+          : amountToReceiveNgaUsd // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      rate: rate == freezed
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Datum implements _Datum {
-  const _$_Datum(
-      {required this.id,
-      this.currencyDesc,
-      this.rateType,
-      this.sendCurrencyCode,
-      this.receiveCurrencyCode,
-      this.isUsdDisplay,
-      this.isActive,
-      this.amount,
-      this.amountNgaUsd});
+class _$_RateData implements _RateData {
+  const _$_RateData(
+      {required this.amountToSend,
+      required this.totalAmountToCharge,
+      required this.amountToReceive,
+      this.amountToReceiveNgaUsd = 0,
+      required this.rate});
 
-  factory _$_Datum.fromJson(Map<String, dynamic> json) =>
-      _$_$_DatumFromJson(json);
+  factory _$_RateData.fromJson(Map<String, dynamic> json) =>
+      _$_$_RateDataFromJson(json);
 
   @override
-  final int id;
+  final num amountToSend;
   @override
-  final String? currencyDesc;
+  final num totalAmountToCharge;
   @override
-  final int? rateType;
+  final double amountToReceive;
+  @JsonKey(defaultValue: 0)
   @override
-  final String? sendCurrencyCode;
+  final dynamic amountToReceiveNgaUsd;
   @override
-  final String? receiveCurrencyCode;
-  @override
-  final bool? isUsdDisplay;
-  @override
-  final bool? isActive;
-  @override
-  final double? amount;
-  @override
-  final double? amountNgaUsd;
+  final double rate;
 
   @override
   String toString() {
-    return 'Datum(id: $id, currencyDesc: $currencyDesc, rateType: $rateType, sendCurrencyCode: $sendCurrencyCode, receiveCurrencyCode: $receiveCurrencyCode, isUsdDisplay: $isUsdDisplay, isActive: $isActive, amount: $amount, amountNgaUsd: $amountNgaUsd)';
+    return 'RateData(amountToSend: $amountToSend, totalAmountToCharge: $totalAmountToCharge, amountToReceive: $amountToReceive, amountToReceiveNgaUsd: $amountToReceiveNgaUsd, rate: $rate)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Datum &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.currencyDesc, currencyDesc) ||
+        (other is _RateData &&
+            (identical(other.amountToSend, amountToSend) ||
                 const DeepCollectionEquality()
-                    .equals(other.currencyDesc, currencyDesc)) &&
-            (identical(other.rateType, rateType) ||
+                    .equals(other.amountToSend, amountToSend)) &&
+            (identical(other.totalAmountToCharge, totalAmountToCharge) ||
                 const DeepCollectionEquality()
-                    .equals(other.rateType, rateType)) &&
-            (identical(other.sendCurrencyCode, sendCurrencyCode) ||
+                    .equals(other.totalAmountToCharge, totalAmountToCharge)) &&
+            (identical(other.amountToReceive, amountToReceive) ||
                 const DeepCollectionEquality()
-                    .equals(other.sendCurrencyCode, sendCurrencyCode)) &&
-            (identical(other.receiveCurrencyCode, receiveCurrencyCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.receiveCurrencyCode, receiveCurrencyCode)) &&
-            (identical(other.isUsdDisplay, isUsdDisplay) ||
-                const DeepCollectionEquality()
-                    .equals(other.isUsdDisplay, isUsdDisplay)) &&
-            (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)) &&
-            (identical(other.amount, amount) ||
-                const DeepCollectionEquality().equals(other.amount, amount)) &&
-            (identical(other.amountNgaUsd, amountNgaUsd) ||
-                const DeepCollectionEquality()
-                    .equals(other.amountNgaUsd, amountNgaUsd)));
+                    .equals(other.amountToReceive, amountToReceive)) &&
+            (identical(other.amountToReceiveNgaUsd, amountToReceiveNgaUsd) ||
+                const DeepCollectionEquality().equals(
+                    other.amountToReceiveNgaUsd, amountToReceiveNgaUsd)) &&
+            (identical(other.rate, rate) ||
+                const DeepCollectionEquality().equals(other.rate, rate)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(currencyDesc) ^
-      const DeepCollectionEquality().hash(rateType) ^
-      const DeepCollectionEquality().hash(sendCurrencyCode) ^
-      const DeepCollectionEquality().hash(receiveCurrencyCode) ^
-      const DeepCollectionEquality().hash(isUsdDisplay) ^
-      const DeepCollectionEquality().hash(isActive) ^
-      const DeepCollectionEquality().hash(amount) ^
-      const DeepCollectionEquality().hash(amountNgaUsd);
+      const DeepCollectionEquality().hash(amountToSend) ^
+      const DeepCollectionEquality().hash(totalAmountToCharge) ^
+      const DeepCollectionEquality().hash(amountToReceive) ^
+      const DeepCollectionEquality().hash(amountToReceiveNgaUsd) ^
+      const DeepCollectionEquality().hash(rate);
 
   @JsonKey(ignore: true)
   @override
-  _$DatumCopyWith<_Datum> get copyWith =>
-      __$DatumCopyWithImpl<_Datum>(this, _$identity);
+  _$RateDataCopyWith<_RateData> get copyWith =>
+      __$RateDataCopyWithImpl<_RateData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_DatumToJson(this);
+    return _$_$_RateDataToJson(this);
   }
 }
 
-abstract class _Datum implements Datum {
-  const factory _Datum(
-      {required int id,
-      String? currencyDesc,
-      int? rateType,
-      String? sendCurrencyCode,
-      String? receiveCurrencyCode,
-      bool? isUsdDisplay,
-      bool? isActive,
-      double? amount,
-      double? amountNgaUsd}) = _$_Datum;
+abstract class _RateData implements RateData {
+  const factory _RateData(
+      {required num amountToSend,
+      required num totalAmountToCharge,
+      required double amountToReceive,
+      dynamic amountToReceiveNgaUsd,
+      required double rate}) = _$_RateData;
 
-  factory _Datum.fromJson(Map<String, dynamic> json) = _$_Datum.fromJson;
+  factory _RateData.fromJson(Map<String, dynamic> json) = _$_RateData.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  num get amountToSend => throw _privateConstructorUsedError;
   @override
-  String? get currencyDesc => throw _privateConstructorUsedError;
+  num get totalAmountToCharge => throw _privateConstructorUsedError;
   @override
-  int? get rateType => throw _privateConstructorUsedError;
+  double get amountToReceive => throw _privateConstructorUsedError;
   @override
-  String? get sendCurrencyCode => throw _privateConstructorUsedError;
+  dynamic get amountToReceiveNgaUsd => throw _privateConstructorUsedError;
   @override
-  String? get receiveCurrencyCode => throw _privateConstructorUsedError;
-  @override
-  bool? get isUsdDisplay => throw _privateConstructorUsedError;
-  @override
-  bool? get isActive => throw _privateConstructorUsedError;
-  @override
-  double? get amount => throw _privateConstructorUsedError;
-  @override
-  double? get amountNgaUsd => throw _privateConstructorUsedError;
+  double get rate => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$DatumCopyWith<_Datum> get copyWith => throw _privateConstructorUsedError;
+  _$RateDataCopyWith<_RateData> get copyWith =>
+      throw _privateConstructorUsedError;
 }
