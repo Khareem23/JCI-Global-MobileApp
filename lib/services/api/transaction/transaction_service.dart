@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/create_transaction_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/currency_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
 import 'package:jci_remit_mobile/utils/globals.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -74,6 +76,26 @@ class TransactionService {
           },
           options: Options(headers: {"requireToken": true}));
       final result = rateModelFromJson(response.data);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  Future<TransactionRes> createTransaction(
+      CreateTransactionModel transaction) async {
+    final url = 'Transactions/createTransaction';
+    try {
+      final response = await _dio.post(url,
+          data: transaction.toJson(),
+          options: Options(headers: {"requireToken": true}));
+      final result = transactionResFromJson(response.data);
       return result;
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {
