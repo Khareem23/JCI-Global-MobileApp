@@ -19,220 +19,11 @@ import 'package:just_debounce_it/just_debounce_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart';
 
+import 'select_beneficiary_screen.dart';
 import 'vm/transaction_vm.dart';
 
 class CreateTransactionScreen extends HookWidget {
   final formKey = new GlobalKey<FormState>();
-  void showBeneficiaryModal(BuildContext context, List<String> purposes,
-      TextEditingController purpose) {
-    showBarModalBottomSheet(
-      expand: false,
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        padding: EdgeInsets.all(20),
-        // height: context.screenHeight(0.6),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Enter Beneficiary Details',
-              textAlign: TextAlign.center,
-              style: context.textTheme.headline3!
-                  .copyWith(color: Colors.grey, fontSize: 14),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              // controller: purpose,
-              decoration: InputDecoration(
-                labelText: 'Bank Name',
-                hintText: '',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              // controller: purpose,
-              decoration: InputDecoration(
-                labelText: 'Account Number / IBAN',
-                hintText: '',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              // controller: purpose,
-              decoration: InputDecoration(
-                labelText: 'Account Name',
-                hintText: '',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              // controller: purpose,
-              decoration: InputDecoration(
-                labelText: 'Bank Address',
-                hintText: '',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    // controller: purpose,
-                    decoration: InputDecoration(
-                      labelText: 'Swift(Optional)',
-                      hintText: '',
-                      contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: TextFormField(
-                    // controller: purpose,
-                    decoration: InputDecoration(
-                      labelText: 'BSB(Optional)',
-                      hintText: '',
-                      contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 40,
-            ),
-            Text(
-              'Corresponding Bank (Optional)',
-              style: context.textTheme.headline3!
-                  .copyWith(color: Colors.grey, fontSize: 14),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextField(
-              controller: purpose,
-              readOnly: true,
-              decoration: InputDecoration(
-                hintText: 'Country',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                suffixIcon: PopupMenuButton<String>(
-                  icon: const Icon(Icons.arrow_drop_down),
-                  onSelected: (String value) {
-                    purpose.text = value;
-                  },
-                  itemBuilder: (BuildContext context) {
-                    return purposes.map<PopupMenuItem<String>>((String value) {
-                      return new PopupMenuItem(
-                          child: new Text(value), value: value);
-                    }).toList();
-                  },
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              // controller: purpose,
-              decoration: InputDecoration(
-                labelText: 'Bank Name',
-                hintText: '',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              // controller: purpose,
-              decoration: InputDecoration(
-                labelText: 'Account Number',
-                hintText: '',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              // controller: purpose,
-              decoration: InputDecoration(
-                labelText: 'Account Name',
-                hintText: '',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-            Spacer(),
-            CustomButton(
-                color: Colors.black,
-                width: MediaQuery.of(context).size.width,
-                onPressed: () {
-                  //showModal(context, purposes, purpose);
-                },
-                title: Text(
-                  'PROCEED',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Sizes.TEXT_SIZE_16),
-                )),
-          ],
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -246,8 +37,6 @@ class CreateTransactionScreen extends HookWidget {
     final purpose = useTextEditingController();
     final description = useTextEditingController();
     final bonus = useTextEditingController();
-    final rateParam = useState<RateParam>(RateParam(
-        sendCurrency: 'AUS', receiveCurrency: 'NGA', amountToSend: 1));
     final sendAmountController = useTextEditingController(text: '1');
     final amount = _useDebouncedSearch(sendAmountController);
 
@@ -255,6 +44,10 @@ class CreateTransactionScreen extends HookWidget {
       onChange: (BuildContext context, value) {
         if (value is Success) {
           print('Transaction has been created');
+          print(value.value);
+          context.navigate(SelectBeneficiaryScreen(
+            transactionData: value.value,
+          ));
         }
         if (value is Error) {
           AppSnackBar.showErrorSnackBar(context, message: value.toString());

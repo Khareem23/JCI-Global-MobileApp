@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/helper/static_config.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/country_res.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/create_transaction_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/currency_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart'
@@ -26,6 +27,11 @@ class TransactionRepository {
 
   Future<CurrencyModel> getAllSendingCurrency() async {
     return await _transactionService.getAllSendingCurrency();
+  }
+
+  Future<List<CountryData>> getCountries() async {
+    final res = await _transactionService.getCountries();
+    return res.data!;
   }
 
   Future<TransactionData> createTransaction(

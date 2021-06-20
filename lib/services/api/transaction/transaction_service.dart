@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/country_res.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/create_transaction_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/currency_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart';
@@ -52,6 +53,24 @@ class TransactionService {
       final response = await _dio.get(url,
           options: Options(headers: {"requireToken": true}));
       CurrencyModel result = currencyModelFromJson(response.data);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  Future<CountryRes> getCountries() async {
+    final url = 'Users/getCountries';
+    try {
+      final response = await _dio.get(url,
+          options: Options(headers: {"requireToken": true}));
+      final result = countryResFromJson(response.data);
       return result;
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {

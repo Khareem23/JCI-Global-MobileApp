@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:jci_remit_mobile/controllers/request_state_notifier.dart';
 import 'package:jci_remit_mobile/repositories/transaction_repository.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/country_res.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/create_transaction_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/currency_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart'
@@ -27,6 +28,11 @@ final receivingCurrency =
 final sendingCurrency = FutureProvider.autoDispose<CurrencyModel>((ref) async {
   final trnxRepo = TransactionRepository(ref);
   return await trnxRepo.getAllSendingCurrency();
+});
+final getCountriesProvider =
+    FutureProvider.autoDispose<List<CountryData>>((ref) async {
+  final trnxRepo = TransactionRepository(ref);
+  return await trnxRepo.getCountries();
 });
 
 final getRatesParam = FutureProvider.autoDispose
