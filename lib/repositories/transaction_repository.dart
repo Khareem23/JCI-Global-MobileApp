@@ -1,6 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/helper/static_config.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/bank_account_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/country_res.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/create_beneficiary_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/create_transaction_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/currency_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart'
@@ -34,6 +36,11 @@ class TransactionRepository {
     return res.data!;
   }
 
+  Future<List<BankAccountData>> getBankAccounts() async {
+    final res = await _transactionService.getBankAccounts();
+    return res.data!;
+  }
+
   Future<TransactionData> createTransaction(
       CreateTransactionModel transaction) async {
     final customerId = getCustomerId();
@@ -41,6 +48,16 @@ class TransactionRepository {
         transaction.copyWith(customerId: num.parse(customerId));
     final res = await _transactionService.createTransaction(transactionX);
     return res.data!;
+  }
+
+  Future<bool> createBeneficiary(
+      CreateBeneficiaryModel beneficiary, num transactionId) async {
+    final customerId = getCustomerId();
+    final beneficiaryX =
+        beneficiary.copyWith(customerId: int.parse(customerId));
+    final res = await _transactionService.createBeneficiary(
+        beneficiaryX, transactionId);
+    return res;
   }
 
   Future<r.RateData> getRates(

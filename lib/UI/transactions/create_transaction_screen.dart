@@ -50,7 +50,8 @@ class CreateTransactionScreen extends HookWidget {
           ));
         }
         if (value is Error) {
-          AppSnackBar.showErrorSnackBar(context, message: value.toString());
+          AppSnackBar.showErrorSnackBar(context,
+              message: value.error.toString());
         }
       },
       provider: createTrnxProvider,

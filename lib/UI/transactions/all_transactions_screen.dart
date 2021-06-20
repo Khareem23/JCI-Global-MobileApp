@@ -35,56 +35,58 @@ class AllTransactionsScreen extends HookWidget {
                 textAlign: TextAlign.start,
                 style: context.textTheme.headline4,
               ),
-              useProvider(userTransactionsProvider).when(
-                data: (transactions) {
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: transactions.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (transactions.length > 0) {
-                        final trnx = transactions[index];
-                        return InkWell(
-                          onTap: () {
-                            context.navigate(TransactionDetail(
-                              data: trnx,
-                            ));
-                          },
-                          child: TransactionCard(
-                              amountToReceive: trnx.amountToReceive!,
-                              amountToSend: trnx.amountToSend!,
-                              name: trnx.fullName!,
-                              receivingCounty: trnx.receivingCountry!,
-                              sendingCountry: trnx.sendingCountry!,
-                              transactionDate: trnx.dateProcessed!,
-                              transactionType: trnx.transactionType!),
+              Expanded(
+                child: useProvider(userTransactionsProvider).when(
+                  data: (transactions) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: transactions.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (transactions.length > 0) {
+                          final trnx = transactions[index];
+                          return InkWell(
+                            onTap: () {
+                              context.navigate(TransactionDetail(
+                                data: trnx,
+                              ));
+                            },
+                            child: TransactionCard(
+                                amountToReceive: trnx.amountToReceive!,
+                                amountToSend: trnx.amountToSend!,
+                                name: trnx.fullName!,
+                                receivingCounty: trnx.receivingCountry!,
+                                sendingCountry: trnx.sendingCountry!,
+                                transactionDate: trnx.dateProcessed!,
+                                transactionType: trnx.transactionType!),
+                          );
+                        }
+                        return EmptyStateWidget(
+                          // TODO: Navigate to a create transaction screen
+                          refreshCallBack: () => {},
                         );
-                      }
-                      return EmptyStateWidget(
-                        // TODO: Navigate to a create transaction screen
-                        refreshCallBack: () => {},
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider(
-                        indent: 40,
-                      );
-                    },
-                  );
-                },
-                error: (Object? error, StackTrace? stackTrace) {
-                  return Center(
-                      child: NetworkErrorWidget(
-                    error:
-                        'Looks like we are unable to fetch your transactions at this time. Please try again',
-                    refreshCallBack: () =>
-                        context.refresh(userTransactionsProvider),
-                  ));
-                },
-                loading: () {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider(
+                          indent: 40,
+                        );
+                      },
+                    );
+                  },
+                  error: (Object? error, StackTrace? stackTrace) {
+                    return Center(
+                        child: NetworkErrorWidget(
+                      error:
+                          'Looks like we are unable to fetch your transactions at this time. Please try again',
+                      refreshCallBack: () =>
+                          context.refresh(userTransactionsProvider),
+                    ));
+                  },
+                  loading: () {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
               ),
             ],
           ),
