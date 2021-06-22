@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:jci_remit_mobile/controllers/request_state_notifier.dart';
 import 'package:jci_remit_mobile/repositories/transaction_repository.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/bank_account_model.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/beneficiary_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/country_res.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/create_beneficiary_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/create_transaction_model.dart';
@@ -40,6 +41,12 @@ final getbankAccountsProvider =
     FutureProvider.autoDispose<List<BankAccountData>>((ref) async {
   final trnxRepo = TransactionRepository(ref);
   return await trnxRepo.getBankAccounts();
+});
+
+final getBeneficiariesProvider =
+    FutureProvider.autoDispose<List<BeneficiaryData>>((ref) async {
+  final trnxRepo = TransactionRepository(ref);
+  return await trnxRepo.getBeneficiaries();
 });
 
 final getRatesParam = FutureProvider.autoDispose
@@ -80,4 +87,20 @@ class BeneficiaryRequestNotifier extends RequestStateNotifier<void> {
   Future<void> createBeneficiary(
           CreateBeneficiaryModel beneficiary, num transactionId) =>
       makeRequest(() => _api.createBeneficiary(beneficiary, transactionId));
+}
+
+final addExistingBeneficiaryProvider =
+    StateNotifierProvider<AddExistingBeneficiaryRequestNotifier, RequestState>(
+  (ref) =>
+      AddExistingBeneficiaryRequestNotifier(ref.watch(trnxRepositoryProvider)),
+);
+
+class AddExistingBeneficiaryRequestNotifier extends RequestStateNotifier<void> {
+  final TransactionRepository _api;
+
+  AddExistingBeneficiaryRequestNotifier(this._api);
+
+  Future<void> addExistingBeneficiary(num beneficiary, num transactionId) =>
+      makeRequest(
+          () => _api.addBeneficiaryToTransaction(beneficiary, transactionId));
 }

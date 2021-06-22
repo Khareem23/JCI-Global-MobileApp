@@ -232,7 +232,7 @@ class CreateTransactionScreen extends HookWidget {
                     style: context.textTheme.headline3!
                         .copyWith(color: Colors.grey, fontSize: 14),
                   ),
-                  useProvider(sendingCurrency).when(
+                  useProvider(receivingCurrency).when(
                       data: (data) {
                         final currencies = data.data;
                         return Row(
