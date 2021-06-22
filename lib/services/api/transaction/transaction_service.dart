@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/bank_account_model.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/beneficiary_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/country_res.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/create_beneficiary_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/create_transaction_model.dart';
@@ -103,6 +104,24 @@ class TransactionService {
     }
   }
 
+  Future<BeneficiaryModel> getBeneficiaries() async {
+    final url = '/Transactions/getUserReceivers';
+    try {
+      final response = await _dio.get(url,
+          options: Options(headers: {"requireToken": true}));
+      final result = beneficiaryModelFromJson(response.data);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
   Future<RateModel> getRate(
       String sendCurrencyCode, String receiveCurrencyCode, num amount) async {
     final url = 'Transactions/convertSendingToReceiving';
@@ -153,6 +172,26 @@ class TransactionService {
     try {
       final response = await _dio.patch(url,
           data: beneficiary.toJson(),
+          options: Options(headers: {"requireToken": true}));
+
+      return response.data != null;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  Future<bool> addExistingBeneficiary(
+      num beneficiary, num transactionId) async {
+    final url =
+        'Transactions/addExistingBeneficiaryToTransaction/$transactionId/$beneficiary';
+    try {
+      final response = await _dio.patch(url,
           options: Options(headers: {"requireToken": true}));
 
       return response.data != null;
