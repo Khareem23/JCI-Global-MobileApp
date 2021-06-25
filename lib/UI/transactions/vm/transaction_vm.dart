@@ -104,3 +104,31 @@ class AddExistingBeneficiaryRequestNotifier extends RequestStateNotifier<void> {
       makeRequest(
           () => _api.addBeneficiaryToTransaction(beneficiary, transactionId));
 }
+
+final uploadProvider =
+    StateNotifierProvider<UploadRequestNotifier, RequestState>(
+  (ref) => UploadRequestNotifier(ref.watch(trnxRepositoryProvider)),
+);
+
+class UploadRequestNotifier extends RequestStateNotifier<void> {
+  final TransactionRepository _api;
+
+  UploadRequestNotifier(this._api);
+
+  Future<void> upload(num transactionId, String file) =>
+      makeRequest(() => _api.uploadPaymentConfirmation(transactionId, file));
+}
+
+final addPaymentProvider =
+    StateNotifierProvider<AddPaymentNotifier, RequestState>(
+  (ref) => AddPaymentNotifier(ref.watch(trnxRepositoryProvider)),
+);
+
+class AddPaymentNotifier extends RequestStateNotifier<void> {
+  final TransactionRepository _api;
+
+  AddPaymentNotifier(this._api);
+
+  Future<void> addPayment(num transactionId, num paymentTypeId) => makeRequest(
+      () => _api.addPaymentToTransaction(transactionId, paymentTypeId));
+}

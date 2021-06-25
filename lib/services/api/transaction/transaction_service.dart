@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/bank_account_model.dart';
@@ -10,6 +12,8 @@ import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart'
 import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
 import 'package:jci_remit_mobile/utils/globals.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
 
 import '../api_interceptor.dart';
 import '../error_interceptor.dart';
@@ -135,6 +139,53 @@ class TransactionService {
           options: Options(headers: {"requireToken": true}));
       final result = rateModelFromJson(response.data);
       return result;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  Future<bool> uploadPaymentConfirmation(
+      num transactionId, String filePath) async {
+    File file = File(filePath);
+    final url = 'Transactions/uploadPaymentConfirmation/$transactionId';
+    final mimeTypeData =
+        lookupMimeType(file.path, headerBytes: [0xFF, 0xD8])!.split('/');
+    FormData formData = FormData.fromMap({
+      "fileToUpload": await MultipartFile.fromFile(file.path,
+          contentType: MediaType(mimeTypeData[0], mimeTypeData[1]))
+    });
+    try {
+      final response = await _dio.post(url,
+          data: formData, options: Options(headers: {"requireToken": true}));
+      //final result = rateModelFromJson(response.data);
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  Future<bool> addPaymentToTransaction(
+      num transactionId, num paymentTypeId) async {
+    final url =
+        'Transactions/AddPaymentToTransaction/$transactionId/PaymentTypeID/$paymentTypeId';
+
+    try {
+      final response = await _dio.patch(url,
+          options: Options(headers: {"requireToken": true}));
+      //final result = rateModelFromJson(response.data);
+      return true;
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {
         // Failure result = Failure.fromJson(e.response!.data);
