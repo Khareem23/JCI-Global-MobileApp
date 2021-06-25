@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/helper/static_config.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/bank_account_model.dart';
@@ -79,6 +81,20 @@ class TransactionRepository {
         sendCurrencyCode, receiveCurrencyCode, amount);
 
     return result.data!;
+  }
+
+  Future<bool> uploadPaymentConfirmation(num transactionId, String file) async {
+    final result = await _transactionService.uploadPaymentConfirmation(
+        transactionId, file);
+    return result;
+  }
+
+  Future<bool> addPaymentToTransaction(
+      num transactionId, num paymentTypeId) async {
+    final result = await _transactionService.addPaymentToTransaction(
+        transactionId, paymentTypeId);
+
+    return result;
   }
 
   String getCustomerId() {

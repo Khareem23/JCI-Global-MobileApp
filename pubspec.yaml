@@ -37,7 +37,7 @@ dependencies:
   top_snackbar_flutter: ^1.0.0
   flutter_svg: ^0.22.0
   just_debounce_it: ^4.0.0+2
-  flutter_android_downloader: ^1.0.0
+  file_picker: ^3.0.3
 
 dev_dependencies:
   flutter_test:
