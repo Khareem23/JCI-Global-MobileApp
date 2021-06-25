@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:jci_remit_mobile/UI/transactions/direct_debit_screen.dart';
+import 'package:jci_remit_mobile/UI/transactions/poli_lander_screen.dart';
 import 'package:jci_remit_mobile/UI/transactions/wire_transfer_screen.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
@@ -147,6 +148,8 @@ class TransactionSuccessScreen extends HookWidget {
                       color: Colors.black,
                       onPressed: () {
                         if (_selectedIndex.value == 1) {
+                          context.navigate(
+                              PoliLanderScreen(transactionData: transaction));
                           // Poli transfer
                         } else if (_selectedIndex.value == 2) {
                           // Domestic Wire Transfer

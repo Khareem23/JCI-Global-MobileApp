@@ -120,11 +120,11 @@ class UploadRequestNotifier extends RequestStateNotifier<void> {
 }
 
 final addPaymentProvider =
-    StateNotifierProvider<AddPaymentNotifier, RequestState>(
+    StateNotifierProvider<AddPaymentNotifier, RequestState<String>>(
   (ref) => AddPaymentNotifier(ref.watch(trnxRepositoryProvider)),
 );
 
-class AddPaymentNotifier extends RequestStateNotifier<void> {
+class AddPaymentNotifier extends RequestStateNotifier<String> {
   final TransactionRepository _api;
 
   AddPaymentNotifier(this._api);
