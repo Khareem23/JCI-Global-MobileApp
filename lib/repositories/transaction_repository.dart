@@ -89,7 +89,7 @@ class TransactionRepository {
     return result;
   }
 
-  Future<bool> addPaymentToTransaction(
+  Future<String> addPaymentToTransaction(
       num transactionId, num paymentTypeId) async {
     final result = await _transactionService.addPaymentToTransaction(
         transactionId, paymentTypeId);

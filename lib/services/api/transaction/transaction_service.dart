@@ -176,7 +176,7 @@ class TransactionService {
     }
   }
 
-  Future<bool> addPaymentToTransaction(
+  Future<String> addPaymentToTransaction(
       num transactionId, num paymentTypeId) async {
     final url =
         'Transactions/AddPaymentToTransaction/$transactionId/PaymentTypeID/$paymentTypeId';
@@ -185,7 +185,7 @@ class TransactionService {
       final response = await _dio.patch(url,
           options: Options(headers: {"requireToken": true}));
       //final result = rateModelFromJson(response.data);
-      return true;
+      return response.data['data'];
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {
         // Failure result = Failure.fromJson(e.response!.data);

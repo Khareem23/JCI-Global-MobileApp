@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: ^0.22.0
   just_debounce_it: ^4.0.0+2
   file_picker: ^3.0.3
+  flutter_inappwebview: ^5.3.2
 
 dev_dependencies:
   flutter_test:
