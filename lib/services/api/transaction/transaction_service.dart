@@ -217,13 +217,20 @@ class TransactionService {
     }
   }
 
+  // Create beneficiary on transaction screen or beneficiary screen
   Future<bool> createBeneficiary(
-      CreateBeneficiaryModel beneficiary, num transactionId) async {
-    final url = 'Transactions/addNewBeneficiaryToTransaction/$transactionId';
+      CreateBeneficiaryModel beneficiary, num? transactionId) async {
+    final url = transactionId == null
+        ? 'Transactions/addReceiver'
+        : 'Transactions/addNewBeneficiaryToTransaction/$transactionId';
     try {
-      final response = await _dio.patch(url,
-          data: beneficiary.toJson(),
-          options: Options(headers: {"requireToken": true}));
+      final response = transactionId == null
+          ? await _dio.post(url,
+              data: beneficiary.toJson(),
+              options: Options(headers: {"requireToken": true}))
+          : await _dio.patch(url,
+              data: beneficiary.toJson(),
+              options: Options(headers: {"requireToken": true}));
 
       return response.data != null;
     } on DioError catch (e) {

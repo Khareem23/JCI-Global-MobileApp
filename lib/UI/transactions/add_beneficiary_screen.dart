@@ -14,8 +14,8 @@ import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 class AddBeneficiaryScreen extends HookWidget {
-  final TransactionData transactionData;
-  const AddBeneficiaryScreen({required this.transactionData, Key? key})
+  final TransactionData? transactionData;
+  const AddBeneficiaryScreen({this.transactionData, Key? key})
       : super(key: key);
 
   @override
@@ -409,7 +409,7 @@ class AddBeneficiaryScreen extends HookWidget {
                                         .read(
                                             createBeneficiaryProvider.notifier)
                                         .createBeneficiary(
-                                            beneficiary, transactionData.id!);
+                                            beneficiary, transactionData?.id);
                                     // showModal(
                                     //     context,
                                     //     purposes,
