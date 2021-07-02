@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:jci_remit_mobile/services/api/user/models/user_transaction.dart';
 import 'package:jci_remit_mobile/utils/extensions.dart';
@@ -13,7 +14,10 @@ class TransactionDetail extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('Transaction Summary', style: TextStyle(color: Colors.black),),
+        title: Text(
+          'Transaction Summary',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,12 +38,12 @@ class TransactionDetail extends StatelessWidget {
                           context.textTheme.headline3!.copyWith(fontSize: 12),
                       children: [
                         TextSpan(
-                          text: 'AUD ',
+                          text: '${data.sendingCountry} ',
                           style: context.textTheme.headline3!
                               .copyWith(fontSize: 12),
                         ),
                         TextSpan(
-                          text: '12.99',
+                          text: data.amountToSend.toString(),
                           style: context.textTheme.headline4!.copyWith(
                               fontSize: 40, fontWeight: FontWeight.w400),
                         )
@@ -47,7 +51,7 @@ class TransactionDetail extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'September 24, 2021',
+                    formatDate(data.dateSent!, [dd, ' ', M, ' ', yyyy]),
                     textAlign: TextAlign.center,
                     style: context.textTheme.headline3!
                         .copyWith(color: Colors.grey, fontSize: 14),
@@ -78,7 +82,7 @@ class TransactionDetail extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  '12843ubjeihtuehr3984u02340',
+                  data.transactionRefNumber!,
                   textAlign: TextAlign.center,
                   style: context.textTheme.headline3!.copyWith(
                       color: Colors.blueGrey,
@@ -94,42 +98,43 @@ class TransactionDetail extends StatelessWidget {
                 ),
                 TrnxDetailItem(
                   title: 'Amount Sent',
-                  item: '\$185.65',
+                  item: data.amountToSend.toString(),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TrnxDetailItem(
                   title: 'Amount Charged',
-                  item: '\$262.65',
+                  item: data.amountToCharge.toString(),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TrnxDetailItem(
                   title: 'Amount Received',
-                  item: '\$262.65',
+                  item: data.amountToReceive.toString(),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TrnxDetailItem(
                   title: 'PayIn Method',
-                  item: 'Poli',
+                  item: data.payInMethod!,
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TrnxDetailItem(
                   title: 'Status',
-                  item: 'Completed',
+                  item: data.transactionStatus!,
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TrnxDetailItem(
                   title: 'Date & Time Processed',
-                  item: '25 JUN 2020',
+                  item:
+                      formatDate(data.dateProcessed!, [dd, ' ', M, ' ', yyyy]),
                 ),
               ],
             ),
@@ -181,21 +186,21 @@ class TransactionDetail extends StatelessWidget {
                 ),
                 TrnxDetailItem(
                   title: 'Name',
-                  item: 'Bankolade Bimbo',
+                  item: data.receiver!.accountName!,
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 TrnxDetailItem(
                   title: 'Bank Name',
-                  item: 'First Bank Nigeria',
+                  item: data.receiver!.bankName!,
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 TrnxDetailItem(
                   title: 'Account Number',
-                  item: '09084938749343',
+                  item: data.receiver!.accountNumber!,
                 ),
               ],
             ),

@@ -31,7 +31,7 @@ class AllTransactionsScreen extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Recent Transactions',
+                'All Transactions',
                 textAlign: TextAlign.start,
                 style: context.textTheme.headline4,
               ),
