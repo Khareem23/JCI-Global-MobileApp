@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:jci_remit_mobile/UI/auth/register/register.model.dart';
+import 'package:jci_remit_mobile/services/api/user/models/customer_update_dto.dart';
 import 'package:jci_remit_mobile/services/api/user/models/state.dart';
 import 'package:jci_remit_mobile/services/api/user/models/user_transaction.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -217,6 +218,25 @@ class UserService extends IUserService {
             "accountName": accName,
             "customerId": customerId
           },
+          options: Options(headers: {"requireToken": true}));
+      //final result = userTransactionFromJson(response.data);
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  Future<bool> updateUser(CustomerUpdateDto customer) async {
+    final url = 'Users/updateCustomerByCustomer';
+    try {
+      final response = await _dio.put(url,
+          data: customer.toJson(),
           options: Options(headers: {"requireToken": true}));
       //final result = userTransactionFromJson(response.data);
       return true;
