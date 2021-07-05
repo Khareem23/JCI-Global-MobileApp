@@ -16,7 +16,7 @@ class BasicInfoScreen extends HookWidget {
     final _formKey = useState(GlobalKey<FormState>());
     PhoneNumber number = PhoneNumber(isoCode: 'NG');
     var _genders = ['Male', 'Female'];
-    var _accountTypes = ['Individual Account', 'Business Account'];
+    var _accountTypes = ['Individual-Account', 'Business-Account'];
     final gender = useState('');
 
     final firstName = useState('');
