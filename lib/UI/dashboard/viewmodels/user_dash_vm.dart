@@ -6,13 +6,13 @@ import 'package:jci_remit_mobile/services/api/user/models/user_dto.dart';
 import 'package:jci_remit_mobile/services/api/user/models/user_transaction.dart';
 
 final dashProvider = StateNotifierProvider<UserDashController, UserState>(
-    (ref) => UserDashController());
+    (ref) => UserDashController(ref.watch(userRepositoryProvider)));
 
 class UserDashController extends StateNotifier<UserState> {
-  UserDashController() : super(UserLoading());
+  final UserRepository userRepository;
+  UserDashController(this.userRepository) : super(UserLoading());
 
   getUser() async {
-    final userRepository = UserRepository();
     state = UserLoading();
     try {
       final user = await userRepository.getUser();
@@ -26,7 +26,7 @@ class UserDashController extends StateNotifier<UserState> {
 }
 
 final userProvider = FutureProvider.autoDispose<UserDto>((ref) async {
-  final userRepository = UserRepository();
+  final userRepository = UserRepository(ref);
   final cancelToken = CancelToken();
   ref.onDispose(cancelToken.cancel);
   return await userRepository.getUser();
@@ -34,7 +34,7 @@ final userProvider = FutureProvider.autoDispose<UserDto>((ref) async {
 
 final userTransactionsProvider =
     FutureProvider.autoDispose<List<Datum>>((ref) async {
-  final userRepository = UserRepository();
+  final userRepository = UserRepository(ref);
   final cancelToken = CancelToken();
   ref.onDispose(cancelToken.cancel);
   return await userRepository.getUserTransaction();
