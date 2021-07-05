@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/dashboard/viewmodels/user_dash_vm.dart';
 import 'package:jci_remit_mobile/UI/profile/personal_data.dart';
@@ -58,8 +59,10 @@ class ProfileScreen extends HookWidget {
                         Row(
                           children: [
                             CircleAvatar(
-                              radius: 40,
-                            ),
+                                radius: 40,
+                                child: SvgPicture.asset(
+                                  'assets/images/svg/male_avatar.svg',
+                                )),
                             SizedBox(
                               width: 20,
                             ),
@@ -71,11 +74,25 @@ class ProfileScreen extends HookWidget {
                                   style: context.textTheme.headline4!
                                       .copyWith(fontSize: 16),
                                 ),
-                                Text(
-                                  'Verified',
-                                  style: context.textTheme.headline5!.copyWith(
-                                      fontSize: 16,
-                                      color: AppColors.primaryColor),
+                                Row(
+                                  children: [
+                                    user.isAmlCompliancePassed!
+                                        ? Icon(Icons.check_circle,
+                                            color: Colors.green)
+                                        : Icon(
+                                            Icons.error,
+                                            color: Colors.red,
+                                          ),
+                                    Text(
+                                      user.isAmlCompliancePassed!
+                                          ? 'Verified'
+                                          : 'Not Verified',
+                                      style: context.textTheme.headline5!
+                                          .copyWith(
+                                              fontSize: 16,
+                                              color: AppColors.primaryColor),
+                                    ),
+                                  ],
                                 ),
                               ],
                             )
