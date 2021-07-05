@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/dashboard/viewmodels/user_dash_vm.dart';
+import 'package:jci_remit_mobile/UI/profile/personal_data.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/empty_state_widget.dart';
 import 'package:jci_remit_mobile/utils/extensions.dart';
@@ -84,6 +85,8 @@ class ProfileScreen extends HookWidget {
                           height: 20,
                         ),
                         ListTile(
+                            onTap: () => context
+                                .navigate(PersonalDataScreen(userDto: user)),
                             leading: Icon(AntDesign.user),
                             title: Text(
                               'Personal Data',
@@ -142,161 +145,5 @@ class ProfileScreen extends HookWidget {
         ),
       ),
     );
-  }
-
-  void showModal(
-      BuildContext context,
-      ValueNotifier userHasBankAccount,
-      ValueNotifier<GlobalKey<FormState>> _formKey,
-      accountNumber,
-      accName,
-      bankName,
-      accCountry,
-      accSwiftCode) {
-    showBarModalBottomSheet(
-        expand: false,
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (context) {
-          //  bool isCreateAccount = userHasBankAccount.value;
-          return StatefulBuilder(builder: (builder, StateSetter setState) {
-            return Container(
-              padding: EdgeInsets.all(20),
-              height: context.screenHeight(0.6),
-              child: Form(
-                key: _formKey.value,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: context.screenHeight(1),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Enter Bank Details',
-                              textAlign: TextAlign.center,
-                              style: context.textTheme.headline3!
-                                  .copyWith(color: Colors.grey, fontSize: 14),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextFormField(
-                              controller: accountNumber,
-                              decoration: InputDecoration(
-                                labelText: 'Account Number / IBAN',
-                                hintText: '',
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextFormField(
-                              controller: accName,
-                              decoration: InputDecoration(
-                                labelText: 'Account Name',
-                                hintText: '',
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextFormField(
-                              controller: bankName,
-                              decoration: InputDecoration(
-                                labelText: 'Bank Name',
-                                hintText: '',
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextFormField(
-                              controller: accCountry,
-                              decoration: InputDecoration(
-                                labelText: 'Country',
-                                hintText: '',
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextFormField(
-                              controller: accSwiftCode,
-                              decoration: InputDecoration(
-                                labelText: 'Swift Code',
-                                hintText: '',
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ),
-                            Spacer(),
-                            CustomButton(
-                                color: Colors.black,
-                                width: MediaQuery.of(context).size.width,
-                                onPressed: () {
-                                  if (!_formKey.value.currentState!
-                                      .validate()) {
-                                    return null;
-                                  }
-                                  _formKey.value.currentState!.save();
-                                  // context.popView();
-                                  // showBeneficiaryModal(context, purposes, purpose);
-                                },
-                                title: Text(
-                                  'UPDATE',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Sizes.TEXT_SIZE_16),
-                                )),
-                          ],
-                        ),
-                      ),
-                    )
-                    // : EmptyStateWidget(
-                    //     error:
-                    //         "Seems like you've not added a bank account yet",
-                    //     textOnButton: '+ Add Bank Account',
-                    //     errorTitle: 'One minute!',
-
-                    //     // TODO: Navigate to a create transaction screen
-                    //     refreshCallBack: () {
-                    //       setState(() {
-                    //         isCreateAccount = false;
-                    //       });
-                    //     },
-                    //   )
-                  ],
-                ),
-              ),
-            );
-          });
-        });
   }
 }
