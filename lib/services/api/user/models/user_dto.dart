@@ -37,6 +37,7 @@ class UserDto {
     this.receivers,
     this.transactions,
     this.customerReferredTransaction,
+    this.customerBankAccount,
   });
 
   int id;
@@ -66,6 +67,7 @@ class UserDto {
   List<Receiver>? receivers;
   List<Transaction>? transactions;
   CustomerReferredTransaction? customerReferredTransaction;
+  Map<String, dynamic>? customerBankAccount;
 
   factory UserDto.fromJson(Map<String, dynamic> json) => UserDto(
         id: json["id"] == null ? null : json["id"],
@@ -116,6 +118,9 @@ class UserDto {
             ? null
             : CustomerReferredTransaction.fromJson(
                 json["customerReferredTransaction"]),
+        customerBankAccount: json["customerBankAccount"] == null
+            ? null
+            : json["customerBankAccount"],
       );
 
   Map<String, dynamic> toJson() => {

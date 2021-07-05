@@ -198,4 +198,36 @@ class UserService extends IUserService {
       }
     }
   }
+
+  Future<bool> addBankAccount(
+      String accCountry,
+      String accBankName,
+      String accNumber,
+      String accName,
+      String accountSwiftCode,
+      String customerId) async {
+    final url = 'Users/addBankAccount';
+    try {
+      final response = await _dio.post(url,
+          data: {
+            "accCountry": accCountry,
+            "accBankName": accBankName,
+            "accNumber": accNumber,
+            "accSwiftCode": accountSwiftCode,
+            "accountName": accName,
+            "customerId": customerId
+          },
+          options: Options(headers: {"requireToken": true}));
+      //final result = userTransactionFromJson(response.data);
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
 }

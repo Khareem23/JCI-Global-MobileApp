@@ -85,7 +85,7 @@ class BeneficiaryRequestNotifier extends RequestStateNotifier<void> {
   BeneficiaryRequestNotifier(this._api);
 
   Future<void> createBeneficiary(
-          CreateBeneficiaryModel beneficiary, num transactionId) =>
+          CreateBeneficiaryModel beneficiary, num? transactionId) =>
       makeRequest(() => _api.createBeneficiary(beneficiary, transactionId));
 }
 

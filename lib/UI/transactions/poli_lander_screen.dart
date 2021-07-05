@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:jci_remit_mobile/UI/transactions/poli_webview.dart';
+import 'package:jci_remit_mobile/UI/transactions/transaction_success.dart';
+import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/controllers/request_state_notifier.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
@@ -8,10 +11,10 @@ import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'payment_success.dart';
 import 'vm/transaction_vm.dart';
 
 class PoliLanderScreen extends StatefulWidget {
-  final MyInAppBrowser browser = new MyInAppBrowser();
   final TransactionData transactionData;
   PoliLanderScreen({Key? key, required this.transactionData}) : super(key: key);
 
@@ -20,19 +23,22 @@ class PoliLanderScreen extends StatefulWidget {
 }
 
 class _PoliLanderScreenState extends State<PoliLanderScreen> {
-  var options = InAppBrowserClassOptions(
-      crossPlatform: InAppBrowserOptions(hideUrlBar: false),
-      inAppWebViewGroupOptions: InAppWebViewGroupOptions(
-          crossPlatform: InAppWebViewOptions(javaScriptEnabled: true)));
   @override
   Widget build(BuildContext context) {
     return ProviderListener(
-      onChange: (BuildContext context, value) {
+      onChange: (BuildContext context, value) async {
         if (value is Success) {
-          print(value.value);
-          widget.browser.openUrlRequest(
-              urlRequest: URLRequest(url: Uri.parse(value.value)),
-              options: options);
+          final text = await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PoliWebView(url: value.value)),
+          );
+
+          // Perform action based on returned data from WebView
+          if (text == 'failed')
+            return AppSnackBar.showErrorSnackBar(context,
+                message: 'POLI transaction has failed. Please try again');
+          if (text == 'success') return context.navigate(PaymentSuccess());
         }
       },
       provider: addPaymentProvider,
@@ -106,6 +112,12 @@ class MyInAppBrowser extends InAppBrowser {
   @override
   Future onLoadStop(url) async {
     print("Stopped $url");
+    if (url.toString().contains("POLiFailure")) {
+      print('Transaction Failed');
+    }
+    if (url.toString().contains("Success")) {
+      print('Transaction Successful');
+    }
   }
 
   @override

@@ -59,7 +59,7 @@ class TransactionRepository {
   }
 
   Future<bool> createBeneficiary(
-      CreateBeneficiaryModel beneficiary, num transactionId) async {
+      CreateBeneficiaryModel beneficiary, num? transactionId) async {
     final customerId = getCustomerId();
     final beneficiaryX =
         beneficiary.copyWith(customerId: int.parse(customerId));
