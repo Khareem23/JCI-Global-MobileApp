@@ -40,8 +40,8 @@ class AuthController extends StateNotifier<AuthState> {
     } else {
       final bool hasToken = _authRepository.hasToken();
       if (hasToken) {
-        final user = await _authRepository.getUser();
-        state = AuthAuthenticated(user);
+        // final user = await _authRepository.getUser();
+        state = AuthPinNeeded();
       } else {
         state = AuthUnauthenticated();
       }

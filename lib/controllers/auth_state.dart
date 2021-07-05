@@ -26,6 +26,13 @@ class AuthNotVerified extends AuthState {
   List<Object> get props => [];
 }
 
+class AuthPinNeeded extends AuthState {
+  AuthPinNeeded();
+
+  @override
+  List<Object> get props => [];
+}
+
 class AuthAuthenticated extends AuthState {
   final UserDto user;
   AuthAuthenticated(this.user);

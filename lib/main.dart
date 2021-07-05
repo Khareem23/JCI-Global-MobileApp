@@ -6,6 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/login/login.dart';
+import 'package:jci_remit_mobile/UI/auth/login/pin_login.dart';
 import 'package:jci_remit_mobile/UI/auth/mobile/mobile_auth_screen.dart';
 import 'package:jci_remit_mobile/UI/dashboard/dashboard_screen.dart';
 import 'package:jci_remit_mobile/UI/lander/lander.dart';
@@ -15,6 +16,7 @@ import 'package:jci_remit_mobile/services/storage/shared_prefs.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
+import 'UI/auth/mobile/verify_otp_screen.dart';
 import 'controllers/auth_controller.dart';
 import 'utils/navigator.dart';
 
@@ -64,7 +66,10 @@ class MyApp extends StatelessWidget {
               context.navigateReplaceRoot(DashboardScreen());
             }
             if (state is AuthUnauthenticated) {
-              context.navigateReplaceRoot(SplashScreen());
+              context.navigateReplaceRoot(LanderScreen());
+            }
+            if (state is AuthPinNeeded) {
+              context.navigateReplaceRoot(VerifyOTPScreen());
             }
           },
           provider: authControllerProvider,
@@ -88,8 +93,10 @@ class AuthPageContainer extends HookWidget {
         return LanderScreen();
       } else if (state is AuthNotVerified) {
         return MobileAuthScreen();
+      } else if (state is AuthPinNeeded) {
+        return VerifyOTPScreen();
       }
-      return SplashScreen();
+      return LanderScreen();
     });
   }
 }

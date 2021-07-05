@@ -10,13 +10,12 @@ import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/controllers/auth_controller.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
+import 'package:pinput/pin_put/pin_put.dart';
 
 import 'viewmodels/verify_otp_state.dart';
 
 class VerifyOTPScreen extends StatefulWidget {
-  final String phone;
-
-  const VerifyOTPScreen({Key? key, required this.phone}) : super(key: key);
+  const VerifyOTPScreen({Key? key}) : super(key: key);
   @override
   _VerifyOTPScreenState createState() => _VerifyOTPScreenState();
 }
@@ -24,10 +23,18 @@ class VerifyOTPScreen extends StatefulWidget {
 class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
   final formKey = GlobalKey<FormState>();
   late StreamController<ErrorAnimationType> errorController;
-  TextEditingController textEditingController = TextEditingController();
+  final FocusNode _pinPutFocusNode = FocusNode();
+  TextEditingController _pinPutController = TextEditingController();
   String text = '';
   String currentText = "";
   bool isCompleted = false;
+  BoxDecoration get _pinPutDecoration {
+    return BoxDecoration(
+      border: Border.all(color: Colors.deepPurpleAccent),
+      borderRadius: BorderRadius.circular(15.0),
+    );
+  }
+
   @override
   void initState() {
     errorController = StreamController<ErrorAnimationType>();
@@ -69,7 +76,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
           child: Column(
             children: [
               Text(
-                'Verify Account!',
+                'Login with PIN',
                 style: theme.headline2,
               ),
               SizedBox(
@@ -78,11 +85,11 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  text: 'Enter the 4-digit code we sent to you at\n',
+                  text: 'Enter your 6-digit pin',
                   style: theme.headline3,
                   children: [
                     TextSpan(
-                      text: "${widget.phone}",
+                      text: "",
                       style: theme.headline3!
                           .copyWith(fontWeight: FontWeight.w700),
                     )
@@ -92,77 +99,98 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
               SizedBox(
                 height: 60,
               ),
-              Form(
-                key: formKey,
-                child: PinCodeTextField(
-                  length: 6,
-                  cursorColor: AppColors.accentColor,
-                  textStyle: theme.headline2!,
-                  //obsecureText: false,
-                  //autoFocus: true,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  autoDismissKeyboard: true,
-                  animationType: AnimationType.scale,
-                  pinTheme: PinTheme(
-                    shape: PinCodeFieldShape.underline,
-                    fieldHeight: 50,
-                    fieldWidth: 48,
-                    borderWidth: 3.0,
-                    inactiveColor: AppColors.accentColor,
-                    activeFillColor: Colors.white,
-                    selectedFillColor: AppColors.primaryColor,
-                    selectedColor: AppColors.primaryColor,
+              Container(
+                color: Colors.white,
+                margin: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
+                child: PinPut(
+                  fieldsCount: 5,
+                  onSubmit: (String pin) => {},
+                  focusNode: _pinPutFocusNode,
+                  controller: _pinPutController,
+                  submittedFieldDecoration: _pinPutDecoration.copyWith(
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  animationDuration: Duration(milliseconds: 300),
-                  // backgroundColor: Colors.blue.shade50,
-                  errorAnimationController: errorController,
-                  controller: textEditingController,
-                  // enableActiveFill: true,
-                  onCompleted: (v) {
-                    print("Completed");
-                    setState(() {
-                      isCompleted = true;
-                    });
-                    // context.read(currentAuthProvider).authenticate2FA(
-                    //     currentText, context, args.authType);
-                  },
-                  onChanged: (value) {
-                    print(value);
-                    setState(() {
-                      if (value.length != 6) {
-                        isCompleted = false;
-                      }
-                      currentText = value;
-                    });
-                  },
-                  beforeTextPaste: (text) {
-                    print("Allowing to paste $text");
-                    return false;
-                  },
-                  appContext: context, onTap: () {},
+                  selectedFieldDecoration: _pinPutDecoration,
+                  followingFieldDecoration: _pinPutDecoration.copyWith(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(
+                      color: Colors.deepPurpleAccent.withOpacity(.5),
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Did not receive the code?',
-                textAlign: TextAlign.center,
-                style: theme.headline3,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Resend Code',
-                textAlign: TextAlign.center,
-                style: theme.headline3!.copyWith(
-                    fontSize: 18,
-                    decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryColor),
-              ),
+              // Form(
+              //   key: formKey,
+              //   child: PinCodeTextField(
+              //     length: 6,
+              //     cursorColor: AppColors.accentColor,
+              //     textStyle: theme.headline2!,
+              //     //obsecureText: false,
+              //     //autoFocus: true,
+              //     keyboardType: TextInputType.number,
+              //     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              //     autoDismissKeyboard: true,
+              //     // animationType: AnimationType.scale,
+              //     pinTheme: PinTheme(
+              //         shape: PinCodeFieldShape.underline,
+              //         fieldHeight: 50,
+              //         fieldWidth: 48,
+              //         borderWidth: 3.0,
+              //         inactiveColor: AppColors.accentColor,
+              //         activeFillColor: Colors.white,
+              //         selectedFillColor: AppColors.primaryColor,
+              //         selectedColor: AppColors.primaryColor,
+              //         borderRadius: BorderRadius.circular(5)),
+              //     // animationDuration: Duration(milliseconds: 300),
+              //     // backgroundColor: Colors.blue.shade50,
+              //     errorAnimationController: errorController,
+              //     controller: textEditingController,
+              //     // enableActiveFill: true,
+              //     onCompleted: (v) {
+              //       print("Completed");
+              //       setState(() {
+              //         isCompleted = true;
+              //       });
+              //       // context.read(currentAuthProvider).authenticate2FA(
+              //       //     currentText, context, args.authType);
+              //     },
+              //     onChanged: (value) {
+              //       print(value);
+              //       setState(() {
+              //         if (value.length != 6) {
+              //           isCompleted = false;
+              //         }
+              //         currentText = value;
+              //       });
+              //     },
+              //     beforeTextPaste: (text) {
+              //       print("Allowing to paste $text");
+              //       return false;
+              //     },
+              //     appContext: context, onTap: () {},
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Text(
+              //   'Did not receive the code?',
+              //   textAlign: TextAlign.center,
+              //   style: theme.headline3,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Text(
+              //   'Resend Code',
+              //   textAlign: TextAlign.center,
+              //   style: theme.headline3!.copyWith(
+              //       fontSize: 18,
+              //       decoration: TextDecoration.underline,
+              //       fontWeight: FontWeight.w600,
+              //       color: AppColors.primaryColor),
+              // ),
               Spacer(),
               Consumer(builder: (context, watch, _) {
                 final vm = watch(verifyOtpProvider);
@@ -197,33 +225,33 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
               SizedBox(
                 height: 20,
               ),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: 'By clicking start, you agree to our ',
-                  style: theme.headline3,
-                  children: [
-                    TextSpan(
-                      text: "Privacy Policy",
-                      style: theme.headline3!.copyWith(
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primaryColor),
-                    ),
-                    TextSpan(
-                      text: " and our ",
-                      style: theme.headline3,
-                    ),
-                    TextSpan(
-                      text: "Terms and conditions",
-                      style: theme.headline3!.copyWith(
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primaryColor),
-                    )
-                  ],
-                ),
-              ),
+              // RichText(
+              //   textAlign: TextAlign.center,
+              //   text: TextSpan(
+              //     text: 'By clicking start, you agree to our ',
+              //     style: theme.headline3,
+              //     children: [
+              //       TextSpan(
+              //         text: "Privacy Policy",
+              //         style: theme.headline3!.copyWith(
+              //             decoration: TextDecoration.underline,
+              //             fontWeight: FontWeight.w700,
+              //             color: AppColors.primaryColor),
+              //       ),
+              //       TextSpan(
+              //         text: " and our ",
+              //         style: theme.headline3,
+              //       ),
+              //       TextSpan(
+              //         text: "Terms and conditions",
+              //         style: theme.headline3!.copyWith(
+              //             decoration: TextDecoration.underline,
+              //             fontWeight: FontWeight.w700,
+              //             color: AppColors.primaryColor),
+              //       )
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
