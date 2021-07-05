@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/login/login.dart';
 import 'package:jci_remit_mobile/UI/auth/mobile/mobile_auth_screen.dart';
 import 'package:jci_remit_mobile/UI/dashboard/dashboard_screen.dart';
+import 'package:jci_remit_mobile/UI/lander/lander.dart';
 import 'package:jci_remit_mobile/UI/splash/splash_screen.dart';
 import 'package:jci_remit_mobile/controllers/auth_state.dart';
 import 'package:jci_remit_mobile/services/storage/shared_prefs.dart';
@@ -84,7 +85,7 @@ class AuthPageContainer extends HookWidget {
       if (state is AuthAuthenticated) {
         return DashboardScreen();
       } else if (state is AuthUnauthenticated) {
-        return LoginScreen();
+        return LanderScreen();
       } else if (state is AuthNotVerified) {
         return MobileAuthScreen();
       }
