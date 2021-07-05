@@ -7,7 +7,8 @@ enum AuthenticationStatus {
   unknown,
   authenticated,
   unauthenticated,
-  notVerified
+  notVerified,
+  logout
 }
 
 final authControllerProvider =
@@ -20,7 +21,9 @@ final authControllerProvider =
 class AuthController extends StateNotifier<AuthState> {
   final AuthRepository _authRepository;
   AuthController(this._authRepository, [AuthState? state])
-      : super(state ?? AuthUnknown());
+      : super(state ?? AuthUnknown()) {
+    auth(AuthenticationStatus.unknown);
+  }
 
   void auth(AuthenticationStatus status) async {
     if (status == AuthenticationStatus.unauthenticated) {
@@ -31,8 +34,17 @@ class AuthController extends StateNotifier<AuthState> {
     } else if (status == AuthenticationStatus.notVerified) {
       //  final user = await _authRepository.getUser();
       state = AuthNotVerified();
+    } else if (status == AuthenticationStatus.logout) {
+      await _authRepository.removeToken();
+      state = AuthUnauthenticated();
     } else {
-      state = AuthUnknown();
+      final bool hasToken = _authRepository.hasToken();
+      if (hasToken) {
+        // final user = await _authRepository.getUser();
+        state = AuthPinNeeded();
+      } else {
+        state = AuthUnauthenticated();
+      }
     }
   }
 }

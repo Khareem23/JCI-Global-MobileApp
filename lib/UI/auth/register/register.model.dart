@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-Register registerFromJson(String str) => Register.fromJson(json.decode(str));
+// Register registerFromJson(String str) => Register.fromJson(json.decode(str));
 
 String registerToJson(Register data) => json.encode(data.toJson());
 
@@ -16,7 +16,8 @@ class Register {
     this.lastName,
     this.password,
     this.pin,
-    this.country,
+    this.countryOfResidence,
+    this.countryOfNationality,
     this.state,
     this.city,
     this.postalCode,
@@ -35,7 +36,8 @@ class Register {
   final String? lastName;
   final String? password;
   final String? pin;
-  final String? country;
+  final String? countryOfResidence;
+  final String? countryOfNationality;
   final String? state;
   final String? city;
   final String? postalCode;
@@ -54,7 +56,8 @@ class Register {
     String? lastName,
     String? password,
     String? pin,
-    String? country,
+    String? countryOfResidence,
+    String? countryOfNationality,
     String? state,
     String? city,
     String? postalCode,
@@ -73,7 +76,8 @@ class Register {
         lastName: lastName ?? this.lastName,
         password: password ?? this.password,
         pin: pin ?? this.pin,
-        country: country ?? this.country,
+        countryOfResidence: countryOfResidence ?? this.countryOfResidence,
+        countryOfNationality: countryOfNationality ?? this.countryOfNationality,
         state: state ?? this.state,
         city: city ?? this.city,
         postalCode: postalCode ?? this.postalCode,
@@ -86,28 +90,28 @@ class Register {
         userRole: userRole ?? this.userRole,
       );
 
-  factory Register.fromJson(Map<String, dynamic> json) => Register(
-        email: json["email"] == null ? null : json["email"],
-        firstName: json["firstName"] == null ? null : json["firstName"],
-        phoneNumber: json["phoneNumber"] == null ? null : json["phoneNumber"],
-        lastName: json["lastName"] == null ? null : json["lastName"],
-        password: json["password"] == null ? null : json["password"],
-        pin: json["pin"] == null ? null : json["pin"],
-        country: json["country"] == null ? null : json["country"],
-        state: json["state"] == null ? null : json["state"],
-        city: json["city"] == null ? null : json["city"],
-        postalCode: json["postalCode"] == null ? null : json["postalCode"],
-        address: json["address"] == null ? null : json["address"],
-        gender: json["gender"] == null ? null : json["gender"],
-        dateOfBirth: json["dateOfBirth"],
-        businessName:
-            json["businessName"] == null ? null : json["businessName"],
-        businessRegNumber: json["businessRegNumber"] == null
-            ? null
-            : json["businessRegNumber"],
-        accountType: json["accountType"] == null ? null : json["accountType"],
-        userRole: json["userRole"] == null ? null : json["userRole"],
-      );
+  // factory Register.fromJson(Map<String, dynamic> json) => Register(
+  //       email: json["email"] == null ? null : json["email"],
+  //       firstName: json["firstName"] == null ? null : json["firstName"],
+  //       phoneNumber: json["phoneNumber"] == null ? null : json["phoneNumber"],
+  //       lastName: json["lastName"] == null ? null : json["lastName"],
+  //       password: json["password"] == null ? null : json["password"],
+  //       pin: json["pin"] == null ? null : json["pin"],
+  //       country: json["country"] == null ? null : json["country"],
+  //       state: json["state"] == null ? null : json["state"],
+  //       city: json["city"] == null ? null : json["city"],
+  //       postalCode: json["postalCode"] == null ? null : json["postalCode"],
+  //       address: json["address"] == null ? null : json["address"],
+  //       gender: json["gender"] == null ? null : json["gender"],
+  //       dateOfBirth: json["dateOfBirth"],
+  //       businessName:
+  //           json["businessName"] == null ? null : json["businessName"],
+  //       businessRegNumber: json["businessRegNumber"] == null
+  //           ? null
+  //           : json["businessRegNumber"],
+  //       accountType: json["accountType"] == null ? null : json["accountType"],
+  //       userRole: json["userRole"] == null ? null : json["userRole"],
+  //     );
 
   Map<String, dynamic> toJson() => {
         "email": email == null ? null : email,
@@ -116,7 +120,10 @@ class Register {
         "lastName": lastName == null ? null : lastName,
         "password": password == null ? null : password,
         "pin": pin == null ? null : pin,
-        "country": country == null ? null : country,
+        "countryOfResidence":
+            countryOfResidence == null ? null : countryOfResidence,
+        "countryOfNationality":
+            countryOfNationality == null ? null : countryOfNationality,
         "state": state == null ? null : state,
         "city": city == null ? null : city,
         "postalCode": postalCode == null ? null : postalCode,

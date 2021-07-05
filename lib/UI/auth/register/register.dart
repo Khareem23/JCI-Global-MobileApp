@@ -50,7 +50,7 @@ class RegisterScreen extends HookWidget {
               return [
                 MaterialPage(child: BasicInfoScreen()),
                 if (register.email != null) MaterialPage(child: AddressInfo()),
-                if (register.country != null)
+                if (register.countryOfResidence != null)
                   MaterialPage(child: SecurityInfoScreen()),
               ];
             },

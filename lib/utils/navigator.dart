@@ -126,7 +126,16 @@ extension MyNavigator on BuildContext {
         isDialog: isDialog,
         isTransparent: isTransparent,
       );
-
+  void navigateReplaceRoot(
+    Widget route, {
+    bool isDialog = false,
+    bool isTransparent = false,
+  }) =>
+      navigator.replaceRoot(
+        route,
+        isDialog: isDialog,
+        isTransparent: isTransparent,
+      );
   void navigate(
     Widget route, {
     bool isDialog = false,

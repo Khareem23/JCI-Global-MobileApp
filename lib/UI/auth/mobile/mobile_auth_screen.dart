@@ -22,12 +22,8 @@ class MobileAuthScreen extends HookWidget {
       provider: mobileAuthProvider,
       onChange: (context, state) {
         if (state is MobileAuthSent) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => VerifyOTPScreen(
-                        phone: phone.value.toString(),
-                      )));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => VerifyOTPScreen()));
         }
         if (state is MobileAuthError) {
           AppSnackBar.showErrorSnackBar(context, message: state.message);

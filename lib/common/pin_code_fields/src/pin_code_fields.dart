@@ -235,6 +235,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
         _pinTheme.shape != PinCodeFieldShape.underline) {
       borderRadius = _pinTheme.borderRadius;
     }
+    borderRadius = _pinTheme.borderRadius;
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(() {
       setState(() {});
