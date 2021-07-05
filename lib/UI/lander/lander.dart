@@ -1,16 +1,21 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:jci_remit_mobile/UI/auth/login/login.dart';
+import 'package:jci_remit_mobile/UI/auth/mobile/mobile_auth_screen.dart';
+import 'package:jci_remit_mobile/UI/auth/register/register.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/utils/extensions.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
 
 class LanderScreen extends StatelessWidget {
   const LanderScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var theme = context.themeData.textTheme;
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Container(
@@ -86,7 +91,9 @@ class LanderScreen extends StatelessWidget {
               CustomButton(
                   color: AppColors.white,
                   width: MediaQuery.of(context).size.width,
-                  onPressed: () {},
+                  onPressed: () {
+                    context.navigate(RegisterScreen());
+                  },
                   title: Text(
                     'Sign Up with Email',
                     style: TextStyle(
@@ -94,6 +101,42 @@ class LanderScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: Sizes.TEXT_SIZE_16),
                   )),
+              SizedBox(
+                height: 30,
+              ),
+              RichText(
+                text: TextSpan(
+                  text: "Can't login yet?",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: ' - ',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => {
+                              // context.navigate(MobileAuthScreen())
+                            },
+                      text: "Activate Your Account!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          decoration: TextDecoration.underline),
+                    )
+                  ],
+                ),
+              ),
+              // Text(
+              //             'Verify Account',
+              //             textAlign: TextAlign.left,
+              //             overflow: TextOverflow.clip,
+              //             style: theme.headline3!.copyWith(
+              //                 color: AppColors.primaryColor,
+              //                 fontSize: 13,
+              //                 fontWeight: FontWeight.bold),
+              //           ),
               SizedBox(
                 height: 30,
               ),

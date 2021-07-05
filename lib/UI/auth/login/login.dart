@@ -11,8 +11,11 @@ import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/controllers/auth_controller.dart';
+import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+
+import '../reset_password.dart';
 
 class LoginScreen extends HookWidget {
   @override
@@ -209,67 +212,65 @@ class LoginScreen extends HookWidget {
                         ],
                       ),
                     ),
+                    // SizedBox(
+                    //   height: 40,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Text(
+                    //       'Verify Account',
+                    //       textAlign: TextAlign.left,
+                    //       overflow: TextOverflow.clip,
+                    //       style: theme.headline3!.copyWith(
+                    //           color: AppColors.primaryColor,
+                    //           fontSize: 13,
+                    //           fontWeight: FontWeight.bold),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 40,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Verify Account',
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.clip,
-                          style: theme.headline3!.copyWith(
-                              color: AppColors.primaryColor,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Forgot Password?',
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.clip,
-                          style: theme.headline3!.copyWith(
-                              fontSize: 13, color: AppColors.primaryColor),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Don\'t have an account?',
-                        style: theme.headline3,
-                        children: [
-                          TextSpan(
-                            text: ' - ',
-                            style: theme.headline3,
-                          ),
-                          TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                RegisterScreen()))
-                                  },
-                            text: "Sign Up",
-                            style: context.textTheme.headline3!.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primaryColor),
-                          )
-                        ],
+                    InkWell(
+                      onTap: () => context.navigate(ResetPassword()),
+                      child: Text(
+                        'Forgot Password?',
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.clip,
+                        style: theme.headline3!.copyWith(
+                            fontSize: 15, color: AppColors.primaryColor),
                       ),
                     ),
+                    // SizedBox(
+                    //   height: 40,
+                    // ),
+                    // RichText(
+                    //   text: TextSpan(
+                    //     text: 'Don\'t have an account?',
+                    //     style: theme.headline3,
+                    //     children: [
+                    //       TextSpan(
+                    //         text: ' - ',
+                    //         style: theme.headline3,
+                    //       ),
+                    //       TextSpan(
+                    //         recognizer: TapGestureRecognizer()
+                    //           ..onTap = () => {
+                    //                 Navigator.push(
+                    //                     context,
+                    //                     MaterialPageRoute(
+                    //                         builder: (context) =>
+                    //                             RegisterScreen()))
+                    //               },
+                    //         text: "Sign Up",
+                    //         style: context.textTheme.headline3!.copyWith(
+                    //             fontWeight: FontWeight.w700,
+                    //             color: AppColors.primaryColor),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 80,
                     ),

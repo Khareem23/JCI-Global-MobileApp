@@ -16,15 +16,15 @@ class BasicInfoScreen extends HookWidget {
     final _formKey = useState(GlobalKey<FormState>());
     PhoneNumber number = PhoneNumber(isoCode: 'NG');
     var _genders = ['Male', 'Female'];
-    var _accountTypes = ['Individual-Account', 'Business-Account'];
-    final gender = useState('');
+    var _accountTypes = ['Individual Account', 'Business Account'];
+    final gender = useState('Male');
 
     final firstName = useState('');
     final lastName = useState('');
     final dob = useState<DateTime>(DateTime.now());
     final email = useState('');
     final phoneNumber = useState('');
-    final accountType = useState('');
+    final accountType = useState('Individual Account');
 
     final fnameFocusNode = useFocusNode();
     final lnameFocusNode = useFocusNode();
@@ -64,6 +64,7 @@ class BasicInfoScreen extends HookWidget {
                 fillColor: fnameBgColor.value,
                 textInputType: TextInputType.text,
                 hintText: 'First Name',
+                labelText: 'First Name',
                 validator: (String? value) {
                   if (value!.isEmpty) {
                     return 'First Name is required';
@@ -82,6 +83,7 @@ class BasicInfoScreen extends HookWidget {
                 onChanged: (v) => lastName.value = v,
                 textInputType: TextInputType.text,
                 hintText: 'Last Name',
+                labelText: 'Last Name',
                 validator: (String? value) {
                   if (value!.isEmpty) {
                     return 'Last Name is required';
@@ -96,6 +98,7 @@ class BasicInfoScreen extends HookWidget {
               ),
               DateTimeFormField(
                 decoration: const InputDecoration(
+                  labelText: 'Date of Birth',
                   hintStyle: TextStyle(color: Colors.black45),
                   errorStyle: TextStyle(color: Colors.redAccent),
                   hintText: 'Date of birth',
@@ -150,6 +153,7 @@ class BasicInfoScreen extends HookWidget {
                 onChanged: (v) => email.value = v,
                 textInputType: TextInputType.text,
                 hintText: 'Email Address',
+                labelText: 'Email Address',
                 validator: (String? value) {
                   if (value!.isEmpty) {
                     return 'Email Address is required';
@@ -186,6 +190,7 @@ class BasicInfoScreen extends HookWidget {
                 selectorTextStyle: TextStyle(color: Colors.black),
                 inputDecoration: InputDecoration(
                   hintText: 'Phone',
+                  labelText: 'Phone',
                   filled: true,
                   fillColor: phoneBgColor.value,
                   contentPadding:
@@ -210,10 +215,11 @@ class BasicInfoScreen extends HookWidget {
               ),
 
               DropdownButtonFormField<String>(
-                value: gender.value,
+                // value: gender.value,
                 hint: Text("Select Gender"),
                 decoration: InputDecoration(
                   hintText: 'Select Gender',
+                  labelText: 'Select Gender',
                   contentPadding:
                       const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   border: Borders.customOutlineInputBorder(),
@@ -243,10 +249,11 @@ class BasicInfoScreen extends HookWidget {
               ),
 
               DropdownButtonFormField<String>(
-                value: accountType.value,
+                // value: accountType.value,
                 hint: Text("Select Account Type"),
                 decoration: InputDecoration(
                   hintText: 'Select Account Type',
+                  labelText: 'Select Account Type',
                   contentPadding:
                       const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   border: Borders.customOutlineInputBorder(),

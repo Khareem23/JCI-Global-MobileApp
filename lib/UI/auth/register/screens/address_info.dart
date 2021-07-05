@@ -17,7 +17,8 @@ class AddressInfo extends HookWidget {
     final _formKey = useState(GlobalKey<FormState>());
     final countryModel = useProvider(countryProvider);
 
-    final country = useState('');
+    final countryOfResidence = useState('');
+    final countryOfNationality = useState('');
     final state = useState('');
     final city = useState('');
     final address = useState('');
@@ -61,11 +62,11 @@ class AddressInfo extends HookWidget {
                         height: 20,
                       ),
                       DropdownButtonFormField(
-                          value: country.value != null ? country.value : null,
-                          hint: Text("Select Country"),
+                          // value: country.value != null ? country.value : null,
+                          hint: Text("Select Country of Residence"),
                           isDense: true,
                           decoration: InputDecoration(
-                            hintText: 'Select Country',
+                            hintText: 'Select Country of Residence',
                             // filled: true,
                             // fillColor: phoneBgColor.value,
                             contentPadding: const EdgeInsets.only(
@@ -77,11 +78,10 @@ class AddressInfo extends HookWidget {
                             // focusColor: AppColors.accentColor.withOpacity(0.8),
                           ),
                           onChanged: (String? newValue) {
-                            country.value = newValue!;
-                            context.read(statesProvider(country.value));
+                            countryOfResidence.value = newValue!;
+                            context
+                                .read(statesProvider(countryOfResidence.value));
                             state.value = '';
-
-                            print(country.value);
                           },
                           validator: (String? value) {
                             if (value!.isEmpty) {
@@ -99,65 +99,60 @@ class AddressInfo extends HookWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      country.value != null
-                          ? Consumer(
-                              builder: (context, watch, child) {
-                                final states =
-                                    watch(statesProvider(country.value));
+                      Consumer(
+                        builder: (context, watch, child) {
+                          final states =
+                              watch(statesProvider(countryOfResidence.value));
 
-                                return states.when(
-                                    data: (data) {
-                                      // _states.value = List.from(_states.value)
-                                      //   ..addAll(data.data);
-                                      return DropdownButtonFormField(
-                                          value: state.value,
-                                          hint: Text("Select State"),
-                                          decoration: InputDecoration(
-                                            hintText: 'Select State',
-                                            // filled: true,
-                                            // fillColor: phoneBgColor.value,
-                                            contentPadding:
-                                                const EdgeInsets.only(
-                                                    left: 14.0,
-                                                    bottom: 8.0,
-                                                    top: 8.0),
-                                            border: Borders
-                                                .customOutlineInputBorder(),
-                                            enabledBorder: Borders
-                                                .customOutlineInputBorder(),
-                                            focusedBorder: Borders
-                                                .customOutlineInputBorder(
-                                                    color:
-                                                        AppColors.primaryColor),
-                                            // focusColor: AppColors.accentColor.withOpacity(0.8),
-                                          ),
-                                          onChanged: (String? newValue) {
-                                            state.value = newValue!;
+                          return states.when(
+                              data: (data) {
+                                // _states.value = List.from(_states.value)
+                                //   ..addAll(data.data);
+                                return DropdownButtonFormField(
+                                    //  value: state.value,
+                                    hint: Text("Select State"),
+                                    decoration: InputDecoration(
+                                      hintText: 'Select State',
+                                      // filled: true,
+                                      // fillColor: phoneBgColor.value,
+                                      contentPadding: const EdgeInsets.only(
+                                          left: 14.0, bottom: 8.0, top: 8.0),
+                                      border:
+                                          Borders.customOutlineInputBorder(),
+                                      enabledBorder:
+                                          Borders.customOutlineInputBorder(),
+                                      focusedBorder:
+                                          Borders.customOutlineInputBorder(
+                                              color: AppColors.primaryColor),
+                                      // focusColor: AppColors.accentColor.withOpacity(0.8),
+                                    ),
+                                    onChanged: (String? newValue) {
+                                      state.value = newValue!;
 
-                                            print(state.value);
-                                          },
-                                          validator: (String? value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please select a state';
-                                            }
-                                            return null;
-                                          },
-                                          items: data.data
-                                              .map<DropdownMenuItem<String>>(
-                                                  (value) => DropdownMenuItem(
-                                                        value: value,
-                                                        child: Text(value),
-                                                      ))
-                                              .toList());
+                                      print(state.value);
                                     },
-                                    loading: () => Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
-                                    error: (error, stack) =>
-                                        Text('Cannot load state'));
+                                    validator: (String? value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please select a state';
+                                      }
+                                      return null;
+                                    },
+                                    items: data.data
+                                        .map<DropdownMenuItem<String>>(
+                                            (value) => DropdownMenuItem(
+                                                  value: value,
+                                                  child: Text(value),
+                                                ))
+                                        .toList());
                               },
-                            )
-                          : SizedBox(),
+                              loading: () => Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                              error: (error, stack) =>
+                                  Text('Select a country'));
+                        },
+                      ),
+                      //  : SizedBox(),
                       // SizedBox(
                       //   height: ScreenUtil().setHeight(20),
                       // ),
@@ -179,6 +174,7 @@ class AddressInfo extends HookWidget {
                       SizedBox(
                         height: 20,
                       ),
+
                       CustomTextFormField(
                         focusNode: cityFocusNode,
                         fillColor: cityBgColor.value,
@@ -233,6 +229,44 @@ class AddressInfo extends HookWidget {
                           return null;
                         },
                       ),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+                      DropdownButtonFormField(
+                          // value: country.value != null ? country.value : null,
+                          hint: Text("Select Country of Nationality"),
+                          isDense: true,
+                          decoration: InputDecoration(
+                            hintText: 'Select Country of Nationality',
+                            // filled: true,
+                            // fillColor: phoneBgColor.value,
+                            contentPadding: const EdgeInsets.only(
+                                left: 14.0, bottom: 8.0, top: 8.0),
+                            border: Borders.customOutlineInputBorder(),
+                            enabledBorder: Borders.customOutlineInputBorder(),
+                            focusedBorder: Borders.customOutlineInputBorder(
+                                color: AppColors.primaryColor),
+                            // focusColor: AppColors.accentColor.withOpacity(0.8),
+                          ),
+                          onChanged: (String? newValue) {
+                            countryOfNationality.value = newValue!;
+                            // context.read(statesProvider(countryOfResidence.value));
+                            // state.value = '';
+                          },
+                          validator: (String? value) {
+                            if (value == null) {
+                              return 'Please select a country';
+                            }
+                            return null;
+                          },
+                          items: data.data
+                              .map<DropdownMenuItem<String>>(
+                                  (value) => DropdownMenuItem(
+                                        value: value.alpha3Code,
+                                        child: Text(value.country!),
+                                      ))
+                              .toList()),
                       SizedBox(
                         height: 20,
                       ),
@@ -245,7 +279,10 @@ class AddressInfo extends HookWidget {
                             _formKey.value.currentState!.save();
                             context.flow<Register>().update((register) =>
                                 register.copyWith(
-                                    country: country.value,
+                                    countryOfResidence:
+                                        countryOfResidence.value,
+                                    countryOfNationality:
+                                        countryOfNationality.value,
                                     state: state.value,
                                     city: city.value,
                                     address: address.value,
