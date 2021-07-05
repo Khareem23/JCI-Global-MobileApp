@@ -49,6 +49,19 @@ class AuthRepository {
     final res = await _userService.getUserProfile(userId);
     return res;
   }
+
+  bool hasToken() {
+    var value = StorageUtil.getString(StaticConfig.token);
+    if (value.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool?> removeToken() async {
+    return await StorageUtil.removeString(StaticConfig.token);
+  }
 }
 
 class Failure {

@@ -1,7 +1,7 @@
 part of values;
 
 class AppColors {
-  static const Color primaryColor = Colors.redAccent;
+  static const Color primaryColor = Color(0xFF790300);
   //Color(0xFFFF7165E3);
   static const Color accentColor = Color(0xFF262624);
 

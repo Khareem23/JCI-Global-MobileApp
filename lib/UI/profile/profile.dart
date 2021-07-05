@@ -7,6 +7,7 @@ import 'package:jci_remit_mobile/UI/dashboard/viewmodels/user_dash_vm.dart';
 import 'package:jci_remit_mobile/UI/profile/personal_data.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/empty_state_widget.dart';
+import 'package:jci_remit_mobile/controllers/auth_controller.dart';
 import 'package:jci_remit_mobile/utils/extensions.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
@@ -129,6 +130,9 @@ class ProfileScreen extends HookWidget {
                             )),
                         Spacer(),
                         ListTile(
+                            onTap: () => context
+                                .read(authControllerProvider.notifier)
+                                .auth(AuthenticationStatus.logout),
                             leading: Icon(AntDesign.poweroff,
                                 color: AppColors.primaryColor),
                             title: Text(

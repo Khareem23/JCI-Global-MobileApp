@@ -56,6 +56,20 @@ class MyApp extends StatelessWidget {
       title: 'JCI Remit Mobile',
       theme: context.themeData,
       home: AuthPageContainer(),
+      builder: (context, child) {
+        return ProviderListener<AuthState>(
+          onChange: (BuildContext context, state) {
+            if (state is AuthAuthenticated) {
+              context.navigateReplaceRoot(DashboardScreen());
+            }
+            if (state is AuthUnauthenticated) {
+              context.navigateReplaceRoot(SplashScreen());
+            }
+          },
+          provider: authControllerProvider,
+          child: child!,
+        );
+      },
       onGenerateRoute: (_) => SplashScreen.route(),
     );
   }
@@ -74,7 +88,7 @@ class AuthPageContainer extends HookWidget {
       } else if (state is AuthNotVerified) {
         return MobileAuthScreen();
       }
-      return LoginScreen();
+      return SplashScreen();
     });
   }
 }
