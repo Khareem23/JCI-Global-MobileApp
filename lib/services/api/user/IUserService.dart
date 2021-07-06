@@ -11,7 +11,7 @@ abstract class IUserService {
   Future<LoginResDto> login(username, password);
   Future<RegisterResDto> register(Register register);
   Future<String> sendOtp(String phone);
-  Future<String> validateOtp(String otp);
+  Future<bool> validateOtp(String otp, int userID);
   Future<UserDto> getUserProfile(String id);
   Future<Country> getCountries();
   Future<State> getStates(String countryCode);

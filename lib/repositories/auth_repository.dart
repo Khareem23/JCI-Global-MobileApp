@@ -35,8 +35,13 @@ class AuthRepository {
     return res;
   }
 
-  Future<String> validateOtp(String otp) async {
-    final res = await _userService.validateOtp(otp);
+  Future<bool> validateOtp(String otp) async {
+    final util = Util();
+    final token = StorageUtil.getString(StaticConfig.token);
+    final userMap = util.parseJwtPayLoad(token);
+    print(userMap);
+    final userId = userMap['nameid'];
+    final res = await _userService.validateOtp(otp, int.parse(userId));
     return res;
   }
 

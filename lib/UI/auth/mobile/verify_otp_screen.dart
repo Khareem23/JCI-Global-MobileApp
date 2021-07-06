@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/mobile/viewmodels/verify_otp_vm.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
@@ -55,10 +54,11 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
       provider: verifyOtpProvider,
       onChange: (context, state) {
         if (state is VerifyOtpSent) {
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
           context
               .read(authControllerProvider.notifier)
               .auth(AuthenticationStatus.authenticated);
+
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (context) => MobileAuthScreen()));
         }
@@ -68,7 +68,9 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: AppColors.primaryColor,
+        ),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -104,8 +106,9 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                 margin: const EdgeInsets.all(20.0),
                 padding: const EdgeInsets.all(20.0),
                 child: PinPut(
-                  fieldsCount: 5,
-                  onSubmit: (String pin) => {},
+                  fieldsCount: 6,
+                  onSubmit: (String pin) =>
+                      context.read(verifyOtpProvider.notifier).validateOtp(pin),
                   focusNode: _pinPutFocusNode,
                   controller: _pinPutController,
                   submittedFieldDecoration: _pinPutDecoration.copyWith(
@@ -197,16 +200,16 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                 return CustomButton(
                     width: MediaQuery.of(context).size.width,
                     onPressed: vm is VerifyOtpSending
-                        ? () {}
+                        ? null
                         : () {
                             if (!formKey.currentState!.validate()) {
                               return null;
                             }
                             formKey.currentState!.save();
-                            if (!isCompleted)
-                              return AppSnackBar.showErrorSnackBar(context,
-                                  message:
-                                      'Looks like you didn\'t enter your OTP correctly');
+                            // if (!isCompleted)
+                            //   return AppSnackBar.showErrorSnackBar(context,
+                            //       message:
+                            //           'Looks like you didn\'t enter your OTP correctly');
 
                             context
                                 .read(verifyOtpProvider.notifier)
@@ -222,9 +225,9 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                           fontSize: Sizes.TEXT_SIZE_16),
                     ));
               }),
-              SizedBox(
-                height: 20,
-              ),
+              // SizedBox(
+              //   height: 20,
+              // ),
               // RichText(
               //   textAlign: TextAlign.center,
               //   text: TextSpan(
