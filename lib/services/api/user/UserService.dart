@@ -105,20 +105,16 @@ class UserService extends IUserService {
   }
 
   @override
-  Future<String> validateOtp(String otp) async {
-    final url = 'auth/validateOtp';
+  Future<bool> validateOtp(String otp, int userID) async {
+    final url = 'Users/login/$userID/$otp';
     try {
       final response = await _dio.post(url,
-          data: {
-            "otp": otp,
-          },
           options: Options(headers: {"requireToken": true}));
-      SendOtpResDto result = SendOtpResDto.fromJson(response.data);
-      return result.message;
+      return true;
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {
-        Failure result = Failure.fromJson(e.response!.data);
-        throw result.message;
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
       } else {
         print(e.error);
         throw e.error;

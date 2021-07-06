@@ -17,7 +17,7 @@ class VerifyOtpController extends StateNotifier<VerifyOtpState> {
     state = VerifyOtpSending();
     try {
       final res = await authRepository.validateOtp(otp);
-      if (res != null) {
+      if (res) {
         state = VerifyOtpSent();
       }
     } catch (e) {
