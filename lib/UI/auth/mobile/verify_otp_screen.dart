@@ -1,12 +1,16 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/auth/login/login.dart';
 import 'package:jci_remit_mobile/UI/auth/mobile/viewmodels/verify_otp_vm.dart';
+import 'package:jci_remit_mobile/UI/lander/lander.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/pin_code_fields/pin_code_fields.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/controllers/auth_controller.dart';
+import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -225,6 +229,37 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                           fontSize: Sizes.TEXT_SIZE_16),
                     ));
               }),
+              SizedBox(
+                height: 20,
+              ),
+              RichText(
+                text: TextSpan(
+                  text: "Can't login?",
+                  style: TextStyle(
+                    color: AppColors.primaryColor,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: ' - ',
+                      style: TextStyle(color: AppColors.primaryColor),
+                    ),
+                    TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => {
+                              context.navigateReplaceRoot(LoginScreen())
+                              // context.navigate(MobileAuthScreen())
+                            },
+                      text: "Login with email instead",
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          decoration: TextDecoration.underline),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               // SizedBox(
               //   height: 20,
               // ),
