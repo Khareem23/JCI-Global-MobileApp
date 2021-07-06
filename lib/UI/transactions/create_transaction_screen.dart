@@ -28,8 +28,8 @@ class CreateTransactionScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var purposes = ['Family Support', 'School', 'Emergency'];
-    final sendingCountry = useState('USD');
-    final receivingCountry = useState('AUD');
+    final sendingCountry = useState('AUS');
+    final receivingCountry = useState('AUS');
     final defaultSendingCountryFlag =
         useState('https://restcountries.eu/data/aus.svg');
     final defaultReceivingCountryFlag =
