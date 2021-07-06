@@ -4,6 +4,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/transactions/all_transactions_screen.dart';
 import 'package:jci_remit_mobile/UI/transactions/create_transaction_screen.dart';
+import 'package:jci_remit_mobile/UI/transactions/transaction_detail.dart';
 import 'package:jci_remit_mobile/common/empty_state_widget.dart';
 import 'package:jci_remit_mobile/utils/extensions.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
@@ -157,14 +158,19 @@ class UserDashboard extends HookWidget {
                           itemBuilder: (BuildContext context, int index) {
                             if (transactions.length > 0) {
                               final trnx = transactions[index];
-                              return TransactionCard(
-                                amountToReceive: trnx.amountToReceive!,
-                                amountToSend: trnx.amountToSend!,
-                                name: trnx.fullName!,
-                                receivingCounty: trnx.receivingCountry!,
-                                sendingCountry: trnx.sendingCountry!,
-                                transactionDate: trnx.dateProcessed!,
-                                transactionType: trnx.transactionType!,
+                              return InkWell(
+                                onTap: () => context.navigate(TransactionDetail(
+                                  data: trnx,
+                                )),
+                                child: TransactionCard(
+                                  amountToReceive: trnx.amountToReceive!,
+                                  amountToSend: trnx.amountToSend!,
+                                  name: trnx.fullName!,
+                                  receivingCounty: trnx.receivingCountry!,
+                                  sendingCountry: trnx.sendingCountry!,
+                                  transactionDate: trnx.dateProcessed!,
+                                  transactionType: trnx.transactionType!,
+                                ),
                               );
                             }
                             return EmptyStateWidget(

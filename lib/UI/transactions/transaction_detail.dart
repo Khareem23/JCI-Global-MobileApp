@@ -119,7 +119,7 @@ class TransactionDetail extends StatelessWidget {
                 ),
                 TrnxDetailItem(
                   title: 'PayIn Method',
-                  item: data.payInMethod!,
+                  item: data.payInMethod.toString(),
                 ),
                 SizedBox(
                   height: 10,
