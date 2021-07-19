@@ -78,8 +78,7 @@ class LoginScreen extends HookWidget {
                     //   textAlign: TextAlign.center,
                     //   style: theme.headline3,
                     // ),
-                    SvgPicture.asset('assets/images/svg/login.svg',
-                        height: 150),
+                    Image.asset('assets/images/logo.png', height: 150),
                     SizedBox(
                       height: 50,
                     ),

@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/register/viewmodels/register_vm.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
+import 'package:jci_remit_mobile/common/network_error_widget.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
@@ -312,7 +313,10 @@ class AddressInfo extends HookWidget {
               loading: () => Center(
                     child: CircularProgressIndicator(),
                   ),
-              error: (error, stack) => Text('An error occured'))),
+              error: (error, stack) => Center(
+                  child: NetworkErrorWidget(
+                      refreshCallBack: () =>
+                          context.refresh(countryProvider))))),
     );
   }
 }
