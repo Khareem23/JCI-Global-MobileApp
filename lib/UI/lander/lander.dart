@@ -66,7 +66,7 @@ class LanderScreen extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black54),
+                      color: AppColors.primaryColor),
                 ),
                 Spacer(),
                 CustomButton(
@@ -86,7 +86,7 @@ class LanderScreen extends StatelessWidget {
                   height: 20,
                 ),
                 CustomButton(
-                    color: AppColors.grey,
+                    color: Colors.red.shade900,
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {
                       context.navigate(RegisterScreen());
@@ -94,7 +94,7 @@ class LanderScreen extends StatelessWidget {
                     title: Text(
                       'Sign Up with Email',
                       style: TextStyle(
-                          color: AppColors.primaryColor,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: Sizes.TEXT_SIZE_16),
                     )),
@@ -105,7 +105,7 @@ class LanderScreen extends StatelessWidget {
                   text: TextSpan(
                     text: "Can't login yet?",
                     style: TextStyle(
-                      color: AppColors.primaryColor,
+                      color: AppColors.black,
                     ),
                     children: [
                       TextSpan(

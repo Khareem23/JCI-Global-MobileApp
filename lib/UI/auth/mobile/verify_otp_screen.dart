@@ -72,225 +72,160 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: AppColors.primaryColor,
-        ),
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 40),
-          child: Column(
-            children: [
-              Text(
-                'Login with PIN',
-                style: theme.headline2,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: 'Enter your 6-digit pin',
-                  style: theme.headline3,
-                  children: [
-                    TextSpan(
-                      text: "",
-                      style: theme.headline3!
-                          .copyWith(fontWeight: FontWeight.w700),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 60,
-              ),
-              Container(
-                color: Colors.white,
-                margin: const EdgeInsets.all(20.0),
-                padding: const EdgeInsets.all(20.0),
-                child: PinPut(
-                  fieldsCount: 6,
-                  onSubmit: (String pin) =>
-                      context.read(verifyOtpProvider.notifier).validateOtp(pin),
-                  focusNode: _pinPutFocusNode,
-                  controller: _pinPutController,
-                  submittedFieldDecoration: _pinPutDecoration.copyWith(
-                    borderRadius: BorderRadius.circular(20.0),
+        // appBar: AppBar(
+        //   backgroundColor: AppColors.primaryColor,
+        // ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              padding:
+                  EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 60),
+              child: Column(
+                children: [
+                  Text(
+                    'Login with PIN',
+                    style: theme.headline2,
                   ),
-                  selectedFieldDecoration: _pinPutDecoration,
-                  followingFieldDecoration: _pinPutDecoration.copyWith(
-                    borderRadius: BorderRadius.circular(5.0),
-                    border: Border.all(
-                      color: Colors.deepPurpleAccent.withOpacity(.5),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: 'Enter your 6-digit pin',
+                      style: theme.headline3,
+                      children: [
+                        TextSpan(
+                          text: "",
+                          style: theme.headline3!
+                              .copyWith(fontWeight: FontWeight.w700),
+                        )
+                      ],
                     ),
                   ),
-                ),
-              ),
-              // Form(
-              //   key: formKey,
-              //   child: PinCodeTextField(
-              //     length: 6,
-              //     cursorColor: AppColors.accentColor,
-              //     textStyle: theme.headline2!,
-              //     //obsecureText: false,
-              //     //autoFocus: true,
-              //     keyboardType: TextInputType.number,
-              //     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              //     autoDismissKeyboard: true,
-              //     // animationType: AnimationType.scale,
-              //     pinTheme: PinTheme(
-              //         shape: PinCodeFieldShape.underline,
-              //         fieldHeight: 50,
-              //         fieldWidth: 48,
-              //         borderWidth: 3.0,
-              //         inactiveColor: AppColors.accentColor,
-              //         activeFillColor: Colors.white,
-              //         selectedFillColor: AppColors.primaryColor,
-              //         selectedColor: AppColors.primaryColor,
-              //         borderRadius: BorderRadius.circular(5)),
-              //     // animationDuration: Duration(milliseconds: 300),
-              //     // backgroundColor: Colors.blue.shade50,
-              //     errorAnimationController: errorController,
-              //     controller: textEditingController,
-              //     // enableActiveFill: true,
-              //     onCompleted: (v) {
-              //       print("Completed");
-              //       setState(() {
-              //         isCompleted = true;
-              //       });
-              //       // context.read(currentAuthProvider).authenticate2FA(
-              //       //     currentText, context, args.authType);
-              //     },
-              //     onChanged: (value) {
-              //       print(value);
-              //       setState(() {
-              //         if (value.length != 6) {
-              //           isCompleted = false;
-              //         }
-              //         currentText = value;
-              //       });
-              //     },
-              //     beforeTextPaste: (text) {
-              //       print("Allowing to paste $text");
-              //       return false;
-              //     },
-              //     appContext: context, onTap: () {},
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Text(
-              //   'Did not receive the code?',
-              //   textAlign: TextAlign.center,
-              //   style: theme.headline3,
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Text(
-              //   'Resend Code',
-              //   textAlign: TextAlign.center,
-              //   style: theme.headline3!.copyWith(
-              //       fontSize: 18,
-              //       decoration: TextDecoration.underline,
-              //       fontWeight: FontWeight.w600,
-              //       color: AppColors.primaryColor),
-              // ),
-              Spacer(),
-              Consumer(builder: (context, watch, _) {
-                final vm = watch(verifyOtpProvider);
-                return CustomButton(
-                    width: MediaQuery.of(context).size.width,
-                    onPressed: vm is VerifyOtpSending
-                        ? null
-                        : () {
-                            if (!formKey.currentState!.validate()) {
-                              return null;
-                            }
-                            formKey.currentState!.save();
-                            // if (!isCompleted)
-                            //   return AppSnackBar.showErrorSnackBar(context,
-                            //       message:
-                            //           'Looks like you didn\'t enter your OTP correctly');
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    // color: Colors.white,
+                    // margin: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20.0),
+                    child: PinPut(
+                      fieldsCount: 6,
+                      onSubmit: (String pin) => context
+                          .read(verifyOtpProvider.notifier)
+                          .validateOtp(pin),
+                      focusNode: _pinPutFocusNode,
+                      controller: _pinPutController,
+                      submittedFieldDecoration: _pinPutDecoration.copyWith(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      selectedFieldDecoration: _pinPutDecoration,
+                      followingFieldDecoration: _pinPutDecoration.copyWith(
+                        borderRadius: BorderRadius.circular(5.0),
+                        border: Border.all(
+                          color: Colors.deepPurpleAccent.withOpacity(.5),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Spacer(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Consumer(builder: (context, watch, _) {
+                    final vm = watch(verifyOtpProvider);
+                    return CustomButton(
+                        width: MediaQuery.of(context).size.width,
+                        onPressed: vm is VerifyOtpSending
+                            ? null
+                            : () {
+                                if (!formKey.currentState!.validate()) {
+                                  return null;
+                                }
+                                formKey.currentState!.save();
+                                // if (!isCompleted)
+                                //   return AppSnackBar.showErrorSnackBar(context,
+                                //       message:
+                                //           'Looks like you didn\'t enter your OTP correctly');
 
-                            context
-                                .read(verifyOtpProvider.notifier)
-                                .validateOtp(currentText);
-                          },
-                    title: Text(
-                      vm is VerifyOtpSending
-                          ? 'Verifying your Account...'
-                          : 'Proceed',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: Sizes.TEXT_SIZE_16),
-                    ));
-              }),
-              SizedBox(
-                height: 20,
-              ),
-              RichText(
-                text: TextSpan(
-                  text: "Can't login?",
-                  style: TextStyle(
-                    color: AppColors.primaryColor,
+                                context
+                                    .read(verifyOtpProvider.notifier)
+                                    .validateOtp(currentText);
+                              },
+                        title: Text(
+                          vm is VerifyOtpSending
+                              ? 'Verifying your Account...'
+                              : 'Proceed',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Sizes.TEXT_SIZE_16),
+                        ));
+                  }),
+                  SizedBox(
+                    height: 20,
                   ),
-                  children: [
-                    TextSpan(
-                      text: ' - ',
-                      style: TextStyle(color: AppColors.primaryColor),
-                    ),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => {
-                              context.navigateReplaceRoot(LoginScreen())
-                              // context.navigate(MobileAuthScreen())
-                            },
-                      text: "Login with email instead",
+                  RichText(
+                    text: TextSpan(
+                      text: "Can't login?",
                       style: TextStyle(
-                          color: AppColors.primaryColor,
-                          decoration: TextDecoration.underline),
-                    )
-                  ],
-                ),
+                        color: AppColors.primaryColor,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: ' - ',
+                          style: TextStyle(color: AppColors.primaryColor),
+                        ),
+                        TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => {
+                                  context.navigateReplaceRoot(LoginScreen())
+                                  // context.navigate(MobileAuthScreen())
+                                },
+                          text: "Login with email instead",
+                          style: TextStyle(
+                              color: AppColors.primaryColor,
+                              decoration: TextDecoration.underline),
+                        )
+                      ],
+                    ),
+                  ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // RichText(
+                  //   textAlign: TextAlign.center,
+                  //   text: TextSpan(
+                  //     text: 'By clicking start, you agree to our ',
+                  //     style: theme.headline3,
+                  //     children: [
+                  //       TextSpan(
+                  //         text: "Privacy Policy",
+                  //         style: theme.headline3!.copyWith(
+                  //             decoration: TextDecoration.underline,
+                  //             fontWeight: FontWeight.w700,
+                  //             color: AppColors.primaryColor),
+                  //       ),
+                  //       TextSpan(
+                  //         text: " and our ",
+                  //         style: theme.headline3,
+                  //       ),
+                  //       TextSpan(
+                  //         text: "Terms and conditions",
+                  //         style: theme.headline3!.copyWith(
+                  //             decoration: TextDecoration.underline,
+                  //             fontWeight: FontWeight.w700,
+                  //             color: AppColors.primaryColor),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // RichText(
-              //   textAlign: TextAlign.center,
-              //   text: TextSpan(
-              //     text: 'By clicking start, you agree to our ',
-              //     style: theme.headline3,
-              //     children: [
-              //       TextSpan(
-              //         text: "Privacy Policy",
-              //         style: theme.headline3!.copyWith(
-              //             decoration: TextDecoration.underline,
-              //             fontWeight: FontWeight.w700,
-              //             color: AppColors.primaryColor),
-              //       ),
-              //       TextSpan(
-              //         text: " and our ",
-              //         style: theme.headline3,
-              //       ),
-              //       TextSpan(
-              //         text: "Terms and conditions",
-              //         style: theme.headline3!.copyWith(
-              //             decoration: TextDecoration.underline,
-              //             fontWeight: FontWeight.w700,
-              //             color: AppColors.primaryColor),
-              //       )
-              //     ],
-              //   ),
-              // ),
-            ],
+            ),
           ),
         ),
       ),

@@ -26,193 +26,220 @@ class UserDashboard extends HookWidget {
       onRefresh: () => context.refresh(userTransactionsProvider),
       child: Scaffold(
         backgroundColor: AppColors.primaryColor.withOpacity(0.1),
-        body: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              height: MediaQuery.of(context).size.height * 0.3,
-              width: MediaQuery.of(context).size.width,
-              // decoration: BoxDecoration(color: AppColors.black),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        useProvider(userProvider).when(
-                          data: (user) {
-                            return Text('Welcome, ${user.firstName} 👍🏽',
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline4!
-                                    .copyWith(fontSize: 20));
-                          },
-                          error: (error, stackTrace) {
-                            return Text(
-                              'Welcome',
-                              textAlign: TextAlign.center,
-                              style: context.textTheme.headline4!
-                                  .copyWith(fontSize: 20),
-                            );
-                          },
-                          loading: () {
-                            return Text(
-                              '',
-                              textAlign: TextAlign.center,
-                              style: context.textTheme.headline3!
-                                  .copyWith(color: Colors.black, fontSize: 20),
-                            );
-                          },
-                        ),
-                        Icon(
-                          Feather.bell,
-                          color: Colors.black,
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: 'Send money across the world ',
-                                style: context.textTheme.headline3!.copyWith(
-                                  color: Colors.black,
-                                ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                padding:
+                    EdgeInsets.only(left: 40, right: 40, top: 20, bottom: 20),
+                height: MediaQuery.of(context).size.height * 0.3,
+                width: MediaQuery.of(context).size.width,
+                // decoration: BoxDecoration(color: AppColors.black),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Expanded(
+                    //   flex: 2,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       useProvider(userProvider).when(
+                    //         data: (user) {
+                    //           return Text('Welcome, ${user.firstName} 👍🏽',
+                    //               textAlign: TextAlign.center,
+                    //               style: context.textTheme.headline4!
+                    //                   .copyWith(fontSize: 20));
+                    //         },
+                    //         error: (error, stackTrace) {
+                    //           return Text(
+                    //             'Welcome',
+                    //             textAlign: TextAlign.center,
+                    //             style: context.textTheme.headline4!
+                    //                 .copyWith(fontSize: 20),
+                    //           );
+                    //         },
+                    //         loading: () {
+                    //           return Text(
+                    //             '',
+                    //             textAlign: TextAlign.center,
+                    //             style: context.textTheme.headline3!
+                    //                 .copyWith(color: Colors.black, fontSize: 20),
+                    //           );
+                    //         },
+                    //       ),
+                    //       Icon(
+                    //         Feather.bell,
+                    //         color: Colors.black,
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: AppColors.primaryColor,
+                            child: Icon(Feather.dollar_sign),
+                          ),
+                          Text(
+                            'JCI Global LTD',
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                color: AppColors.primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: 'Send money across the world ',
+                              style: context.textTheme.headline3!.copyWith(
+                                color: Colors.black,
                               ),
                             ),
-                            InkWell(
-                              onTap: () =>
-                                  context.navigate(CreateTransactionScreen()),
-                              child: Container(
-                                height: 40,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Center(
-                                  child: Text(
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          InkWell(
+                            onTap: () =>
+                                context.navigate(CreateTransactionScreen()),
+                            child: Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
                                     'Send Now',
                                     textAlign: TextAlign.center,
                                     style: context.textTheme.headline3!
                                         .copyWith(color: Colors.white),
                                   ),
-                                ),
+                                  // Spacer(),
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.white,
+                                  )
+                                ],
                               ),
-                            )
-                          ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    color: Color(0xFFF9F9FB),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(40))),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Recent Transactions',
+                          textAlign: TextAlign.start,
+                          style: context.textTheme.headline4,
+                        ),
+                        InkWell(
+                          onTap: () =>
+                              navigator.pushTo(AllTransactionsScreen()),
+                          child: Text(
+                            'show more',
+                            textAlign: TextAlign.start,
+                            style: context.textTheme.headline3!
+                                .copyWith(color: AppColors.primaryColor),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-                child: Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: Color(0xFFF9F9FB),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40))),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Recent Transactions',
-                        textAlign: TextAlign.start,
-                        style: context.textTheme.headline4,
-                      ),
-                      InkWell(
-                        onTap: () => navigator.pushTo(AllTransactionsScreen()),
-                        child: Text(
-                          'show more',
-                          textAlign: TextAlign.start,
-                          style: context.textTheme.headline3!
-                              .copyWith(color: AppColors.primaryColor),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: useProvider(userTransactionsProvider).when(
-                      data: (transactions) {
-                        return ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (transactions.length > 0) {
-                              final trnx = transactions[index];
-                              return InkWell(
-                                onTap: () => context.navigate(TransactionDetail(
-                                  data: trnx,
-                                )),
-                                child: TransactionCard(
-                                  amountToReceive: trnx.amountToReceive!,
-                                  amountToSend: trnx.amountToSend!,
-                                  name: trnx.fullName!,
-                                  receivingCounty: trnx.receivingCountry!,
-                                  sendingCountry: trnx.sendingCountry!,
-                                  transactionDate: trnx.dateProcessed!,
-                                  transactionType: trnx.transactionType!,
-                                ),
+                    Expanded(
+                      child: useProvider(userTransactionsProvider).when(
+                        data: (transactions) {
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: transactions.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (transactions.length > 0) {
+                                final trnx = transactions[index];
+                                return InkWell(
+                                  onTap: () =>
+                                      context.navigate(TransactionDetail(
+                                    data: trnx,
+                                  )),
+                                  child: TransactionCard(
+                                    amountToReceive: trnx.amountToReceive!,
+                                    amountToSend: trnx.amountToSend!,
+                                    name: trnx.fullName!,
+                                    receivingCounty: trnx.receivingCountry!,
+                                    sendingCountry: trnx.sendingCountry!,
+                                    transactionDate: trnx.dateProcessed!,
+                                    transactionType: trnx.transactionType!,
+                                  ),
+                                );
+                              } else
+                                return EmptyStateWidget(
+                                  errorTitle: '',
+                                  // TODO: Navigate to a create transaction screen
+                                  refreshCallBack: () => context
+                                      .navigate(CreateTransactionScreen()),
+                                  textOnButton: 'Send Money',
+                                );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return Divider(
+                                indent: 40,
                               );
-                            }
-                            return EmptyStateWidget(
-                              // TODO: Navigate to a create transaction screen
-                              refreshCallBack: () => {},
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return Divider(
-                              indent: 40,
-                            );
-                          },
-                        );
-                      },
-                      error: (Object? error, StackTrace? stackTrace) {
-                        return Center(
-                            child: NetworkErrorWidget(
-                          error:
-                              'Looks like we are unable to fetch your transactions at this time. Please try again',
-                          refreshCallBack: () =>
-                              context.refresh(userTransactionsProvider),
-                        ));
-                      },
-                      loading: () {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
+                            },
+                          );
+                        },
+                        error: (Object? error, StackTrace? stackTrace) {
+                          return Center(
+                              child: NetworkErrorWidget(
+                            error:
+                                'Looks like we are unable to fetch your transactions at this time. Please try again',
+                            refreshCallBack: () =>
+                                context.refresh(userTransactionsProvider),
+                          ));
+                        },
+                        loading: () {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      ),
                     ),
-                  ),
 
-                  // Divider(
-                  //   indent: 40,
-                  // ),
-                  // TransactionCard(),
-                  // Divider(),
-                  // TransactionCard(),
-                  // Divider()
-                ],
-              ),
-            ))
-          ],
+                    // Divider(
+                    //   indent: 40,
+                    // ),
+                    // TransactionCard(),
+                    // Divider(),
+                    // TransactionCard(),
+                    // Divider()
+                  ],
+                ),
+              ))
+            ],
+          ),
         ),
       ),
     );

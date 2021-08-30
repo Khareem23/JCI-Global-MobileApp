@@ -31,9 +31,9 @@ class TransactionSuccessScreen extends HookWidget {
             child: Center(
                 child: Padding(
               padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: ListView(
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 20,
@@ -46,10 +46,13 @@ class TransactionSuccessScreen extends HookWidget {
                   SizedBox(
                     height: 15,
                   ),
-                  Text(
-                    'Transaction Completed',
-                    style: context.textTheme.headline4!
-                        .copyWith(fontSize: 25, color: Colors.green),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Transaction Completed',
+                      style: context.textTheme.headline4!
+                          .copyWith(fontSize: 25, color: Colors.green),
+                    ),
                   ),
                   SizedBox(
                     height: 15,
@@ -67,9 +70,9 @@ class TransactionSuccessScreen extends HookWidget {
                     'How do you want to pay for this transfer?',
                     textAlign: TextAlign.center,
                     style: context.textTheme.headline4!.copyWith(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: Colors.green),
+                        color: Colors.black54),
                   ),
                   SizedBox(
                     height: 20,
@@ -85,18 +88,26 @@ class TransactionSuccessScreen extends HookWidget {
                           _selectedIndex.value = 1;
                         },
                         selected: _selectedIndex.value == 1,
-                        leading: Icon(Feather.corner_up_right),
+                        leading: Icon(Feather.corner_up_right,
+                            color: _selectedIndex.value == 1
+                                ? AppColors.primaryColor
+                                : AppColors.blackShade1),
                         selectedTileColor: AppColors.primaryColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         title: Text(
                           'Direct Debit (POLI)',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: _selectedIndex.value == 1
+                                  ? AppColors.primaryColor
+                                  : AppColors.blackShade1),
                         ),
-                        trailing: Icon(
-                          AntDesign.right,
-                        )),
+                        trailing: Icon(AntDesign.right,
+                            color: _selectedIndex.value == 1
+                                ? AppColors.primaryColor
+                                : AppColors.blackShade1)),
                   ),
                   SizedBox(
                     height: 10,
@@ -112,12 +123,24 @@ class TransactionSuccessScreen extends HookWidget {
                           _selectedIndex.value = 2;
                         },
                         selected: _selectedIndex.value == 2,
-                        leading: Icon(Feather.corner_right_up),
+                        leading: Icon(
+                          Feather.corner_right_up,
+                          color: _selectedIndex.value == 2
+                              ? AppColors.primaryColor
+                              : AppColors.blackShade1,
+                        ),
                         title: Text('Domestic Wire Transfer',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
+                                color: _selectedIndex.value == 2
+                                    ? AppColors.primaryColor
+                                    : AppColors.blackShade1,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400)),
                         trailing: Icon(
                           AntDesign.right,
+                          color: _selectedIndex.value == 2
+                              ? AppColors.primaryColor
+                              : AppColors.blackShade1,
                         )),
                   ),
                   SizedBox(
@@ -135,15 +158,29 @@ class TransactionSuccessScreen extends HookWidget {
                         },
                         selected: _selectedIndex.value == 3,
                         selectedTileColor: AppColors.primaryColor,
-                        leading: Icon(Feather.credit_card),
+                        leading: Icon(
+                          Feather.credit_card,
+                          color: _selectedIndex.value == 3
+                              ? AppColors.primaryColor
+                              : AppColors.blackShade1,
+                        ),
                         title: Text('Credit Card',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
+                                color: _selectedIndex.value == 3
+                                    ? AppColors.primaryColor
+                                    : AppColors.blackShade1,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400)),
                         trailing: Icon(
                           AntDesign.right,
+                          color: _selectedIndex.value == 3
+                              ? AppColors.primaryColor
+                              : AppColors.blackShade1,
                         )),
                   ),
-                  Spacer(),
+                  SizedBox(
+                    height: 20,
+                  ),
                   CustomButton(
                       color: Colors.black,
                       onPressed: () {
