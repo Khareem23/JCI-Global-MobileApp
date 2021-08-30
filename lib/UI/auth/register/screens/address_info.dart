@@ -132,12 +132,12 @@ class AddressInfo extends HookWidget {
 
                                       print(state.value);
                                     },
-                                    validator: (String? value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please select a state';
-                                      }
-                                      return null;
-                                    },
+                                    // validator: (String? value) {
+                                    //   if (value != null || value != '') {
+                                    //     return 'Please select a state';
+                                    //   }
+                                    //   return null;
+                                    // },
                                     items: data.data
                                         .map<DropdownMenuItem<String>>(
                                             (value) => DropdownMenuItem(
