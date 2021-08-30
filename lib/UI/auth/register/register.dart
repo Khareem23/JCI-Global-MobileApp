@@ -21,8 +21,8 @@ class RegisterScreen extends HookWidget {
       provider: registerNotifierProvider,
       onChange: (context, state) {
         if (state is RegisterSuccess) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => RegisterSuccessScreen()));
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginScreen()));
         }
         if (state is RegisterError) {
           AppSnackBar.showErrorSnackBar(context, message: state.message);
