@@ -246,4 +246,24 @@ class UserService extends IUserService {
       }
     }
   }
+
+  @override
+  Future<bool> resetPassword(String newPassword, String resetKey) async {
+    final url = 'Users/resetPassword/$newPassword/$resetKey';
+    try {
+      final response = await _dio.put(
+        url,
+      );
+      //final result = userTransactionFromJson(response.data);
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
 }

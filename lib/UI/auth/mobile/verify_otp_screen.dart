@@ -84,6 +84,10 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                   EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 60),
               child: Column(
                 children: [
+                  Image.asset('assets/images/logo.png', height: 100),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
                     'Login with PIN',
                     style: theme.headline2,
