@@ -78,6 +78,15 @@ class ReceiversScreen extends HookWidget {
                       color: Colors.white,
                       child: useProvider(getBeneficiariesProvider).when(
                           data: (List<BeneficiaryData> beneficiary) {
+                            if (beneficiary.isEmpty) {
+                              return EmptyStateWidget(
+                                refreshCallBack: () => {},
+                                textOnButton: 'Create',
+                                errorTitle: 'Oops!',
+                                error:
+                                    'You do not have a saved beneficiary. Do you want to create one?',
+                              );
+                            }
                             return ListView.separated(
                               shrinkWrap: true,
                               itemCount: beneficiary.length,

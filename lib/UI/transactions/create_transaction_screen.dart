@@ -459,6 +459,7 @@ class CreateTransactionScreen extends HookWidget {
                                           horizontal: 2, vertical: 8),
                                       icon: const Icon(
                                         Icons.arrow_drop_down,
+                                        size: 40,
                                         color: AppColors.primaryColor,
                                       ),
                                       onSelected: (Datum value) {
@@ -471,6 +472,7 @@ class CreateTransactionScreen extends HookWidget {
                                             .map<PopupMenuItem<Datum>>(
                                                 (Datum value) {
                                           return PopupMenuItem(
+                                              height: 50,
                                               child: Row(
                                                 children: [
                                                   SvgPicture.network(
@@ -627,6 +629,7 @@ class CreateTransactionScreen extends HookWidget {
                                         horizontal: 2, vertical: 8),
                                     icon: const Icon(
                                       Icons.arrow_drop_down,
+                                      size: 40,
                                       color: AppColors.primaryColor,
                                     ),
                                     onSelected: (Datum value) {
@@ -639,6 +642,7 @@ class CreateTransactionScreen extends HookWidget {
                                           .map<PopupMenuItem<Datum>>(
                                               (Datum value) {
                                         return PopupMenuItem(
+                                            height: 50,
                                             child: Row(
                                               children: [
                                                 SvgPicture.network(

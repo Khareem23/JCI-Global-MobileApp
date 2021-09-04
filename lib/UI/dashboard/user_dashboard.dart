@@ -147,8 +147,8 @@ class UserDashboard extends HookWidget {
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40))),
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,35 +173,34 @@ class UserDashboard extends HookWidget {
                     Expanded(
                       child: useProvider(userTransactionsProvider).when(
                         data: (transactions) {
+                          if (transactions.isEmpty) {
+                            return EmptyStateWidget(
+                              errorTitle: '',
+                              // TODO: Navigate to a create transaction screen
+                              refreshCallBack: () =>
+                                  context.navigate(CreateTransactionScreen()),
+                              textOnButton: 'Send Money',
+                            );
+                          }
                           return ListView.separated(
                             shrinkWrap: true,
                             itemCount: transactions.length,
                             itemBuilder: (BuildContext context, int index) {
-                              if (transactions.length > 0) {
-                                final trnx = transactions[index];
-                                return InkWell(
-                                  onTap: () =>
-                                      context.navigate(TransactionDetail(
-                                    data: trnx,
-                                  )),
-                                  child: TransactionCard(
-                                    amountToReceive: trnx.amountToReceive!,
-                                    amountToSend: trnx.amountToSend!,
-                                    name: trnx.fullName!,
-                                    receivingCounty: trnx.receivingCountry!,
-                                    sendingCountry: trnx.sendingCountry!,
-                                    transactionDate: trnx.dateProcessed!,
-                                    transactionType: trnx.transactionType!,
-                                  ),
-                                );
-                              } else
-                                return EmptyStateWidget(
-                                  errorTitle: '',
-                                  // TODO: Navigate to a create transaction screen
-                                  refreshCallBack: () => context
-                                      .navigate(CreateTransactionScreen()),
-                                  textOnButton: 'Send Money',
-                                );
+                              final trnx = transactions[index];
+                              return InkWell(
+                                onTap: () => context.navigate(TransactionDetail(
+                                  data: trnx,
+                                )),
+                                child: TransactionCard(
+                                  amountToReceive: trnx.amountToReceive!,
+                                  amountToSend: trnx.amountToSend!,
+                                  name: trnx.fullName!,
+                                  receivingCounty: trnx.receivingCountry!,
+                                  sendingCountry: trnx.sendingCountry!,
+                                  transactionDate: trnx.dateProcessed!,
+                                  transactionType: trnx.transactionType!,
+                                ),
+                              );
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
