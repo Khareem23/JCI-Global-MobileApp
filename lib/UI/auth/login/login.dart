@@ -1,12 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_state.dart';
 import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_vm.dart';
-import 'package:jci_remit_mobile/UI/auth/register/register.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
@@ -20,7 +17,6 @@ import '../reset_password.dart';
 class LoginScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final _tabController = useTabController(initialLength: 2);
     final ispwdShown = useState(false);
     final _formKey = useState(GlobalKey<FormState>());
     final username = useState('');
@@ -60,51 +56,16 @@ class LoginScreen extends HookWidget {
             body: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.all(20),
-                height: MediaQuery.of(context).size.height,
+                // height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Text(
-                    //   "Let's sign you in",
-                    //   style: context.textTheme.headline2!
-                    //       .copyWith(color: AppColors.primaryColor),
-                    // ),
-                    // // SizedBox(
-                    // //   height: ScreenUtil().setHeight(30),
-                    // // ),
-                    // Text(
-                    //   'Send money to accross the world',
-                    //   textAlign: TextAlign.center,
-                    //   style: theme.headline3,
-                    // ),
-                    SvgPicture.asset('assets/images/svg/login.svg',
-                        height: 150),
+                    Image.asset('assets/images/logo.png', height: 150),
                     SizedBox(
                       height: 50,
                     ),
-                    // Align(
-                    //   alignment: Alignment.centerLeft,
-                    //   child: TabBar(
-                    //     controller: _tabController,
-                    //     isScrollable: true,
-                    //     indicatorSize: TabBarIndicatorSize.label,
-                    //     indicatorColor: AppColors.primaryColor,
-                    //     tabs: [
-                    //       Tab(
-                    //         // icon: Icon(Icons.email, color: AppColors.colorShade2),
-                    //         child: Text(
-                    //           'Email',
-                    //           style: TextStyle(color: Colors.black87),
-                    //         ),
-                    //       ),
-                    //       Tab(
-                    //         child: Text('Pin',
-                    //             style: TextStyle(color: Colors.black87)),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
+
                     Form(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       key: _formKey.value,

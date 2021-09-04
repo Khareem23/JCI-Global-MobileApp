@@ -54,4 +54,9 @@ class UserRepository {
     final res = await _userService.updateUser(xCustomer);
     return res;
   }
+
+  Future<bool> resetPassword(String resetKey, newPassword) async {
+    final res = await _userService.resetPassword(newPassword, resetKey);
+    return res;
+  }
 }

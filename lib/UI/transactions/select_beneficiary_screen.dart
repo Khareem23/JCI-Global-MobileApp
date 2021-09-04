@@ -156,7 +156,7 @@ class SelectBeneficiaryScreen extends HookWidget {
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                           color: _selectedIndex.value == index
-                                              ? Colors.green
+                                              ? AppColors.primaryColor
                                               : Colors.grey)),
                                   child: ListTile(
                                       onTap: () {

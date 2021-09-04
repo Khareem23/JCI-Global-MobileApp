@@ -28,6 +28,18 @@ final receivingCurrency =
   return await trnxRepo.getAllReceivingCurrency();
 });
 
+final downloadProvider =
+    StreamProvider.autoDispose.family<String, num>((ref, transactionId) async* {
+  final trnxRepo = TransactionRepository(ref);
+  // Close the connection when the stream is destroyed
+  // ref.onDispose(() => trnxRepo.downloadFile(transactionId));
+
+  // Parse the value received and emit a Message instance
+  await for (final value in trnxRepo.downloadFile(transactionId)) {
+    yield value.toString();
+  }
+});
+
 final sendingCurrency = FutureProvider.autoDispose<CurrencyModel>((ref) async {
   final trnxRepo = TransactionRepository(ref);
   return await trnxRepo.getAllSendingCurrency();
@@ -55,6 +67,7 @@ final getRatesParam = FutureProvider.autoDispose
   return await trnxRepo.getRates(rateParam.sendCurrency,
       rateParam.receiveCurrency, rateParam.amountToSend);
 });
+
 // final createTrnxProvider = FutureProvider.autoDispose
 //     .family<TransactionData, CreateTransactionModel>((ref, transaction) async {
 //   final trnxRepo = TransactionRepository(ref);

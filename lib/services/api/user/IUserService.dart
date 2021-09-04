@@ -16,4 +16,5 @@ abstract class IUserService {
   Future<Country> getCountries();
   Future<State> getStates(String countryCode);
   Future<UserTransaction> getUserTransaction();
+  Future<bool> resetPassword(String newPassword, String resetKey);
 }

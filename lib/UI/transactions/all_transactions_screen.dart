@@ -10,6 +10,8 @@ import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
+import 'create_transaction_screen.dart';
+
 class AllTransactionsScreen extends HookWidget {
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey =
       GlobalKey<LiquidPullToRefreshState>();
@@ -61,8 +63,11 @@ class AllTransactionsScreen extends HookWidget {
                           );
                         }
                         return EmptyStateWidget(
+                          errorTitle: '',
                           // TODO: Navigate to a create transaction screen
-                          refreshCallBack: () => {},
+                          refreshCallBack: () =>
+                              context.navigate(CreateTransactionScreen()),
+                          textOnButton: 'Send Money',
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {

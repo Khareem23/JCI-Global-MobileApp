@@ -73,9 +73,9 @@ class ManualPaymentReportScreen extends HookWidget {
                 transactionData.id.toString(),
                 textAlign: TextAlign.center,
                 style: context.textTheme.headline3!.copyWith(
-                    color: Colors.blueGrey,
+                    color: AppColors.blackShade1,
                     fontWeight: FontWeight.w600,
-                    fontSize: 20),
+                    fontSize: 18),
               ),
               SizedBox(
                 height: 20,
@@ -95,9 +95,9 @@ class ManualPaymentReportScreen extends HookWidget {
                 'Domestic Wire Transfer',
                 textAlign: TextAlign.center,
                 style: context.textTheme.headline3!.copyWith(
-                    color: Colors.blueGrey,
+                    color: AppColors.blackShade1,
                     fontWeight: FontWeight.w600,
-                    fontSize: 20),
+                    fontSize: 18),
               ),
               SizedBox(
                 height: 40,
@@ -125,7 +125,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         textAlign: TextAlign.center,
                         style: context.textTheme.headline3!.copyWith(
                             fontWeight: FontWeight.w800,
-                            color: AppColors.colorShade1,
+                            color: AppColors.primaryColor,
                             fontSize: 14),
                       ),
                       SizedBox(
@@ -135,7 +135,9 @@ class ManualPaymentReportScreen extends HookWidget {
                         "Account holder's name",
                         textAlign: TextAlign.center,
                         style: context.textTheme.headline3!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 16),
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                       ),
                     ],
                   ),
@@ -150,7 +152,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         textAlign: TextAlign.center,
                         style: context.textTheme.headline3!.copyWith(
                             fontWeight: FontWeight.w800,
-                            color: AppColors.colorShade1,
+                            color: AppColors.primaryColor,
                             fontSize: 14),
                       ),
                       SizedBox(
@@ -160,7 +162,9 @@ class ManualPaymentReportScreen extends HookWidget {
                         "Germany",
                         textAlign: TextAlign.center,
                         style: context.textTheme.headline3!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 16),
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                       ),
                     ],
                   )
@@ -180,7 +184,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         textAlign: TextAlign.center,
                         style: context.textTheme.headline3!.copyWith(
                             fontWeight: FontWeight.w800,
-                            color: AppColors.colorShade1,
+                            color: AppColors.primaryColor,
                             fontSize: 14),
                       ),
                       SizedBox(
@@ -190,7 +194,9 @@ class ManualPaymentReportScreen extends HookWidget {
                         "0125434328",
                         textAlign: TextAlign.center,
                         style: context.textTheme.headline3!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 16),
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                       ),
                     ],
                   ),
@@ -202,7 +208,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         textAlign: TextAlign.center,
                         style: context.textTheme.headline3!.copyWith(
                             fontWeight: FontWeight.w800,
-                            color: AppColors.colorShade1,
+                            color: AppColors.primaryColor,
                             fontSize: 14),
                       ),
                       SizedBox(
@@ -212,7 +218,9 @@ class ManualPaymentReportScreen extends HookWidget {
                         formatDate(DateTime.now(), [dd, ' ', M, ' ', yyyy]),
                         textAlign: TextAlign.center,
                         style: context.textTheme.headline3!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 16),
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                       ),
                     ],
                   )
@@ -221,18 +229,44 @@ class ManualPaymentReportScreen extends HookWidget {
               SizedBox(
                 height: 40,
               ),
-              InkWell(
-                onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text('Download Payment Info'),
-                    SizedBox(
-                      width: 10,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () =>
+                        context.read(downloadProvider(transactionData.id!)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text('Download Payment Info'),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Feather.download)
+                      ],
                     ),
-                    Icon(Feather.download)
-                  ],
-                ),
+                  ),
+                  Consumer(
+                    builder: (BuildContext context,
+                        T Function<T>(ProviderBase<Object?, T>) watch,
+                        Widget? child) {
+                      AsyncValue<String> message =
+                          watch(downloadProvider(transactionData.id!));
+                      return message.when(
+                        loading: () => SizedBox(
+                            width: 10,
+                            height: 10,
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 2,
+                            )),
+                        error: (err, stack) => Text('Error: $err'),
+                        data: (message) {
+                          return Text(message);
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
               SizedBox(
                 height: 20,
@@ -277,14 +311,14 @@ class ManualPaymentReportScreen extends HookWidget {
                   final vm = watch(addPaymentProvider);
                   return CustomButton(
                       color: Colors.black,
-                      onPressed: () {
+                      onPressed: vm is Loading ? null : () {
                         context
                             .read(addPaymentProvider.notifier)
                             .addPayment(transactionData.id!, 3);
                       },
                       width: context.screenWidth(1),
                       title: Text(
-                        'COMPLETE',
+                       vm is Loading ? 'LOADING' : 'COMPLETE',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

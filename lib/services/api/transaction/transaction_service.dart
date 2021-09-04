@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'dart:async';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/bank_account_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/beneficiary_model.dart';
@@ -11,6 +12,7 @@ import 'package:jci_remit_mobile/services/api/transaction/model/currency_model.d
 import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
 import 'package:jci_remit_mobile/utils/globals.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
@@ -185,7 +187,7 @@ class TransactionService {
       final response = await _dio.patch(url,
           options: Options(headers: {"requireToken": true}));
       //final result = rateModelFromJson(response.data);
-      return response.data['data'];
+      return 'Success';
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {
         // Failure result = Failure.fromJson(e.response!.data);
@@ -261,6 +263,33 @@ class TransactionService {
         print(e.error);
         throw e.error;
       }
+    }
+  }
+
+  Stream<String> downloadFile(num transactionId) async* {
+    StreamController<String> streamController = StreamController();
+    final url = 'Transactions/downloadTransactionReceipt/$transactionId';
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      var path = '${directory.path}/invoice.pdf';
+      await _dio
+          .download(url, path,
+              options: Options(headers: {"requireToken": true}),
+              onReceiveProgress: (received, total) {
+            if (total != -1) {
+              streamController.add(total.toString());
+              print((received / total * 100).toStringAsFixed(0) + "%");
+            }
+          })
+          .then((Response response) =>
+              {streamController.add("Download Finished")})
+          .catchError((ex) {
+            streamController.add(ex.toString());
+          })
+          .whenComplete(() => streamController.close());
+      yield* streamController.stream;
+    } catch (e) {
+      throw e.toString();
     }
   }
 }

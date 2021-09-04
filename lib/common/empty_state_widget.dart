@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 
 class EmptyStateWidget extends StatelessWidget {
-  final Function refreshCallBack;
+  final Function()? refreshCallBack;
   final String error, textOnButton, errorTitle;
 
   const EmptyStateWidget(
@@ -25,18 +25,18 @@ class EmptyStateWidget extends StatelessWidget {
             'assets/icons/network_error.png',
             scale: 1.6,
           ),
-          SizedBox(height: 50),
+          SizedBox(height: 20),
           Text(errorTitle, style: headline3),
           Container(
             margin: EdgeInsets.symmetric(vertical: 14.0),
             child:
                 Text(error, textAlign: TextAlign.center, style: descTextStyle),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 10),
           Container(
             child: RaisedButton(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              onPressed: () => refreshCallBack,
+              onPressed: refreshCallBack,
               color: AppColors.accentColor,
               child: Text(textOnButton, style: btnAccentStyle),
             ),

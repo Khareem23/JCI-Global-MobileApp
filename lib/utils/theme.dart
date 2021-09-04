@@ -18,7 +18,7 @@ extension CustomThemeContext on BuildContext {
       );
 
   TextTheme get textTheme =>
-      GoogleFonts.dmSansTextTheme(Theme.of(this).textTheme.copyWith(
+      GoogleFonts.montserratTextTheme(Theme.of(this).textTheme.copyWith(
           headline2: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 30,

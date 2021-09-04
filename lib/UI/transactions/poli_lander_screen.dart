@@ -63,8 +63,7 @@ class _PoliLanderScreenState extends State<PoliLanderScreen> {
                 Text(
                   "Click below to make a direct deposit payment by login to your POLI account to make payment and complete the transaction",
                   textAlign: TextAlign.center,
-                  style: context.textTheme.headline4!
-                      .copyWith(fontSize: 20, color: Colors.blueGrey),
+                  style: TextStyle(fontSize: 16, color: Colors.blueGrey),
                 ),
                 SizedBox(height: 30),
                 Consumer(
