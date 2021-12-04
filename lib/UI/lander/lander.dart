@@ -20,127 +20,64 @@ class LanderScreen extends StatelessWidget {
       backgroundColor: AppColors.primaryColor,
       body: SingleChildScrollView(
         child: Container(
-          height: context.screenHeight(1),
-          width: context.screenWidth(1),
-          color: Colors.white,
-          padding: EdgeInsets.all(20),
-          // height: context.screenHeight(1),
-          // width: context.screenWidth(1),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            height: context.screenHeight(1),
+            width: context.screenWidth(1),
+            color: Colors.white,
+            child: Stack(
               children: [
-                SizedBox(
-                  height: 80,
-                ),
-                Image.asset(
-                  'assets/images/logo.png',
-                  height: 200,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Cross-border',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                Text(
-                  'Money Transfer',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Made Easy. ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryColor),
-                ),
-                Spacer(),
-                CustomButton(
-                    color: AppColors.primaryColor,
-                    width: MediaQuery.of(context).size.width,
-                    onPressed: () {
-                      context.navigate(LoginScreen());
-                    },
-                    title: Text(
-                      'Sign In with Email',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: Sizes.TEXT_SIZE_16),
-                    )),
-                SizedBox(
-                  height: 20,
-                ),
-                CustomButton(
-                    color: Colors.red.shade900,
-                    width: MediaQuery.of(context).size.width,
-                    onPressed: () {
-                      context.navigate(RegisterScreen());
-                    },
-                    title: Text(
-                      'Sign Up with Email',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: Sizes.TEXT_SIZE_16),
-                    )),
-                SizedBox(
-                  height: 10,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: "Can't login yet?",
-                    style: TextStyle(
-                      color: AppColors.black,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: ' - ',
-                        style: TextStyle(color: AppColors.primaryColor),
-                      ),
-                      TextSpan(
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => {
-                                // context.navigate(MobileAuthScreen())
-                              },
-                        text: "Activate Your Account!",
-                        style: TextStyle(
-                            color: AppColors.primaryColor,
-                            decoration: TextDecoration.underline),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                // Text(
-                //             'Verify Account',
-                //             textAlign: TextAlign.left,
-                //             overflow: TextOverflow.clip,
-                //             style: theme.headline3!.copyWith(
-                //                 color: AppColors.primaryColor,
-                //                 fontSize: 13,
-                //                 fontWeight: FontWeight.bold),
-                //           ),
+                Container(
+                    height: context.screenHeight(1),
+                    width: context.screenWidth(1),
+                    child: Image.asset("assets/images/welcome.png",
+                        fit: BoxFit.cover)),
+                Container(
+                    height: context.screenHeight(1),
+                    width: context.screenWidth(1),
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: RaisedButton(
+                              elevation: 0.0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40)),
+                              child: Text("REGISTER",
+                                  style: TextStyle(
+                                    fontSize: Sizes.TEXT_SIZE_16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.red.shade900,
+                                  )),
+                              color: Colors.white,
+                              onPressed: () =>
+                                  context.navigate(RegisterScreen())),
+                        ),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: RaisedButton(
+                              elevation: 0.0,
+                              shape: RoundedRectangleBorder(
+                                  side:
+                                      BorderSide(width: 2, color: Colors.white),
+                                  borderRadius: BorderRadius.circular(40)),
+                              child: Text("LOG IN",
+                                  style: TextStyle(
+                                    fontSize: Sizes.TEXT_SIZE_16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  )),
+                              color: Colors.transparent,
+                              onPressed: () => context.navigate(LoginScreen())),
+                        ),
+                        SizedBox(height: 30),
+                      ],
+                    ))
               ],
-            ),
-          ),
-        ),
+            )),
       ),
     );
   }

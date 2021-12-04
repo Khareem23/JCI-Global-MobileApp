@@ -14,10 +14,21 @@ class TransactionDetail extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text(
-          'Transaction Summary',
-          style: TextStyle(color: Colors.black),
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            color: AppColors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
+        title: Text('Transaction Summary',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: Sizes.TEXT_SIZE_18,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: AppColors.red,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

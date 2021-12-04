@@ -31,7 +31,7 @@ class UserDashboard extends HookWidget {
             children: [
               Container(
                 padding:
-                    EdgeInsets.only(left: 40, right: 40, top: 20, bottom: 20),
+                    EdgeInsets.only(left: 40, right: 40, top: 0, bottom: 20),
                 height: MediaQuery.of(context).size.height * 0.3,
                 width: MediaQuery.of(context).size.width,
                 // decoration: BoxDecoration(color: AppColors.black),
@@ -80,30 +80,32 @@ class UserDashboard extends HookWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          CircleAvatar(
-                            backgroundColor: AppColors.primaryColor,
-                            child: Icon(Feather.dollar_sign),
-                          ),
-                          Text(
-                            'JCI Global LTD',
-                            textAlign: TextAlign.center,
-                            style: context.textTheme.headline3!.copyWith(
-                                color: AppColors.primaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              text: 'Send money across the world ',
-                              style: context.textTheme.headline3!.copyWith(
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          // CircleAvatar(
+                          //   backgroundColor: AppColors.primaryColor,
+                          //   child: Icon(Feather.dollar_sign),
+                          // ),
+                          // Text(
+                          //   'JCI Global LTD',
+                          //   textAlign: TextAlign.center,
+                          //   style: context.textTheme.headline3!.copyWith(
+                          //       color: AppColors.primaryColor,
+                          //       fontSize: 20,
+                          //       fontWeight: FontWeight.bold),
+                          // ),
+                          // RichText(
+                          //   textAlign: TextAlign.center,
+                          //   text: TextSpan(
+                          //     text: 'Send money across the world ',
+                          //     style: context.textTheme.headline3!.copyWith(
+                          //       color: Colors.black,
+                          //     ),
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          Image.asset("assets/images/logo.png",
+                              width: MediaQuery.of(context).size.width * 0.43),
                           InkWell(
                             onTap: () =>
                                 context.navigate(CreateTransactionScreen()),
@@ -147,95 +149,100 @@ class UserDashboard extends HookWidget {
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40))),
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                child: ListView(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Recent Transactions',
-                          textAlign: TextAlign.start,
-                          style: context.textTheme.headline4,
-                        ),
-                        InkWell(
-                          onTap: () =>
-                              navigator.pushTo(AllTransactionsScreen()),
-                          child: Text(
-                            'show more',
+                child: Stack(alignment: AlignmentDirectional.center, children: [
+                  Image.asset('assets/images/watermark.png',
+                      width: MediaQuery.of(context).size.width * 0.8),
+                  ListView(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Recent Transactions',
                             textAlign: TextAlign.start,
-                            style: context.textTheme.headline3!
-                                .copyWith(color: AppColors.primaryColor),
+                            style: context.textTheme.headline4,
                           ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: useProvider(userTransactionsProvider).when(
-                        data: (transactions) {
-                          if (transactions.isEmpty) {
-                            return EmptyStateWidget(
-                              errorTitle: '',
-                              // TODO: Navigate to a create transaction screen
-                              refreshCallBack: () =>
-                                  context.navigate(CreateTransactionScreen()),
-                              textOnButton: 'Send Money',
-                            );
-                          }
-                          return ListView.separated(
-                            shrinkWrap: true,
-                            itemCount: transactions.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final trnx = transactions[index];
-                              return InkWell(
-                                onTap: () => context.navigate(TransactionDetail(
-                                  data: trnx,
-                                )),
-                                child: TransactionCard(
-                                  amountToReceive: trnx.amountToReceive!,
-                                  amountToSend: trnx.amountToSend!,
-                                  name: trnx.fullName!,
-                                  receivingCounty: trnx.receivingCountry!,
-                                  sendingCountry: trnx.sendingCountry!,
-                                  transactionDate: trnx.dateProcessed!,
-                                  transactionType: trnx.transactionType!,
-                                ),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return Divider(
-                                indent: 40,
-                              );
-                            },
-                          );
-                        },
-                        error: (Object? error, StackTrace? stackTrace) {
-                          return Center(
-                              child: NetworkErrorWidget(
-                            error:
-                                'Looks like we are unable to fetch your transactions at this time. Please try again',
-                            refreshCallBack: () =>
-                                context.refresh(userTransactionsProvider),
-                          ));
-                        },
-                        loading: () {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
+                          InkWell(
+                            onTap: () =>
+                                navigator.pushTo(AllTransactionsScreen()),
+                            child: Text(
+                              'show more',
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!
+                                  .copyWith(color: AppColors.primaryColor),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                      Expanded(
+                        child: useProvider(userTransactionsProvider).when(
+                          data: (transactions) {
+                            if (transactions.isEmpty) {
+                              return EmptyStateWidget(
+                                errorTitle: '',
+                                // TODO: Navigate to a create transaction screen
+                                refreshCallBack: () =>
+                                    context.navigate(CreateTransactionScreen()),
+                                textOnButton: 'Send Money',
+                              );
+                            }
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: transactions.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final trnx = transactions[index];
+                                return InkWell(
+                                  onTap: () =>
+                                      context.navigate(TransactionDetail(
+                                    data: trnx,
+                                  )),
+                                  child: TransactionCard(
+                                    amountToReceive: trnx.amountToReceive!,
+                                    amountToSend: trnx.amountToSend!,
+                                    name: trnx.fullName!,
+                                    receivingCounty: trnx.receivingCountry!,
+                                    sendingCountry: trnx.sendingCountry!,
+                                    transactionDate: trnx.dateProcessed!,
+                                    transactionType: trnx.transactionType!,
+                                  ),
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return Divider(
+                                  indent: 40,
+                                );
+                              },
+                            );
+                          },
+                          error: (Object? error, StackTrace? stackTrace) {
+                            return Center(
+                                child: NetworkErrorWidget(
+                              error:
+                                  'Looks like we are unable to fetch your transactions at this time. Please try again',
+                              refreshCallBack: () =>
+                                  context.refresh(userTransactionsProvider),
+                            ));
+                          },
+                          loading: () {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        ),
+                      ),
 
-                    // Divider(
-                    //   indent: 40,
-                    // ),
-                    // TransactionCard(),
-                    // Divider(),
-                    // TransactionCard(),
-                    // Divider()
-                  ],
-                ),
+                      // Divider(
+                      //   indent: 40,
+                      // ),
+                      // TransactionCard(),
+                      // Divider(),
+                      // TransactionCard(),
+                      // Divider()
+                    ],
+                  )
+                ]),
               ))
             ],
           ),

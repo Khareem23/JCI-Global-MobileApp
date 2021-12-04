@@ -49,22 +49,22 @@ class TransactionSuccessScreen extends HookWidget {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Transaction Completed',
+                      'Proceed with payment',
                       style: context.textTheme.headline4!
-                          .copyWith(fontSize: 25, color: Colors.green),
+                          .copyWith(fontSize: 20, color: Colors.black),
                     ),
                   ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
+                  // Text(
+                  //   'Now you can make payment for the transaction.',
+                  //   textAlign: TextAlign.center,
+                  //   style: context.textTheme.headline5!
+                  //       .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
+                  // ),
                   SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Now you can make payment for the transaction.',
-                    textAlign: TextAlign.center,
-                    style: context.textTheme.headline5!
-                        .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
-                  ),
-                  SizedBox(
-                    height: 60,
+                    height: 40,
                   ),
                   Text(
                     'How do you want to pay for this transfer?',
@@ -179,7 +179,16 @@ class TransactionSuccessScreen extends HookWidget {
                         )),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 50,
+                  ),
+                  Text(
+                    'Transaction will be processed upon fund confirmation only. Please use your own account to pay for the transaction. We do not accept any payments made through third party accounts via net banking. Using third party account would result in your transaction being cancelled/rejected in order to protect you from fraud. We do not accept cash/cheque deposit into our account. Pls make use of the listed payment options above.',
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.headline5!
+                        .copyWith(fontWeight: FontWeight.w300, fontSize: 8),
+                  ),
+                  SizedBox(
+                    height: 40,
                   ),
                   CustomButton(
                       color: Colors.black,

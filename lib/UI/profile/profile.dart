@@ -27,23 +27,26 @@ class ProfileScreen extends HookWidget {
       body: RefreshIndicator(
         onRefresh: () => context.refresh(userProvider),
         child: SafeArea(
+          top: false,
           child: Column(
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.all(20),
+                color: AppColors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 30),
                     Text(
                       'My Profile',
-                      style:
-                          context.textTheme.headline4!.copyWith(fontSize: 30),
+                      style: context.textTheme.headline4!
+                          .copyWith(fontSize: 30, color: AppColors.white),
                     ),
                     Text(
-                      'See all your details in one place',
-                      style:
-                          context.textTheme.headline5!.copyWith(fontSize: 12),
+                      'View and edit profile',
+                      style: context.textTheme.headline5!
+                          .copyWith(fontSize: 12, color: AppColors.white),
                     ),
                   ],
                 ),
@@ -55,96 +58,105 @@ class ProfileScreen extends HookWidget {
                 color: Colors.white,
                 child: useProvider(userProvider).when(
                   data: (user) {
-                    return Column(
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                                radius: 40,
-                                child: SvgPicture.asset(
-                                  'assets/images/svg/male_avatar.svg',
-                                )),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${user.firstName} ${user.lastName}',
-                                  style: context.textTheme.headline4!
-                                      .copyWith(fontSize: 16),
-                                ),
-                                Row(
-                                  children: [
-                                    user.isAmlCompliancePassed!
-                                        ? Icon(Icons.check_circle,
-                                            color: Colors.green)
-                                        : Icon(
-                                            Icons.error,
-                                            color: Colors.red,
+                    return Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Image.asset('assets/images/watermark.png',
+                              width: MediaQuery.of(context).size.width * 0.8),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                      radius: 40,
+                                      child: SvgPicture.asset(
+                                        'assets/images/svg/male_avatar.svg',
+                                      )),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${user.firstName} ${user.lastName}',
+                                        style: context.textTheme.headline4!
+                                            .copyWith(fontSize: 16),
+                                      ),
+                                      Row(
+                                        children: [
+                                          user.isAmlCompliancePassed!
+                                              ? Icon(Icons.check_circle,
+                                                  color: Colors.green)
+                                              : Icon(
+                                                  Icons.error,
+                                                  color: Colors.red,
+                                                ),
+                                          Text(
+                                            user.isAmlCompliancePassed!
+                                                ? 'Verified'
+                                                : 'Not Verified',
+                                            style: context.textTheme.headline5!
+                                                .copyWith(
+                                                    fontSize: 16,
+                                                    color:
+                                                        AppColors.primaryColor),
                                           ),
-                                    Text(
-                                      user.isAmlCompliancePassed!
-                                          ? 'Verified'
-                                          : 'Not Verified',
-                                      style: context.textTheme.headline5!
-                                          .copyWith(
-                                              fontSize: 16,
-                                              color: AppColors.primaryColor),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        ListTile(
-                            onTap: () => context
-                                .navigate(PersonalDataScreen(userDto: user)),
-                            leading: Icon(AntDesign.user),
-                            title: Text(
-                              'Personal Data',
-                              style: context.textTheme.headline5!
-                                  .copyWith(fontSize: 16),
-                            ),
-                            trailing: Icon(
-                              AntDesign.right,
-                            )),
-                        Divider(),
-                        ListTile(
-                            onTap: () => context.navigate(
-                                BankAccountScreen(user.customerBankAccount),
-                                isDialog: true),
-                            leading: Icon(AntDesign.bank),
-                            title: Text(
-                              'Bank Account',
-                              style: context.textTheme.headline5!
-                                  .copyWith(fontSize: 16),
-                            ),
-                            trailing: Icon(
-                              AntDesign.right,
-                            )),
-                        Spacer(),
-                        ListTile(
-                            onTap: () => context
-                                .read(authControllerProvider.notifier)
-                                .auth(AuthenticationStatus.logout),
-                            leading: Icon(AntDesign.poweroff,
-                                color: AppColors.primaryColor),
-                            title: Text(
-                              'Logout',
-                              style: context.textTheme.headline5!
-                                  .copyWith(fontSize: 16),
-                            ),
-                            trailing: Icon(
-                              AntDesign.right,
-                            )),
-                      ],
-                    );
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              ListTile(
+                                  onTap: () => context.navigate(
+                                      PersonalDataScreen(userDto: user)),
+                                  leading: Icon(AntDesign.user),
+                                  title: Text(
+                                    'Personal Data',
+                                    style: context.textTheme.headline5!
+                                        .copyWith(fontSize: 16),
+                                  ),
+                                  trailing: Icon(
+                                    AntDesign.right,
+                                  )),
+                              Divider(),
+                              ListTile(
+                                  onTap: () => context.navigate(
+                                      BankAccountScreen(
+                                          user.customerBankAccount),
+                                      isDialog: true),
+                                  leading: Icon(AntDesign.bank),
+                                  title: Text(
+                                    'Bank Account',
+                                    style: context.textTheme.headline5!
+                                        .copyWith(fontSize: 16),
+                                  ),
+                                  trailing: Icon(
+                                    AntDesign.right,
+                                  )),
+                              Spacer(),
+                              ListTile(
+                                  onTap: () => context
+                                      .read(authControllerProvider.notifier)
+                                      .auth(AuthenticationStatus.logout),
+                                  leading: Icon(AntDesign.poweroff,
+                                      color: AppColors.primaryColor),
+                                  title: Text(
+                                    'Logout',
+                                    style: context.textTheme.headline5!
+                                        .copyWith(fontSize: 16),
+                                  ),
+                                  trailing: Icon(
+                                    AntDesign.right,
+                                  )),
+                            ],
+                          )
+                        ]);
                   },
                   error: (error, stackTrace) {
                     return Text(

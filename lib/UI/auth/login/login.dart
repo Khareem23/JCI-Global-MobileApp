@@ -4,6 +4,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_state.dart';
 import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_vm.dart';
+import 'package:jci_remit_mobile/UI/auth/register/register.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
@@ -50,194 +51,224 @@ class LoginScreen extends HookWidget {
         },
         child: Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: Colors.transparent,
             ),
             backgroundColor: Colors.white,
-            body: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                // height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset('assets/images/logo.png', height: 150),
-                    SizedBox(
-                      height: 50,
-                    ),
+            body: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Image.asset('assets/images/watermark.png',
+                    width: MediaQuery.of(context).size.width * 0.8),
+                SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    // height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset('assets/images/logo.png', height: 150),
+                        SizedBox(
+                          height: 50,
+                        ),
 
-                    Form(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      key: _formKey.value,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 20,
+                        Form(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          key: _formKey.value,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Sign in with your email',
+                                    textAlign: TextAlign.center,
+                                    style: theme.headline3,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextFormField(
+                                focusNode: emailFocusNode,
+                                fillColor: emailBgColor.value,
+                                onChanged: (value) => {username.value = value},
+                                textInputType: TextInputType.text,
+                                hintText: 'Email Address',
+                                validator: (String? value) {
+                                  if (value!.isEmpty) {
+                                    return 'Email is required';
+                                  }
+
+                                  // if (!RegExp(
+                                  //         "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                                  //     .hasMatch(value)) {
+                                  //   return 'Enter a valid email address';
+                                  // }
+
+                                  // validator has to return something :)
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextFormField(
+                                focusNode: pwdFocusNode,
+                                fillColor: pwdBgColor.value,
+                                onChanged: (value) => {password.value = value},
+                                textInputType: TextInputType.text,
+                                obscured: !ispwdShown.value,
+                                hintText: 'Password',
+                                hasSuffixIcon: true,
+                                suffixIcon: IconButton(
+                                    icon: Icon(ispwdShown.value
+                                        ? Feather.eye_off
+                                        : Feather.eye),
+                                    onPressed: () =>
+                                        ispwdShown.value = !ispwdShown.value),
+                                validator: (String? value) {
+                                  if (value!.isEmpty) {
+                                    return 'Password is required';
+                                  }
+
+                                  // validator has to return something :)
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 50,
+                              ),
+                              Consumer(builder: (context, watch, _) {
+                                final vm = watch(loginNotifierProvider);
+                                return CustomButton(
+                                    color: AppColors.primaryColor,
+                                    width: MediaQuery.of(context).size.width,
+                                    onPressed: vm is LoginLoading
+                                        ? null
+                                        : () {
+                                            if (!_formKey.value.currentState!
+                                                .validate()) {
+                                              return null;
+                                            }
+                                            _formKey.value.currentState!.save();
+                                            context
+                                                .read(loginNotifierProvider
+                                                    .notifier)
+                                                .login(
+                                                    context,
+                                                    username.value.trim(),
+                                                    password.value);
+                                          },
+                                    title: Text(
+                                      vm is LoginLoading
+                                          ? 'Signing you in...'
+                                          : 'Sign in',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: Sizes.TEXT_SIZE_16),
+                                    ));
+                              }),
+                            ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                        ),
+                        // SizedBox(
+                        //   height: 40,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       'Verify Account',
+                        //       textAlign: TextAlign.left,
+                        //       overflow: TextOverflow.clip,
+                        //       style: theme.headline3!.copyWith(
+                        //           color: AppColors.primaryColor,
+                        //           fontSize: 13,
+                        //           fontWeight: FontWeight.bold),
+                        //     ),
+                        //   ],
+                        // ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        InkWell(
+                          onTap: () => context.navigate(ResetPassword()),
+                          child: Text(
+                            'Forgot Password?',
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.clip,
+                            style: theme.headline3!.copyWith(
+                                fontSize: 15, color: AppColors.primaryColor),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        InkWell(
+                          onTap: () => context.navigate(RegisterScreen()),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Sign in with your email',
-                                textAlign: TextAlign.center,
-                                style: theme.headline3,
+                                'Don\'t have an account? ',
+                                style: theme.headline3!.copyWith(
+                                    fontSize: 15, color: AppColors.black),
+                              ),
+                              Text(
+                                'Register',
+                                style: theme.headline3!.copyWith(
+                                    fontSize: 15,
+                                    color: AppColors.primaryColor),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CustomTextFormField(
-                            focusNode: emailFocusNode,
-                            fillColor: emailBgColor.value,
-                            onChanged: (value) => {username.value = value},
-                            textInputType: TextInputType.text,
-                            hintText: 'Email Address',
-                            validator: (String? value) {
-                              if (value!.isEmpty) {
-                                return 'Email is required';
-                              }
-
-                              // if (!RegExp(
-                              //         "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                              //     .hasMatch(value)) {
-                              //   return 'Enter a valid email address';
-                              // }
-
-                              // validator has to return something :)
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CustomTextFormField(
-                            focusNode: pwdFocusNode,
-                            fillColor: pwdBgColor.value,
-                            onChanged: (value) => {password.value = value},
-                            textInputType: TextInputType.text,
-                            obscured: !ispwdShown.value,
-                            hintText: 'Password',
-                            hasSuffixIcon: true,
-                            suffixIcon: IconButton(
-                                icon: Icon(ispwdShown.value
-                                    ? Feather.eye_off
-                                    : Feather.eye),
-                                onPressed: () =>
-                                    ispwdShown.value = !ispwdShown.value),
-                            validator: (String? value) {
-                              if (value!.isEmpty) {
-                                return 'Password is required';
-                              }
-
-                              // validator has to return something :)
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Consumer(builder: (context, watch, _) {
-                            final vm = watch(loginNotifierProvider);
-                            return CustomButton(
-                                color: AppColors.primaryColor,
-                                width: MediaQuery.of(context).size.width,
-                                onPressed: vm is LoginLoading
-                                    ? null
-                                    : () {
-                                        if (!_formKey.value.currentState!
-                                            .validate()) {
-                                          return null;
-                                        }
-                                        _formKey.value.currentState!.save();
-                                        context
-                                            .read(
-                                                loginNotifierProvider.notifier)
-                                            .login(
-                                                context,
-                                                username.value.trim(),
-                                                password.value);
-                                      },
-                                title: Text(
-                                  vm is LoginLoading
-                                      ? 'Signing you in...'
-                                      : 'Sign in',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Sizes.TEXT_SIZE_16),
-                                ));
-                          }),
-                        ],
-                      ),
+                        ),
+                        // SizedBox(
+                        //   height: 40,
+                        // ),
+                        // RichText(
+                        //   text: TextSpan(
+                        //     text: 'Don\'t have an account?',
+                        //     style: theme.headline3,
+                        //     children: [
+                        //       TextSpan(
+                        //         text: ' - ',
+                        //         style: theme.headline3,
+                        //       ),
+                        //       TextSpan(
+                        //         recognizer: TapGestureRecognizer()
+                        //           ..onTap = () => {
+                        //                 Navigator.push(
+                        //                     context,
+                        //                     MaterialPageRoute(
+                        //                         builder: (context) =>
+                        //                             RegisterScreen()))
+                        //               },
+                        //         text: "Sign Up",
+                        //         style: context.textTheme.headline3!.copyWith(
+                        //             fontWeight: FontWeight.w700,
+                        //             color: AppColors.primaryColor),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+                        SizedBox(
+                          height: 80,
+                        ),
+                      ],
                     ),
-                    // SizedBox(
-                    //   height: 40,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text(
-                    //       'Verify Account',
-                    //       textAlign: TextAlign.left,
-                    //       overflow: TextOverflow.clip,
-                    //       style: theme.headline3!.copyWith(
-                    //           color: AppColors.primaryColor,
-                    //           fontSize: 13,
-                    //           fontWeight: FontWeight.bold),
-                    //     ),
-                    //   ],
-                    // ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    InkWell(
-                      onTap: () => context.navigate(ResetPassword()),
-                      child: Text(
-                        'Forgot Password?',
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.clip,
-                        style: theme.headline3!.copyWith(
-                            fontSize: 15, color: AppColors.primaryColor),
-                      ),
-                    ),
-                    // SizedBox(
-                    //   height: 40,
-                    // ),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     text: 'Don\'t have an account?',
-                    //     style: theme.headline3,
-                    //     children: [
-                    //       TextSpan(
-                    //         text: ' - ',
-                    //         style: theme.headline3,
-                    //       ),
-                    //       TextSpan(
-                    //         recognizer: TapGestureRecognizer()
-                    //           ..onTap = () => {
-                    //                 Navigator.push(
-                    //                     context,
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             RegisterScreen()))
-                    //               },
-                    //         text: "Sign Up",
-                    //         style: context.textTheme.headline3!.copyWith(
-                    //             fontWeight: FontWeight.w700,
-                    //             color: AppColors.primaryColor),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                    SizedBox(
-                      height: 80,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             )));
   }
 

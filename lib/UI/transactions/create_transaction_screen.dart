@@ -27,7 +27,12 @@ class CreateTransactionScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var purposes = ['Family Support', 'School', 'Emergency'];
+    var purposes = [
+      'Education Fees',
+      'Family Support',
+      'Goods & Services',
+      'Medical Fees'
+    ];
     final sendingCountry = useState('AUS');
     final receivingCountry = useState('AUS');
     final defaultSendingCountryFlag =
@@ -58,10 +63,21 @@ class CreateTransactionScreen extends HookWidget {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: Text(
-            'Send Money',
-            style: TextStyle(color: Colors.black87),
+          leading: IconButton(
+            icon: Icon(
+              Icons.chevron_left,
+              color: AppColors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
+          title: Text('Send Money',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: Sizes.TEXT_SIZE_18,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: AppColors.red,
         ),
         bottomNavigationBar: Consumer(
           builder: (BuildContext context, watch, child) {
@@ -268,7 +284,7 @@ class CreateTransactionScreen extends HookWidget {
                                                       height: 5,
                                                     ),
                                                     Text(
-                                                      'Discount',
+                                                      'Referral Discount Code',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: context
@@ -289,7 +305,8 @@ class CreateTransactionScreen extends HookWidget {
                                                         controller: bonus,
                                                         decoration:
                                                             InputDecoration(
-                                                          hintText: 'Discount',
+                                                          hintText:
+                                                              'Discount Code',
                                                           contentPadding:
                                                               EdgeInsets
                                                                   .fromLTRB(

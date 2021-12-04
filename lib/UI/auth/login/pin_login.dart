@@ -18,85 +18,88 @@ class PinLoginScreen extends HookWidget {
     final _formKey = useState(GlobalKey<FormState>());
     var theme = context.themeData.textTheme;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-      ),
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: _formKey.value,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/images/svg/login.svg', height: 150),
-              SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+        ),
+        backgroundColor: Colors.white,
+        body: Stack(alignment: AlignmentDirectional.center, children: [
+          Image.asset('assets/images/watermark.png',
+              width: MediaQuery.of(context).size.width * 0.8),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _formKey.value,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Sign in with your email',
-                    textAlign: TextAlign.center,
-                    style: theme.headline3,
+                  SvgPicture.asset('assets/images/svg/login.svg', height: 150),
+                  SizedBox(
+                    height: 50,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Sign in with your email',
+                        textAlign: TextAlign.center,
+                        style: theme.headline3,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFormField(
+                    // onChanged: (value) => {username.value = value},
+                    textInputType: TextInputType.text,
+                    hintText: 'Email Address',
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return 'Email is required';
+                      }
+
+                      // if (!RegExp(
+                      //         "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                      //     .hasMatch(value)) {
+                      //   return 'Enter a valid email address';
+                      // }
+
+                      // validator has to return something :)
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Consumer(builder: (context, watch, _) {
+                    final vm = watch(loginNotifierProvider);
+                    return CustomButton(
+                        color: AppColors.primaryColor,
+                        width: MediaQuery.of(context).size.width,
+                        onPressed: vm is LoginLoading
+                            ? null
+                            : () {
+                                if (!_formKey.value.currentState!.validate()) {
+                                  return null;
+                                }
+                                _formKey.value.currentState!.save();
+                                // context.read(loginNotifierProvider.notifier).login(
+                                //     context, username.value.trim(), password.value);
+                              },
+                        title: Text(
+                          vm is LoginLoading ? 'Signing you in...' : 'Sign in',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Sizes.TEXT_SIZE_16),
+                        ));
+                  }),
                 ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              CustomTextFormField(
-                // onChanged: (value) => {username.value = value},
-                textInputType: TextInputType.text,
-                hintText: 'Email Address',
-                validator: (String? value) {
-                  if (value!.isEmpty) {
-                    return 'Email is required';
-                  }
-
-                  // if (!RegExp(
-                  //         "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                  //     .hasMatch(value)) {
-                  //   return 'Enter a valid email address';
-                  // }
-
-                  // validator has to return something :)
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Consumer(builder: (context, watch, _) {
-                final vm = watch(loginNotifierProvider);
-                return CustomButton(
-                    color: AppColors.primaryColor,
-                    width: MediaQuery.of(context).size.width,
-                    onPressed: vm is LoginLoading
-                        ? null
-                        : () {
-                            if (!_formKey.value.currentState!.validate()) {
-                              return null;
-                            }
-                            _formKey.value.currentState!.save();
-                            // context.read(loginNotifierProvider.notifier).login(
-                            //     context, username.value.trim(), password.value);
-                          },
-                    title: Text(
-                      vm is LoginLoading ? 'Signing you in...' : 'Sign in',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: Sizes.TEXT_SIZE_16),
-                    ));
-              }),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          )
+        ]));
   }
 }

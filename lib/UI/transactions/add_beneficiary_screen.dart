@@ -56,384 +56,397 @@ class AddBeneficiaryScreen extends HookWidget {
           leading: IconButton(
             icon: Icon(
               Icons.chevron_left,
+              color: AppColors.white,
             ),
             onPressed: () {
               Navigator.pop(context, 'BeneficiaryCreatedFailed');
             },
           ),
-          title: Text(
-            'Add Beneficiary',
-            style: TextStyle(color: Colors.black87),
-          ),
+          title: Text('Add Beneficiary',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: Sizes.TEXT_SIZE_18,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: AppColors.red,
         ),
-        body: useProvider(getCountriesProvider).when(
-            data: (List<CountryData> value) {
-          return SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              //  height: context.screenHeight(1),
-              child: Form(
-                key: _formKey.value,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Enter Beneficiary Details',
-                      textAlign: TextAlign.center,
-                      style: context.textTheme.headline3!
-                          .copyWith(color: Colors.grey, fontSize: 14),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: country,
-                      readOnly: true,
-                      validator: (val) {
-                        if (val == null || val.isEmpty) return 'Select Country';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Country',
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        suffixIcon: PopupMenuButton<CountryData>(
-                          icon: const Icon(Icons.arrow_drop_down),
-                          onSelected: (CountryData value) {
-                            country.text = value.country!;
-                            countryCode.value = value.alpha3Code!;
-                            accCurrency.value = value.currency!;
-                            print(value.alpha3Code);
-                          },
-                          itemBuilder: (BuildContext context) {
-                            return value.map<PopupMenuItem<CountryData>>(
-                                (CountryData value) {
-                              return new PopupMenuItem(
-                                  child: new Text(value.country!),
-                                  value: value);
-                            }).toList();
-                          },
-                        ),
+        body: Stack(alignment: AlignmentDirectional.center, children: [
+          Image.asset('assets/images/watermark.png',
+              width: MediaQuery.of(context).size.width * 0.8),
+          useProvider(getCountriesProvider).when(
+              data: (List<CountryData> value) {
+            return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                //  height: context.screenHeight(1),
+                child: Form(
+                  key: _formKey.value,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: bankName,
-                      validator: (val) {
-                        if (val == null || val.isEmpty)
-                          return 'Select Bank Name';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Bank Name',
-                        hintText: '',
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
+                      Text(
+                        'Enter Beneficiary Details',
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.headline3!
+                            .copyWith(color: Colors.grey, fontSize: 14),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: accNumber,
-                      validator: (val) {
-                        if (val == null || val.isEmpty)
-                          return 'Enter Account Number';
-                        return null;
-                      },
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: InputDecoration(
-                        labelText: 'Account Number / IBAN',
-                        hintText: '',
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
+                      SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: accName,
-                      validator: (val) {
-                        if (val == null || val.isEmpty)
-                          return 'Enter Account Name';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Account Name',
-                        hintText: '',
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: bankState,
-                      validator: (val) {
-                        if (val == null || val.isEmpty)
-                          return 'Enter Bank State';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Bank State',
-                        hintText: '',
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: bankCity,
-                      validator: (val) {
-                        if (val == null || val.isEmpty)
-                          return 'Enter Bank City';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Bank City',
-                        hintText: '',
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: postalCode,
-                      validator: (val) {
-                        if (val == null || val.isEmpty)
-                          return 'Enter Postal Code';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Postal Code',
-                        hintText: '',
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: bankAddress,
-                      validator: (val) {
-                        if (val == null || val.isEmpty)
-                          return 'Enter Bank Address';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Bank Address',
-                        hintText: '',
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: swiftCode,
-                            validator: (val) {
-                              if (val == null || val.isEmpty)
-                                return 'Enter Swift Code';
-                              return null;
+                      TextFormField(
+                        controller: country,
+                        readOnly: true,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Select Country';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Country',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          suffixIcon: PopupMenuButton<CountryData>(
+                            icon: const Icon(Icons.arrow_drop_down),
+                            onSelected: (CountryData value) {
+                              country.text = value.country!;
+                              countryCode.value = value.alpha3Code!;
+                              accCurrency.value = value.currency!;
+                              print(value.alpha3Code);
                             },
-                            decoration: InputDecoration(
-                              labelText: 'Swift',
-                              hintText: '',
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
+                            itemBuilder: (BuildContext context) {
+                              return value.map<PopupMenuItem<CountryData>>(
+                                  (CountryData value) {
+                                return new PopupMenuItem(
+                                    child:
+                                        new Text(value.country!.toUpperCase()),
+                                    value: value);
+                              }).toList();
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankName,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Select Bank Name';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Bank Name',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: accNumber,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Account Number';
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: InputDecoration(
+                          labelText: 'Account Number / IBAN',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: accName,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Account Name';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Account Name',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankState,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Bank State';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Bank State',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankCity,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Bank City';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Bank City',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: postalCode,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Postal Code';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Postal Code',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankAddress,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Bank Address';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Bank Address',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: swiftCode,
+                              validator: (val) {
+                                if (val == null || val.isEmpty)
+                                  return 'Enter Swift Code';
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Swift',
+                                hintText: '',
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            controller: bsb,
-                            decoration: InputDecoration(
-                              labelText: 'BSB(Optional)',
-                              hintText: '',
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              controller: bsb,
+                              decoration: InputDecoration(
+                                labelText: 'BSB(Optional)',
+                                hintText: '',
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    countryCode.value != 'NGA'
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Text(
-                                'Corresponding Bank (Optional)',
-                                style: context.textTheme.headline3!
-                                    .copyWith(color: Colors.grey, fontSize: 14),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              TextFormField(
-                                controller: cBankName,
-                                decoration: InputDecoration(
-                                  labelText: 'Bank Name',
-                                  hintText: '',
-                                  contentPadding: EdgeInsets.fromLTRB(
-                                      20.0, 15.0, 20.0, 15.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                        ],
+                      ),
+                      countryCode.value != 'NGA'
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Text(
+                                  'Corresponding Bank (Optional)',
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: Colors.grey, fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: cBankName,
+                                  decoration: InputDecoration(
+                                    labelText: 'Bank Name',
+                                    hintText: '',
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              TextFormField(
-                                controller: cAccNumber,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: InputDecoration(
-                                  labelText: 'Account Number',
-                                  hintText: '',
-                                  contentPadding: EdgeInsets.fromLTRB(
-                                      20.0, 15.0, 20.0, 15.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: cAccNumber,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  decoration: InputDecoration(
+                                    labelText: 'Account Number',
+                                    hintText: '',
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              TextFormField(
-                                controller: cAccName,
-                                decoration: InputDecoration(
-                                  labelText: 'Account Name',
-                                  hintText: '',
-                                  contentPadding: EdgeInsets.fromLTRB(
-                                      20.0, 15.0, 20.0, 15.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: cAccName,
+                                  decoration: InputDecoration(
+                                    labelText: 'Account Name',
+                                    hintText: '',
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
-                        : SizedBox.shrink(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Consumer(
-                      builder: (BuildContext context,
-                          T Function<T>(ProviderBase<Object?, T>) watch,
-                          Widget? child) {
-                        final vm = watch(createBeneficiaryProvider);
-                        return CustomButton(
-                            color: Colors.black,
-                            width: MediaQuery.of(context).size.width,
-                            onPressed: vm is Loading
-                                ? null
-                                : () {
-                                    if (!_formKey.value.currentState!
-                                        .validate()) {
-                                      return null;
-                                    }
-                                    _formKey.value.currentState!.save();
-                                    final beneficiary = CreateBeneficiaryModel(
-                                        country: country.text,
-                                        bankName: bankName.text,
-                                        bankState: bankState.text,
-                                        bankPostalCode: postalCode.text,
-                                        bankCity: bankCity.text,
-                                        bankAddress: bankAddress.text,
-                                        accountCurrency: accCurrency.value,
-                                        accountNumber: accNumber.text,
-                                        accountSWiftCode: swiftCode.text,
-                                        accountBsbCode: bsb.text,
-                                        corresBankCountry: country.text,
-                                        corresBankIban: cAccNumber.text,
-                                        corresBankName: cBankName.text,
-                                        accountName: accName.text);
-                                    context
-                                        .read(
-                                            createBeneficiaryProvider.notifier)
-                                        .createBeneficiary(
-                                            beneficiary, transactionData?.id);
-                                    // showModal(
-                                    //     context,
-                                    //     purposes,
-                                    //     purpose);
-                                  },
-                            title: Text(
-                              vm is Loading ? 'LOADING...' : 'PROCEED',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: Sizes.TEXT_SIZE_16),
-                            ));
-                      },
-                    ),
-                  ],
+                              ],
+                            )
+                          : SizedBox.shrink(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Consumer(
+                        builder: (BuildContext context,
+                            T Function<T>(ProviderBase<Object?, T>) watch,
+                            Widget? child) {
+                          final vm = watch(createBeneficiaryProvider);
+                          return CustomButton(
+                              color: Colors.black,
+                              width: MediaQuery.of(context).size.width,
+                              onPressed: vm is Loading
+                                  ? null
+                                  : () {
+                                      if (!_formKey.value.currentState!
+                                          .validate()) {
+                                        return null;
+                                      }
+                                      _formKey.value.currentState!.save();
+                                      final beneficiary =
+                                          CreateBeneficiaryModel(
+                                              country: country.text,
+                                              bankName: bankName.text,
+                                              bankState: bankState.text,
+                                              bankPostalCode: postalCode.text,
+                                              bankCity: bankCity.text,
+                                              bankAddress: bankAddress.text,
+                                              accountCurrency:
+                                                  accCurrency.value,
+                                              accountNumber: accNumber.text,
+                                              accountSWiftCode: swiftCode.text,
+                                              accountBsbCode: bsb.text,
+                                              corresBankCountry: country.text,
+                                              corresBankIban: cAccNumber.text,
+                                              corresBankName: cBankName.text,
+                                              accountName: accName.text);
+                                      context
+                                          .read(createBeneficiaryProvider
+                                              .notifier)
+                                          .createBeneficiary(
+                                              beneficiary, transactionData?.id);
+                                      // showModal(
+                                      //     context,
+                                      //     purposes,
+                                      //     purpose);
+                                    },
+                              title: Text(
+                                vm is Loading ? 'LOADING...' : 'PROCEED',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Sizes.TEXT_SIZE_16),
+                              ));
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }, error: (Object error, StackTrace? stackTrace) {
-          return Center(child: Text('Error fetching banks'));
-        }, loading: () {
-          return Center(child: CircularProgressIndicator());
-        }),
+            );
+          }, error: (Object error, StackTrace? stackTrace) {
+            return Center(child: Text('Error fetching banks'));
+          }, loading: () {
+            return Center(child: CircularProgressIndicator());
+          })
+        ]),
       ),
     );
   }

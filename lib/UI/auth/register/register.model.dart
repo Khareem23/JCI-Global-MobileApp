@@ -18,6 +18,7 @@ class Register {
     this.pin,
     this.countryOfResidence,
     this.countryOfNationality,
+    this.sourceOfFunds,
     this.state,
     this.city,
     this.postalCode,
@@ -38,6 +39,7 @@ class Register {
   final String? pin;
   final String? countryOfResidence;
   final String? countryOfNationality;
+  final String? sourceOfFunds;
   final String? state;
   final String? city;
   final String? postalCode;
@@ -58,6 +60,7 @@ class Register {
     String? pin,
     String? countryOfResidence,
     String? countryOfNationality,
+    String? sourceOfFunds,
     String? state,
     String? city,
     String? postalCode,
@@ -78,6 +81,7 @@ class Register {
         pin: pin ?? this.pin,
         countryOfResidence: countryOfResidence ?? this.countryOfResidence,
         countryOfNationality: countryOfNationality ?? this.countryOfNationality,
+        sourceOfFunds: sourceOfFunds ?? this.sourceOfFunds,
         state: state ?? this.state,
         city: city ?? this.city,
         postalCode: postalCode ?? this.postalCode,
@@ -124,6 +128,7 @@ class Register {
             countryOfResidence == null ? null : countryOfResidence,
         "countryOfNationality":
             countryOfNationality == null ? null : countryOfNationality,
+        "sourceOfFunds": sourceOfFunds == null ? null : sourceOfFunds,
         "state": state == null ? null : state,
         "city": city == null ? null : city,
         "postalCode": postalCode == null ? null : postalCode,

@@ -18,8 +18,21 @@ class AddressInfo extends HookWidget {
     final _formKey = useState(GlobalKey<FormState>());
     final countryModel = useProvider(countryProvider);
 
+    var _sourceOfFunds = [
+      'Bank Loan',
+      'Business',
+      'End of Service Benefit',
+      'Family Associates',
+      'Financial Market',
+      'Gift',
+      'Real Estate',
+      'Salary',
+      'Salary Savings'
+    ];
+
     final countryOfResidence = useState('');
     final countryOfNationality = useState('');
+    final sourceOfFunds = useState('');
     final state = useState('');
     final city = useState('');
     final address = useState('');
@@ -254,6 +267,38 @@ class AddressInfo extends HookWidget {
                             countryOfNationality.value = newValue!;
                             // context.read(statesProvider(countryOfResidence.value));
                             // state.value = '';
+                          },
+                          validator: (String? value) {
+                            if (value == null) {
+                              return 'Please select a country';
+                            }
+                            return null;
+                          },
+                          items: data.data
+                              .map<DropdownMenuItem<String>>(
+                                  (value) => DropdownMenuItem(
+                                        value: value.alpha3Code,
+                                        child: Text(value.country!),
+                                      ))
+                              .toList()),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+                      DropdownButtonFormField(
+                          hint: Text("Source of Funds"),
+                          isDense: true,
+                          decoration: InputDecoration(
+                            hintText: 'Source of Funds',
+                            contentPadding: const EdgeInsets.only(
+                                left: 14.0, bottom: 8.0, top: 8.0),
+                            border: Borders.customOutlineInputBorder(),
+                            enabledBorder: Borders.customOutlineInputBorder(),
+                            focusedBorder: Borders.customOutlineInputBorder(
+                                color: AppColors.primaryColor),
+                          ),
+                          onChanged: (String? newValue) {
+                            sourceOfFunds.value = newValue!;
                           },
                           validator: (String? value) {
                             if (value == null) {

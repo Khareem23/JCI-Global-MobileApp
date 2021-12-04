@@ -2,8 +2,10 @@ import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:jci_remit_mobile/UI/auth/login/login.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
+import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
@@ -14,7 +16,8 @@ class BasicInfoScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = useState(GlobalKey<FormState>());
-    PhoneNumber number = PhoneNumber(isoCode: 'NG');
+    final initialCountry = useState('NG');
+    PhoneNumber number = PhoneNumber(isoCode: initialCountry.value);
     var _genders = ['Male', 'Female'];
     var _accountTypes = ['Individual Account', 'Business Account'];
     final gender = useState('Male');
@@ -23,7 +26,7 @@ class BasicInfoScreen extends HookWidget {
     final lastName = useState('');
     final dob = useState<DateTime>(DateTime.now());
     final email = useState('');
-    final phoneNumber = useState('');
+    var phoneNumber = useState('');
     final accountType = useState('Individual Account');
 
     final fnameFocusNode = useFocusNode();
@@ -137,8 +140,8 @@ class BasicInfoScreen extends HookWidget {
                 ),
                 mode: DateTimeFieldPickerMode.date,
                 autovalidateMode: AutovalidateMode.always,
-                validator: (e) =>
-                    (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
+                // validator: (e) =>
+                //     (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
                 onDateSelected: (DateTime value) {
                   print(value);
                   dob.value = value;
@@ -176,6 +179,7 @@ class BasicInfoScreen extends HookWidget {
                 focusNode: phoneFocusNode,
                 onInputChanged: (PhoneNumber number) {
                   print(number.phoneNumber);
+                  initialCountry.value = number.isoCode!;
                   phoneNumber.value = number.phoneNumber!;
                 },
                 onInputValidated: (bool value) {
@@ -310,6 +314,28 @@ class BasicInfoScreen extends HookWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: Sizes.TEXT_SIZE_16),
                   )),
+
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                onTap: () => context.navigate(LoginScreen()),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already have an account? ',
+                      style: theme.headline3!
+                          .copyWith(fontSize: 15, color: AppColors.black),
+                    ),
+                    Text(
+                      'Login',
+                      style: theme.headline3!.copyWith(
+                          fontSize: 15, color: AppColors.primaryColor),
+                    ),
+                  ],
+                ),
+              ),
               // SizedBox(
               //   height: ScreenUtil().setHeight(40),
               // ),

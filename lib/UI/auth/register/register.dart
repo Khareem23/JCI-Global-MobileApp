@@ -31,40 +31,48 @@ class RegisterScreen extends HookWidget {
       child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text(
-              'Register',
-              style: TextStyle(color: AppColors.primaryColor),
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: InkWell(
-                  onTap: () => Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen())),
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(color: AppColors.primaryColor),
-                  ),
-                ),
-              ),
-            ],
+            automaticallyImplyLeading: false,
+            backgroundColor: AppColors.red,
+            title: Text('Registration',
+                style: TextStyle(
+                    fontSize: Sizes.TEXT_SIZE_20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.white)),
+            // actions: [
+            //   Padding(
+            //     padding: const EdgeInsets.all(20.0),
+            //     child: InkWell(
+            //       onTap: () => Navigator.pushReplacement(context,
+            //           MaterialPageRoute(builder: (context) => LoginScreen())),
+            //       child: Text(
+            //         'Sign In',
+            //         style: TextStyle(color: AppColors.primaryColor),
+            //       ),
+            //     ),
+            //   ),
+            // ],
           ),
-          body: FlowBuilder<Register>(
-            state: const Register(),
-            onGeneratePages: (register, pages) {
-              return [
-                MaterialPage(child: BasicInfoScreen()),
-                if (register.email != null) MaterialPage(child: AddressInfo()),
-                if (register.countryOfResidence != null)
-                  MaterialPage(child: SecurityInfoScreen()),
-              ];
-            },
-            onComplete: (state) {
-              context
-                  .read(registerNotifierProvider.notifier)
-                  .register(context, state);
-            },
-          )),
+          body: Stack(alignment: AlignmentDirectional.center, children: [
+            Image.asset('assets/images/watermark.png',
+                width: MediaQuery.of(context).size.width * 0.8),
+            FlowBuilder<Register>(
+              state: const Register(),
+              onGeneratePages: (register, pages) {
+                return [
+                  MaterialPage(child: BasicInfoScreen()),
+                  if (register.email != null)
+                    MaterialPage(child: AddressInfo()),
+                  if (register.countryOfResidence != null)
+                    MaterialPage(child: SecurityInfoScreen()),
+                ];
+              },
+              onComplete: (state) {
+                context
+                    .read(registerNotifierProvider.notifier)
+                    .register(context, state);
+              },
+            )
+          ])),
     );
   }
 }

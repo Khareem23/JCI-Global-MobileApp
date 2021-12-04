@@ -23,20 +23,23 @@ class ReceiversScreen extends HookWidget {
       body: RefreshIndicator(
         onRefresh: () => context.refresh(getBeneficiariesProvider),
         child: SafeArea(
+          top: false,
           child: Column(
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.all(20),
+                color: AppColors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 30),
                     Row(
                       children: [
                         Text(
                           'All Beneficiaries',
                           style: context.textTheme.headline4!
-                              .copyWith(fontSize: 30),
+                              .copyWith(fontSize: 30, color: AppColors.white),
                         ),
                         Spacer(),
                         InkWell(
@@ -58,96 +61,112 @@ class ReceiversScreen extends HookWidget {
                           },
                           child: Icon(
                             AntDesign.adduser,
-                            color: AppColors.primaryColor,
+                            color: AppColors.white,
                           ),
                         )
                       ],
                     ),
                     Text(
                       'See all your beneficiaries in one place',
-                      style:
-                          context.textTheme.headline5!.copyWith(fontSize: 12),
+                      style: context.textTheme.headline5!
+                          .copyWith(fontSize: 12, color: AppColors.white),
                     ),
                   ],
                 ),
               ),
-              Expanded(
-                  child: Container(
-                      padding: EdgeInsets.all(20),
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.white,
-                      child: useProvider(getBeneficiariesProvider).when(
-                          data: (List<BeneficiaryData> beneficiary) {
-                            if (beneficiary.isEmpty) {
-                              return EmptyStateWidget(
-                                refreshCallBack: () => {},
-                                textOnButton: 'Create',
-                                errorTitle: 'Oops!',
-                                error:
-                                    'You do not have a saved beneficiary. Do you want to create one?',
-                              );
-                            }
-                            return ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: beneficiary.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                if (beneficiary.length > 0)
-                                  return Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: Colors.grey)),
-                                    child: ListTile(
-                                        onTap: () {
-                                          // selectedBeneficiary.value =
-                                          //     beneficiary[index].customerId;
-                                          // _selectedIndex.value = index;
-                                          // print(_selectedIndex.value);
-                                        },
-                                        contentPadding: EdgeInsets.zero,
-                                        leading: CircleAvatar(
-                                            child: Text(
-                                                '${beneficiary[index].accountName![0]}'),
-                                            backgroundColor: Color(0xFFefecfd)),
-                                        title: Text(
-                                          beneficiary[index].accountName!,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 14,
-                                              color: Colors.black87),
-                                        ),
-                                        subtitle: Text(
-                                            '${beneficiary[index].bankName} - ${beneficiary[index].accountNumber}')),
-                                  );
-                                else
-                                  return EmptyStateWidget(
-                                    refreshCallBack: () => {},
-                                    textOnButton: 'Create',
-                                    errorTitle: 'Oops!',
-                                    error:
-                                        'You do not have a saved beneficiary. Do you want to create one?',
-                                  );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 10,
-                                );
-                              },
-                            );
-                          },
-                          error: (Object error, StackTrace? stackTrace) {
-                            return NetworkErrorWidget(
-                              refreshCallBack: () =>
-                                  context.read(getBeneficiariesProvider),
-                              error:
-                                  'Error fetching beneficiaries. Please try again',
-                            );
-                          },
-                          loading: () => Center(
-                                child: CircularProgressIndicator(),
-                              ))))
+              Container(
+                child: Expanded(
+                    child: Container(
+                        padding: EdgeInsets.all(20),
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.white,
+                        child: Stack(
+                            alignment: AlignmentDirectional.center,
+                            children: [
+                              Image.asset('assets/images/watermark.png',
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8),
+                              useProvider(getBeneficiariesProvider).when(
+                                  data: (List<BeneficiaryData> beneficiary) {
+                                    if (beneficiary.isEmpty) {
+                                      return EmptyStateWidget(
+                                        refreshCallBack: () => {},
+                                        textOnButton: 'Create',
+                                        errorTitle: 'Oops!',
+                                        error:
+                                            'You do not have a saved beneficiary. Do you want to create one?',
+                                      );
+                                    }
+                                    return ListView.separated(
+                                      shrinkWrap: true,
+                                      itemCount: beneficiary.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        if (beneficiary.length > 0)
+                                          return Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                    color: Colors.grey)),
+                                            child: ListTile(
+                                                onTap: () {
+                                                  // selectedBeneficiary.value =
+                                                  //     beneficiary[index].customerId;
+                                                  // _selectedIndex.value = index;
+                                                  // print(_selectedIndex.value);
+                                                },
+                                                contentPadding: EdgeInsets.zero,
+                                                leading: CircleAvatar(
+                                                    child: Text(
+                                                        '${beneficiary[index].accountName![0]}'),
+                                                    backgroundColor:
+                                                        Color(0xFFefecfd)),
+                                                title: Text(
+                                                  beneficiary[index]
+                                                      .accountName!,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      fontSize: 14,
+                                                      color: Colors.black87),
+                                                ),
+                                                subtitle: Text(
+                                                    '${beneficiary[index].bankName} - ${beneficiary[index].accountNumber}')),
+                                          );
+                                        else
+                                          return EmptyStateWidget(
+                                            refreshCallBack: () => {},
+                                            textOnButton: 'Create',
+                                            errorTitle: 'Oops!',
+                                            error:
+                                                'You do not have a saved beneficiary. Do you want to create one?',
+                                          );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        return SizedBox(
+                                          height: 10,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  error:
+                                      (Object error, StackTrace? stackTrace) {
+                                    return NetworkErrorWidget(
+                                      refreshCallBack: () => context
+                                          .read(getBeneficiariesProvider),
+                                      error:
+                                          'Error fetching beneficiaries. Please try again',
+                                    );
+                                  },
+                                  loading: () => Center(
+                                        child: CircularProgressIndicator(),
+                                      ))
+                            ]))),
+              )
             ],
           ),
         ),
