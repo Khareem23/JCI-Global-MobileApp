@@ -54,13 +54,16 @@ class Data {
     this.isKycCompliancePassed,
     this.isAmlCompliancePassed,
     this.isScannedForAml,
+    this.sourceOfFunds,
+    this.isActive,
     this.dateOfBirth,
     this.age,
     this.resetKey,
     this.referralDiscountCode,
     this.accountType,
-    this.receivers,
-    this.transactions,
+    this.lastUpdatedDate,
+    // this.receivers,
+    // this.transactions,
     this.customerReferredTransaction,
   });
 
@@ -83,13 +86,16 @@ class Data {
   bool? isKycCompliancePassed;
   bool? isAmlCompliancePassed;
   bool? isScannedForAml;
+  String? sourceOfFunds;
+  bool? isActive;
   DateTime? dateOfBirth;
   int? age;
   String? resetKey;
   String? referralDiscountCode;
   String? accountType;
-  List<Receiver>? receivers;
-  List<Transaction>? transactions;
+  DateTime? lastUpdatedDate;
+  // List<Receiver>? receivers;
+  // List<Transaction>? transactions;
   CustomerReferredTransaction? customerReferredTransaction;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -125,20 +131,26 @@ class Data {
         dateOfBirth: json["dateOfBirth"] == null
             ? null
             : DateTime.parse(json["dateOfBirth"]),
+        lastUpdatedDate: json["lastUpdatedDate"] == null
+            ? null
+            : DateTime.parse(json["lastUpdatedDate"]),
+        sourceOfFunds:
+            json["sourceOfFunds"] == null ? null : json["sourceOfFunds"],
+        isActive: json["isActive"] == null ? null : json["isActive"],
         age: json["age"] == null ? null : json["age"],
         resetKey: json["resetKey"] == null ? null : json["resetKey"],
         referralDiscountCode: json["referralDiscountCode"] == null
             ? null
             : json["referralDiscountCode"],
         accountType: json["accountType"] == null ? null : json["accountType"],
-        receivers: json["receivers"] == null
-            ? null
-            : List<Receiver>.from(
-                json["receivers"].map((x) => Receiver.fromJson(x))),
-        transactions: json["transactions"] == null
-            ? null
-            : List<Transaction>.from(
-                json["transactions"].map((x) => Transaction.fromJson(x))),
+        // receivers: json["receivers"] == null
+        //     ? null
+        //     : List<Receiver>.from(
+        //         json["receivers"].map((x) => Receiver.fromJson(x))),
+        // transactions: json["transactions"] == null
+        //     ? null
+        //     : List<Transaction>.from(
+        //         json["transactions"].map((x) => Transaction.fromJson(x))),
         customerReferredTransaction: json["customerReferredTransaction"] == null
             ? null
             : CustomerReferredTransaction.fromJson(
@@ -169,19 +181,23 @@ class Data {
         "isAMLCompliancePassed":
             isAmlCompliancePassed == null ? null : isAmlCompliancePassed,
         "isScannedForAML": isScannedForAml == null ? null : isScannedForAml,
+        "isActive": isActive == null ? null : isActive,
         "dateOfBirth":
             dateOfBirth == null ? null : dateOfBirth!.toIso8601String(),
+        "lastUpdatedDate":
+            lastUpdatedDate == null ? null : lastUpdatedDate!.toIso8601String(),
+        "sourceOfFunds": sourceOfFunds == null ? null : sourceOfFunds,
         "age": age == null ? null : age,
         "resetKey": resetKey == null ? null : resetKey,
         "referralDiscountCode":
             referralDiscountCode == null ? null : referralDiscountCode,
         "accountType": accountType == null ? null : accountType,
-        "receivers": receivers == null
-            ? null
-            : List<dynamic>.from(receivers!.map((x) => x.toJson())),
-        "transactions": transactions == null
-            ? null
-            : List<dynamic>.from(transactions!.map((x) => x.toJson())),
+        // "receivers": receivers == null
+        //     ? null
+        //     : List<dynamic>.from(receivers!.map((x) => x.toJson())),
+        // "transactions": transactions == null
+        //     ? null
+        //     : List<dynamic>.from(transactions!.map((x) => x.toJson())),
         "customerReferredTransaction": customerReferredTransaction == null
             ? null
             : customerReferredTransaction!.toJson(),

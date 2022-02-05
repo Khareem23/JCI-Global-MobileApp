@@ -11,49 +11,62 @@ class PaymentSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: SizedBox.shrink(),
-        title: Text(
-          'Transaction Status',
-          style: TextStyle(color: Colors.black87),
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            color: AppColors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
+        title: Text('Transaction Status',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: Sizes.TEXT_SIZE_18,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: AppColors.red,
       ),
       body: Container(
-        color: Colors.white,
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 20,
+          color: Colors.white,
+          child: Stack(alignment: AlignmentDirectional.center, children: [
+            Image.asset('assets/images/watermark.png',
+                width: MediaQuery.of(context).size.width * 0.8),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Icon(
+                    Feather.check_circle,
+                    color: Colors.green,
+                    size: 80,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Your Payment is Completed',
+                    style: context.textTheme.headline4!
+                        .copyWith(fontSize: 25, color: Colors.green),
+                  ),
+                  SizedBox(height: 30),
+                  Container(
+                    child: RaisedButton(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 15),
+                      onPressed: () => context.popToFirst(),
+                      color: AppColors.accentColor,
+                      child: Text('Go Home', style: btnAccentStyle),
+                    ),
+                  )
+                ],
               ),
-              Icon(
-                Feather.check_circle,
-                color: Colors.green,
-                size: 80,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'Your Payment is Completed',
-                style: context.textTheme.headline4!
-                    .copyWith(fontSize: 25, color: Colors.green),
-              ),
-              SizedBox(height: 30),
-              Container(
-                child: RaisedButton(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  onPressed: () => context.popToFirst(),
-                  color: AppColors.accentColor,
-                  child: Text('Go Home', style: btnAccentStyle),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
+          ])),
     );
   }
 }

@@ -214,20 +214,9 @@ Datum _$DatumFromJson(Map<String, dynamic> json) {
 class _$DatumTearOff {
   const _$DatumTearOff();
 
-  _Datum call(
-      {required String country,
-      required String callingCode,
-      required String alpha3Code,
-      required String alpha2Code,
-      required String currency,
-      required String flag}) {
+  _Datum call({required String countryCode}) {
     return _Datum(
-      country: country,
-      callingCode: callingCode,
-      alpha3Code: alpha3Code,
-      alpha2Code: alpha2Code,
-      currency: currency,
-      flag: flag,
+      countryCode: countryCode,
     );
   }
 
@@ -241,12 +230,7 @@ const $Datum = _$DatumTearOff();
 
 /// @nodoc
 mixin _$Datum {
-  String get country => throw _privateConstructorUsedError;
-  String get callingCode => throw _privateConstructorUsedError;
-  String get alpha3Code => throw _privateConstructorUsedError;
-  String get alpha2Code => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-  String get flag => throw _privateConstructorUsedError;
+  String get countryCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -257,13 +241,7 @@ mixin _$Datum {
 abstract class $DatumCopyWith<$Res> {
   factory $DatumCopyWith(Datum value, $Res Function(Datum) then) =
       _$DatumCopyWithImpl<$Res>;
-  $Res call(
-      {String country,
-      String callingCode,
-      String alpha3Code,
-      String alpha2Code,
-      String currency,
-      String flag});
+  $Res call({String countryCode});
 }
 
 /// @nodoc
@@ -276,37 +254,12 @@ class _$DatumCopyWithImpl<$Res> implements $DatumCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? country = freezed,
-    Object? callingCode = freezed,
-    Object? alpha3Code = freezed,
-    Object? alpha2Code = freezed,
-    Object? currency = freezed,
-    Object? flag = freezed,
+    Object? countryCode = freezed,
   }) {
     return _then(_value.copyWith(
-      country: country == freezed
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String,
-      callingCode: callingCode == freezed
-          ? _value.callingCode
-          : callingCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      alpha3Code: alpha3Code == freezed
-          ? _value.alpha3Code
-          : alpha3Code // ignore: cast_nullable_to_non_nullable
-              as String,
-      alpha2Code: alpha2Code == freezed
-          ? _value.alpha2Code
-          : alpha2Code // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: currency == freezed
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      flag: flag == freezed
-          ? _value.flag
-          : flag // ignore: cast_nullable_to_non_nullable
+      countryCode: countryCode == freezed
+          ? _value.countryCode
+          : countryCode // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -317,13 +270,7 @@ abstract class _$DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
   factory _$DatumCopyWith(_Datum value, $Res Function(_Datum) then) =
       __$DatumCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String country,
-      String callingCode,
-      String alpha3Code,
-      String alpha2Code,
-      String currency,
-      String flag});
+  $Res call({String countryCode});
 }
 
 /// @nodoc
@@ -337,37 +284,12 @@ class __$DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? country = freezed,
-    Object? callingCode = freezed,
-    Object? alpha3Code = freezed,
-    Object? alpha2Code = freezed,
-    Object? currency = freezed,
-    Object? flag = freezed,
+    Object? countryCode = freezed,
   }) {
     return _then(_Datum(
-      country: country == freezed
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String,
-      callingCode: callingCode == freezed
-          ? _value.callingCode
-          : callingCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      alpha3Code: alpha3Code == freezed
-          ? _value.alpha3Code
-          : alpha3Code // ignore: cast_nullable_to_non_nullable
-              as String,
-      alpha2Code: alpha2Code == freezed
-          ? _value.alpha2Code
-          : alpha2Code // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: currency == freezed
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      flag: flag == freezed
-          ? _value.flag
-          : flag // ignore: cast_nullable_to_non_nullable
+      countryCode: countryCode == freezed
+          ? _value.countryCode
+          : countryCode // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -376,67 +298,31 @@ class __$DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Datum implements _Datum {
-  const _$_Datum(
-      {required this.country,
-      required this.callingCode,
-      required this.alpha3Code,
-      required this.alpha2Code,
-      required this.currency,
-      required this.flag});
+  const _$_Datum({required this.countryCode});
 
   factory _$_Datum.fromJson(Map<String, dynamic> json) =>
       _$_$_DatumFromJson(json);
 
   @override
-  final String country;
-  @override
-  final String callingCode;
-  @override
-  final String alpha3Code;
-  @override
-  final String alpha2Code;
-  @override
-  final String currency;
-  @override
-  final String flag;
+  final String countryCode;
 
   @override
   String toString() {
-    return 'Datum(country: $country, callingCode: $callingCode, alpha3Code: $alpha3Code, alpha2Code: $alpha2Code, currency: $currency, flag: $flag)';
+    return 'Datum(countryCode: $countryCode)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Datum &&
-            (identical(other.country, country) ||
+            (identical(other.countryCode, countryCode) ||
                 const DeepCollectionEquality()
-                    .equals(other.country, country)) &&
-            (identical(other.callingCode, callingCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.callingCode, callingCode)) &&
-            (identical(other.alpha3Code, alpha3Code) ||
-                const DeepCollectionEquality()
-                    .equals(other.alpha3Code, alpha3Code)) &&
-            (identical(other.alpha2Code, alpha2Code) ||
-                const DeepCollectionEquality()
-                    .equals(other.alpha2Code, alpha2Code)) &&
-            (identical(other.currency, currency) ||
-                const DeepCollectionEquality()
-                    .equals(other.currency, currency)) &&
-            (identical(other.flag, flag) ||
-                const DeepCollectionEquality().equals(other.flag, flag)));
+                    .equals(other.countryCode, countryCode)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(country) ^
-      const DeepCollectionEquality().hash(callingCode) ^
-      const DeepCollectionEquality().hash(alpha3Code) ^
-      const DeepCollectionEquality().hash(alpha2Code) ^
-      const DeepCollectionEquality().hash(currency) ^
-      const DeepCollectionEquality().hash(flag);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(countryCode);
 
   @JsonKey(ignore: true)
   @override
@@ -450,28 +336,12 @@ class _$_Datum implements _Datum {
 }
 
 abstract class _Datum implements Datum {
-  const factory _Datum(
-      {required String country,
-      required String callingCode,
-      required String alpha3Code,
-      required String alpha2Code,
-      required String currency,
-      required String flag}) = _$_Datum;
+  const factory _Datum({required String countryCode}) = _$_Datum;
 
   factory _Datum.fromJson(Map<String, dynamic> json) = _$_Datum.fromJson;
 
   @override
-  String get country => throw _privateConstructorUsedError;
-  @override
-  String get callingCode => throw _privateConstructorUsedError;
-  @override
-  String get alpha3Code => throw _privateConstructorUsedError;
-  @override
-  String get alpha2Code => throw _privateConstructorUsedError;
-  @override
-  String get currency => throw _privateConstructorUsedError;
-  @override
-  String get flag => throw _privateConstructorUsedError;
+  String get countryCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$DatumCopyWith<_Datum> get copyWith => throw _privateConstructorUsedError;

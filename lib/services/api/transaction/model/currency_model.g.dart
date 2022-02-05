@@ -25,20 +25,10 @@ Map<String, dynamic> _$_$_CurrencyModelToJson(_$_CurrencyModel instance) =>
 
 _$_Datum _$_$_DatumFromJson(Map<String, dynamic> json) {
   return _$_Datum(
-    country: json['country'] as String,
-    callingCode: json['callingCode'] as String,
-    alpha3Code: json['alpha3Code'] as String,
-    alpha2Code: json['alpha2Code'] as String,
-    currency: json['currency'] as String,
-    flag: json['flag'] as String,
+    countryCode: json['countryCode'] as String,
   );
 }
 
 Map<String, dynamic> _$_$_DatumToJson(_$_Datum instance) => <String, dynamic>{
-      'country': instance.country,
-      'callingCode': instance.callingCode,
-      'alpha3Code': instance.alpha3Code,
-      'alpha2Code': instance.alpha2Code,
-      'currency': instance.currency,
-      'flag': instance.flag,
+      'countryCode': instance.countryCode,
     };

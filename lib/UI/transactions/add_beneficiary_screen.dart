@@ -26,12 +26,14 @@ class AddBeneficiaryScreen extends HookWidget {
     final bankName = useTextEditingController();
     final accNumber = useTextEditingController();
     final accName = useTextEditingController();
+    final address = useTextEditingController();
     final bankAddress = useTextEditingController();
     final bankState = useTextEditingController();
     final postalCode = useTextEditingController();
     final swiftCode = useTextEditingController();
     final bsb = useTextEditingController();
     final cBankName = useTextEditingController();
+    final cBankAddress = useTextEditingController();
     final cAccNumber = useTextEditingController();
     final cAccName = useTextEditingController();
     final bankCity = useTextEditingController();
@@ -96,6 +98,47 @@ class AddBeneficiaryScreen extends HookWidget {
                         height: 20,
                       ),
                       TextFormField(
+                        controller: accName,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Account Name';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Beneficiary Name*',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: address,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Address';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Beneficiary Address*',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      TextFormField(
                         controller: country,
                         readOnly: true,
                         validator: (val) {
@@ -104,7 +147,7 @@ class AddBeneficiaryScreen extends HookWidget {
                           return null;
                         },
                         decoration: InputDecoration(
-                          hintText: 'Country',
+                          hintText: 'Beneficiary Country*',
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
@@ -133,26 +176,7 @@ class AddBeneficiaryScreen extends HookWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
-                        controller: bankName,
-                        validator: (val) {
-                          if (val == null || val.isEmpty)
-                            return 'Select Bank Name';
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Bank Name',
-                          hintText: '',
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
+
                       TextFormField(
                         controller: accNumber,
                         validator: (val) {
@@ -165,7 +189,7 @@ class AddBeneficiaryScreen extends HookWidget {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         decoration: InputDecoration(
-                          labelText: 'Account Number / IBAN',
+                          labelText: 'Account Number / IBAN*',
                           hintText: '',
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -177,35 +201,23 @@ class AddBeneficiaryScreen extends HookWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
-                        controller: accName,
-                        validator: (val) {
-                          if (val == null || val.isEmpty)
-                            return 'Enter Account Name';
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Account Name',
-                          hintText: '',
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
+                      Text(
+                        'Enter Beneficiary Bank Detail',
+                        style: context.textTheme.headline3!
+                            .copyWith(color: Colors.grey, fontSize: 14),
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       TextFormField(
-                        controller: bankState,
+                        controller: bankName,
                         validator: (val) {
                           if (val == null || val.isEmpty)
-                            return 'Enter Bank State';
+                            return 'Select Bank Name';
                           return null;
                         },
                         decoration: InputDecoration(
-                          labelText: 'Bank State',
+                          labelText: 'Bank Name*',
                           hintText: '',
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -214,46 +226,66 @@ class AddBeneficiaryScreen extends HookWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        controller: bankCity,
-                        validator: (val) {
-                          if (val == null || val.isEmpty)
-                            return 'Enter Bank City';
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Bank City',
-                          hintText: '',
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        controller: postalCode,
-                        validator: (val) {
-                          if (val == null || val.isEmpty)
-                            return 'Enter Postal Code';
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Postal Code',
-                          hintText: '',
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      // TextFormField(
+                      //   controller: bankState,
+                      //   validator: (val) {
+                      //     if (val == null || val.isEmpty)
+                      //       return 'Enter Bank State';
+                      //     return null;
+                      //   },
+                      //   decoration: InputDecoration(
+                      //     labelText: 'Bank State',
+                      //     hintText: '',
+                      //     contentPadding:
+                      //         EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(5.0),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      // TextFormField(
+                      //   controller: bankCity,
+                      //   validator: (val) {
+                      //     if (val == null || val.isEmpty)
+                      //       return 'Enter Bank City';
+                      //     return null;
+                      //   },
+                      //   decoration: InputDecoration(
+                      //     labelText: 'Bank City',
+                      //     hintText: '',
+                      //     contentPadding:
+                      //         EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(5.0),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      // TextFormField(
+                      //   controller: postalCode,
+                      //   validator: (val) {
+                      //     if (val == null || val.isEmpty)
+                      //       return 'Enter Postal Code';
+                      //     return null;
+                      //   },
+                      //   decoration: InputDecoration(
+                      //     labelText: 'Postal Code',
+                      //     hintText: '',
+                      //     contentPadding:
+                      //         EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(5.0),
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 20,
                       ),
@@ -265,7 +297,7 @@ class AddBeneficiaryScreen extends HookWidget {
                           return null;
                         },
                         decoration: InputDecoration(
-                          labelText: 'Bank Address',
+                          labelText: 'Bank Address*',
                           hintText: '',
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -277,46 +309,64 @@ class AddBeneficiaryScreen extends HookWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: swiftCode,
-                              validator: (val) {
-                                if (val == null || val.isEmpty)
-                                  return 'Enter Swift Code';
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Swift',
-                                hintText: '',
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ),
+                      TextFormField(
+                        controller: swiftCode,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Swift Code';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Swift*',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
                           ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              controller: bsb,
-                              decoration: InputDecoration(
-                                labelText: 'BSB(Optional)',
-                                hintText: '',
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: TextFormField(
+                      //         controller: swiftCode,
+                      //         validator: (val) {
+                      //           if (val == null || val.isEmpty)
+                      //             return 'Enter Swift Code';
+                      //           return null;
+                      //         },
+                      //         decoration: InputDecoration(
+                      //           labelText: 'Swift',
+                      //           hintText: '',
+                      //           contentPadding:
+                      //               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      //           border: OutlineInputBorder(
+                      //             borderRadius: BorderRadius.circular(5.0),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 20,
+                      //     ),
+                      //     Expanded(
+                      //       child: TextFormField(
+                      //         controller: bsb,
+                      //         decoration: InputDecoration(
+                      //           labelText: 'BSB(Optional)',
+                      //           hintText: '',
+                      //           contentPadding:
+                      //               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      //           border: OutlineInputBorder(
+                      //             borderRadius: BorderRadius.circular(5.0),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      SizedBox(height: 20),
                       countryCode.value != 'NGA'
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,7 +375,7 @@ class AddBeneficiaryScreen extends HookWidget {
                                   width: 40,
                                 ),
                                 Text(
-                                  'Corresponding Bank (Optional)',
+                                  'Corresponding Bank Detail (Optional)',
                                   style: context.textTheme.headline3!.copyWith(
                                       color: Colors.grey, fontSize: 14),
                                 ),
@@ -336,6 +386,36 @@ class AddBeneficiaryScreen extends HookWidget {
                                   controller: cBankName,
                                   decoration: InputDecoration(
                                     labelText: 'Bank Name',
+                                    hintText: '',
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: cBankAddress,
+                                  decoration: InputDecoration(
+                                    labelText: 'Bank Address',
+                                    hintText: '',
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: cAccName,
+                                  decoration: InputDecoration(
+                                    labelText: 'Account Name',
                                     hintText: '',
                                     contentPadding: EdgeInsets.fromLTRB(
                                         20.0, 15.0, 20.0, 15.0),
@@ -362,27 +442,12 @@ class AddBeneficiaryScreen extends HookWidget {
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                TextFormField(
-                                  controller: cAccName,
-                                  decoration: InputDecoration(
-                                    labelText: 'Account Name',
-                                    hintText: '',
-                                    contentPadding: EdgeInsets.fromLTRB(
-                                        20.0, 15.0, 20.0, 15.0),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                  ),
-                                ),
+                                )
                               ],
                             )
                           : SizedBox.shrink(),
                       SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
                       Consumer(
                         builder: (BuildContext context,
@@ -390,7 +455,7 @@ class AddBeneficiaryScreen extends HookWidget {
                             Widget? child) {
                           final vm = watch(createBeneficiaryProvider);
                           return CustomButton(
-                              color: Colors.black,
+                              color: AppColors.primaryColor,
                               width: MediaQuery.of(context).size.width,
                               onPressed: vm is Loading
                                   ? null
@@ -411,11 +476,14 @@ class AddBeneficiaryScreen extends HookWidget {
                                               accountCurrency:
                                                   accCurrency.value,
                                               accountNumber: accNumber.text,
+                                              beneficiaryAddress: address.text,
                                               accountSWiftCode: swiftCode.text,
                                               accountBsbCode: bsb.text,
                                               corresBankCountry: country.text,
                                               corresBankIban: cAccNumber.text,
                                               corresBankName: cBankName.text,
+                                              corresBankAddress:
+                                                  cBankAddress.text,
                                               accountName: accName.text);
                                       context
                                           .read(createBeneficiaryProvider
@@ -436,6 +504,7 @@ class AddBeneficiaryScreen extends HookWidget {
                               ));
                         },
                       ),
+                      SizedBox(height: 100)
                     ],
                   ),
                 ),

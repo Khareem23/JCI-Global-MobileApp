@@ -27,11 +27,13 @@ class CreateBeneficiaryModel with _$CreateBeneficiaryModel {
     required String accountCurrency,
     required String accountNumber,
     required String accountName,
+    required String beneficiaryAddress,
     String? accountSWiftCode,
     String? accountBsbCode,
     String? corresBankCountry,
     String? corresBankName,
     String? corresBankIban,
+    String? corresBankAddress,
   }) = _CreateBeneficiaryModel;
 
   factory CreateBeneficiaryModel.fromJson(Map<String, dynamic> json) =>

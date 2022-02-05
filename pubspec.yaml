@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.0+8
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -41,11 +41,19 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   shared_preferences: ^2.0.6
   top_snackbar_flutter: ^1.0.0
+  flutter_launcher_icons:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.0.4
+
+flutter_icons:
+  ios: true
+  android: true
+  remove_alpha_ios: true
+  image_path_ios: "assets/images/icon.png"
+  image_path_android: "assets/images/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -4,6 +4,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/widgets/item_icon.dart';
+import 'package:intl/intl.dart';
 
 class TransactionCard extends StatelessWidget {
   final String name, sendingCountry, receivingCounty, transactionType;
@@ -20,8 +21,11 @@ class TransactionCard extends StatelessWidget {
       required this.amountToReceive,
       required this.transactionType})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormat('#,###,###.#');
+
     return Container(
       height: 80,
       width: MediaQuery.of(context).size.width,
@@ -84,7 +88,7 @@ class TransactionCard extends StatelessWidget {
                           context.textTheme.headline3!.copyWith(fontSize: 12),
                     ),
                     TextSpan(
-                      text: amountToSend.toString(),
+                      text: formatter.format(amountToSend).toString(),
                       style: context.textTheme.headline4!
                           .copyWith(fontSize: 18, fontWeight: FontWeight.w400),
                     )
@@ -102,7 +106,8 @@ class TransactionCard extends StatelessWidget {
                       style: context.textTheme.headline3!.copyWith(fontSize: 8),
                     ),
                     TextSpan(
-                      text: amountToReceive.toString(),
+                      // text: amountToReceive.toString(),
+                      text: formatter.format(amountToReceive).toString(),
                       style: context.textTheme.headline4!
                           .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                     )

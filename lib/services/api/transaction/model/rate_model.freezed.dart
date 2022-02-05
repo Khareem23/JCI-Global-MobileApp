@@ -227,14 +227,14 @@ class _$RateDataTearOff {
   _RateData call(
       {required num amountToSend,
       required num totalAmountToCharge,
-      required double amountToReceive,
-      dynamic amountToReceiveNgaUsd = 0,
+      required double amountToReceiveLocal,
+      dynamic amountToReceiveUSD = 0,
       required double rate}) {
     return _RateData(
       amountToSend: amountToSend,
       totalAmountToCharge: totalAmountToCharge,
-      amountToReceive: amountToReceive,
-      amountToReceiveNgaUsd: amountToReceiveNgaUsd,
+      amountToReceiveLocal: amountToReceiveLocal,
+      amountToReceiveUSD: amountToReceiveUSD,
       rate: rate,
     );
   }
@@ -251,8 +251,8 @@ const $RateData = _$RateDataTearOff();
 mixin _$RateData {
   num get amountToSend => throw _privateConstructorUsedError;
   num get totalAmountToCharge => throw _privateConstructorUsedError;
-  double get amountToReceive => throw _privateConstructorUsedError;
-  dynamic get amountToReceiveNgaUsd => throw _privateConstructorUsedError;
+  double get amountToReceiveLocal => throw _privateConstructorUsedError;
+  dynamic get amountToReceiveUSD => throw _privateConstructorUsedError;
   double get rate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -268,8 +268,8 @@ abstract class $RateDataCopyWith<$Res> {
   $Res call(
       {num amountToSend,
       num totalAmountToCharge,
-      double amountToReceive,
-      dynamic amountToReceiveNgaUsd,
+      double amountToReceiveLocal,
+      dynamic amountToReceiveUSD,
       double rate});
 }
 
@@ -285,8 +285,8 @@ class _$RateDataCopyWithImpl<$Res> implements $RateDataCopyWith<$Res> {
   $Res call({
     Object? amountToSend = freezed,
     Object? totalAmountToCharge = freezed,
-    Object? amountToReceive = freezed,
-    Object? amountToReceiveNgaUsd = freezed,
+    Object? amountToReceiveLocal = freezed,
+    Object? amountToReceiveUSD = freezed,
     Object? rate = freezed,
   }) {
     return _then(_value.copyWith(
@@ -298,13 +298,13 @@ class _$RateDataCopyWithImpl<$Res> implements $RateDataCopyWith<$Res> {
           ? _value.totalAmountToCharge
           : totalAmountToCharge // ignore: cast_nullable_to_non_nullable
               as num,
-      amountToReceive: amountToReceive == freezed
-          ? _value.amountToReceive
-          : amountToReceive // ignore: cast_nullable_to_non_nullable
+      amountToReceiveLocal: amountToReceiveLocal == freezed
+          ? _value.amountToReceiveLocal
+          : amountToReceiveLocal // ignore: cast_nullable_to_non_nullable
               as double,
-      amountToReceiveNgaUsd: amountToReceiveNgaUsd == freezed
-          ? _value.amountToReceiveNgaUsd
-          : amountToReceiveNgaUsd // ignore: cast_nullable_to_non_nullable
+      amountToReceiveUSD: amountToReceiveUSD == freezed
+          ? _value.amountToReceiveUSD
+          : amountToReceiveUSD // ignore: cast_nullable_to_non_nullable
               as dynamic,
       rate: rate == freezed
           ? _value.rate
@@ -322,8 +322,8 @@ abstract class _$RateDataCopyWith<$Res> implements $RateDataCopyWith<$Res> {
   $Res call(
       {num amountToSend,
       num totalAmountToCharge,
-      double amountToReceive,
-      dynamic amountToReceiveNgaUsd,
+      double amountToReceiveLocal,
+      dynamic amountToReceiveUSD,
       double rate});
 }
 
@@ -340,8 +340,8 @@ class __$RateDataCopyWithImpl<$Res> extends _$RateDataCopyWithImpl<$Res>
   $Res call({
     Object? amountToSend = freezed,
     Object? totalAmountToCharge = freezed,
-    Object? amountToReceive = freezed,
-    Object? amountToReceiveNgaUsd = freezed,
+    Object? amountToReceiveLocal = freezed,
+    Object? amountToReceiveUSD = freezed,
     Object? rate = freezed,
   }) {
     return _then(_RateData(
@@ -353,13 +353,13 @@ class __$RateDataCopyWithImpl<$Res> extends _$RateDataCopyWithImpl<$Res>
           ? _value.totalAmountToCharge
           : totalAmountToCharge // ignore: cast_nullable_to_non_nullable
               as num,
-      amountToReceive: amountToReceive == freezed
-          ? _value.amountToReceive
-          : amountToReceive // ignore: cast_nullable_to_non_nullable
+      amountToReceiveLocal: amountToReceiveLocal == freezed
+          ? _value.amountToReceiveLocal
+          : amountToReceiveLocal // ignore: cast_nullable_to_non_nullable
               as double,
-      amountToReceiveNgaUsd: amountToReceiveNgaUsd == freezed
-          ? _value.amountToReceiveNgaUsd
-          : amountToReceiveNgaUsd // ignore: cast_nullable_to_non_nullable
+      amountToReceiveUSD: amountToReceiveUSD == freezed
+          ? _value.amountToReceiveUSD
+          : amountToReceiveUSD // ignore: cast_nullable_to_non_nullable
               as dynamic,
       rate: rate == freezed
           ? _value.rate
@@ -375,8 +375,8 @@ class _$_RateData implements _RateData {
   const _$_RateData(
       {required this.amountToSend,
       required this.totalAmountToCharge,
-      required this.amountToReceive,
-      this.amountToReceiveNgaUsd = 0,
+      required this.amountToReceiveLocal,
+      this.amountToReceiveUSD = 0,
       required this.rate});
 
   factory _$_RateData.fromJson(Map<String, dynamic> json) =>
@@ -387,16 +387,16 @@ class _$_RateData implements _RateData {
   @override
   final num totalAmountToCharge;
   @override
-  final double amountToReceive;
+  final double amountToReceiveLocal;
   @JsonKey(defaultValue: 0)
   @override
-  final dynamic amountToReceiveNgaUsd;
+  final dynamic amountToReceiveUSD;
   @override
   final double rate;
 
   @override
   String toString() {
-    return 'RateData(amountToSend: $amountToSend, totalAmountToCharge: $totalAmountToCharge, amountToReceive: $amountToReceive, amountToReceiveNgaUsd: $amountToReceiveNgaUsd, rate: $rate)';
+    return 'RateData(amountToSend: $amountToSend, totalAmountToCharge: $totalAmountToCharge, amountToReceiveLocal: $amountToReceiveLocal, amountToReceiveUSD: $amountToReceiveUSD, rate: $rate)';
   }
 
   @override
@@ -409,12 +409,12 @@ class _$_RateData implements _RateData {
             (identical(other.totalAmountToCharge, totalAmountToCharge) ||
                 const DeepCollectionEquality()
                     .equals(other.totalAmountToCharge, totalAmountToCharge)) &&
-            (identical(other.amountToReceive, amountToReceive) ||
-                const DeepCollectionEquality()
-                    .equals(other.amountToReceive, amountToReceive)) &&
-            (identical(other.amountToReceiveNgaUsd, amountToReceiveNgaUsd) ||
+            (identical(other.amountToReceiveLocal, amountToReceiveLocal) ||
                 const DeepCollectionEquality().equals(
-                    other.amountToReceiveNgaUsd, amountToReceiveNgaUsd)) &&
+                    other.amountToReceiveLocal, amountToReceiveLocal)) &&
+            (identical(other.amountToReceiveUSD, amountToReceiveUSD) ||
+                const DeepCollectionEquality()
+                    .equals(other.amountToReceiveUSD, amountToReceiveUSD)) &&
             (identical(other.rate, rate) ||
                 const DeepCollectionEquality().equals(other.rate, rate)));
   }
@@ -424,8 +424,8 @@ class _$_RateData implements _RateData {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(amountToSend) ^
       const DeepCollectionEquality().hash(totalAmountToCharge) ^
-      const DeepCollectionEquality().hash(amountToReceive) ^
-      const DeepCollectionEquality().hash(amountToReceiveNgaUsd) ^
+      const DeepCollectionEquality().hash(amountToReceiveLocal) ^
+      const DeepCollectionEquality().hash(amountToReceiveUSD) ^
       const DeepCollectionEquality().hash(rate);
 
   @JsonKey(ignore: true)
@@ -443,8 +443,8 @@ abstract class _RateData implements RateData {
   const factory _RateData(
       {required num amountToSend,
       required num totalAmountToCharge,
-      required double amountToReceive,
-      dynamic amountToReceiveNgaUsd,
+      required double amountToReceiveLocal,
+      dynamic amountToReceiveUSD,
       required double rate}) = _$_RateData;
 
   factory _RateData.fromJson(Map<String, dynamic> json) = _$_RateData.fromJson;
@@ -454,9 +454,9 @@ abstract class _RateData implements RateData {
   @override
   num get totalAmountToCharge => throw _privateConstructorUsedError;
   @override
-  double get amountToReceive => throw _privateConstructorUsedError;
+  double get amountToReceiveLocal => throw _privateConstructorUsedError;
   @override
-  dynamic get amountToReceiveNgaUsd => throw _privateConstructorUsedError;
+  dynamic get amountToReceiveUSD => throw _privateConstructorUsedError;
   @override
   double get rate => throw _privateConstructorUsedError;
   @override

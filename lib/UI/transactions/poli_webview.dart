@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:jci_remit_mobile/values/values.dart';
 
 class PoliWebView extends StatefulWidget {
   final String url;
@@ -33,7 +34,7 @@ class _PoliWebViewState extends State<PoliWebView> {
   @override
   void initState() {
     super.initState();
-
+    print(widget.url);
     pullToRefreshController = PullToRefreshController(
       options: PullToRefreshOptions(
         color: Colors.blue,
@@ -58,10 +59,21 @@ class _PoliWebViewState extends State<PoliWebView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'POLI',
-          style: TextStyle(color: Colors.black87),
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            color: AppColors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
+        title: Text('POLI',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: Sizes.TEXT_SIZE_18,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: AppColors.red,
       ),
       body: SafeArea(
           child: Stack(

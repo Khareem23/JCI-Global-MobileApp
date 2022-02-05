@@ -4,6 +4,7 @@ import 'package:jci_remit_mobile/values/values.dart';
 
 extension CustomThemeContext on BuildContext {
   ThemeData get themeData => ThemeData(
+        primarySwatch: Colors.red,
         primaryColor: AppColors.primaryColor,
         accentColor: AppColors.accentColor,
         backgroundColor: Colors.white,

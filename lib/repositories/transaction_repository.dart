@@ -97,10 +97,10 @@ class TransactionRepository {
     return result;
   }
 
-  Stream<String> downloadFile(num transactionId) async* {
-    final result = _transactionService.downloadFile(transactionId);
-    yield* result;
-  }
+  // Stream<String> downloadFile(num transactionId) async* {
+  //   final result = _transactionService.downloadFile(transactionId);
+  //   yield* result;
+  // }
 
   String getCustomerId() {
     final util = Util();

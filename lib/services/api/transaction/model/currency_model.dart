@@ -27,14 +27,7 @@ abstract class CurrencyModel with _$CurrencyModel {
 
 @freezed
 abstract class Datum with _$Datum {
-  const factory Datum({
-    required String country,
-    required String callingCode,
-    required String alpha3Code,
-    required String alpha2Code,
-    required String currency,
-    required String flag,
-  }) = _Datum;
+  const factory Datum({required String countryCode}) = _Datum;
 
   factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
 }

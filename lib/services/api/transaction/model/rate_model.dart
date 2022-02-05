@@ -30,8 +30,8 @@ abstract class RateData with _$RateData {
   const factory RateData({
     required num amountToSend,
     required num totalAmountToCharge,
-    required double amountToReceive,
-    @Default(0) dynamic amountToReceiveNgaUsd,
+    required double amountToReceiveLocal,
+    @Default(0) dynamic amountToReceiveUSD,
     required double rate,
   }) = _RateData;
 

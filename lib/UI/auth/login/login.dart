@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_state.dart';
 import 'package:jci_remit_mobile/UI/auth/login/viewmodel/login_vm.dart';
 import 'package:jci_remit_mobile/UI/auth/register/register.dart';
+import 'package:jci_remit_mobile/UI/lander/lander.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
@@ -68,9 +69,17 @@ class LoginScreen extends HookWidget {
                     child: Column(
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.asset('assets/images/logo.png', height: 150),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LanderScreen()));
+                            },
+                            child: Image.asset('assets/images/logo.png',
+                                height: 120)),
                         SizedBox(
-                          height: 50,
+                          height: 100,
                         ),
 
                         Form(

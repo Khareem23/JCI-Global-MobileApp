@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jci_remit_mobile/UI/dashboard/viewmodels/user_dash_vm.dart';
+import 'package:jci_remit_mobile/UI/invite/refferals.dart';
+import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
@@ -143,6 +145,25 @@ class InviteScreen extends HookWidget {
                               );
                             },
                           ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          CustomButton(
+                              color: AppColors.primaryColor,
+                              width: MediaQuery.of(context).size.width,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Refferals()));
+                              },
+                              title: Text(
+                                'View Earnings',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Sizes.TEXT_SIZE_16),
+                              ))
                         ],
                       ),
                     )
