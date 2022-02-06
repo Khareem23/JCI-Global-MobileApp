@@ -27,8 +27,8 @@ _$_RateData _$_$_RateDataFromJson(Map<String, dynamic> json) {
   return _$_RateData(
     amountToSend: json['amountToSend'] as num,
     totalAmountToCharge: json['totalAmountToCharge'] as num,
-    amountToReceive: (json['amountToReceive'] as num).toDouble(),
-    amountToReceiveNgaUsd: json['amountToReceiveNgaUsd'] ?? 0,
+    amountToReceiveLocal: (json['amountToReceive_Local'] as num).toDouble(),
+    amountToReceiveUSD: json['amountToReceive_USD'] ?? 0,
     rate: (json['rate'] as num).toDouble(),
   );
 }
@@ -37,7 +37,7 @@ Map<String, dynamic> _$_$_RateDataToJson(_$_RateData instance) =>
     <String, dynamic>{
       'amountToSend': instance.amountToSend,
       'totalAmountToCharge': instance.totalAmountToCharge,
-      'amountToReceive': instance.amountToReceive,
-      'amountToReceiveNgaUsd': instance.amountToReceiveNgaUsd,
+      'amountToReceive_Local': instance.amountToReceiveLocal,
+      'amountToReceive_USD': instance.amountToReceiveUSD,
       'rate': instance.rate,
     };

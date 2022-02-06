@@ -44,52 +44,70 @@ class _PoliLanderScreenState extends State<PoliLanderScreen> {
       provider: addPaymentProvider,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'POLI Direct Deposit',
-            style: TextStyle(color: Colors.black87),
+          leading: IconButton(
+            icon: Icon(
+              Icons.chevron_left,
+              color: AppColors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
+          title: Text('POLI Direct Deposit',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: Sizes.TEXT_SIZE_18,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: AppColors.red,
         ),
         body: Container(
           padding: EdgeInsets.all(20),
           color: Colors.white,
           child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Click below to make a direct deposit payment by login to your POLI account to make payment and complete the transaction",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.blueGrey),
-                ),
-                SizedBox(height: 30),
-                Consumer(
-                  builder: (BuildContext context,
-                      T Function<T>(ProviderBase<Object?, T>) watch,
-                      Widget? child) {
-                    final vm = watch(addPaymentProvider);
-                    return Container(
-                      child: RaisedButton(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 15),
-                        onPressed: vm is Loading
-                            ? null
-                            : () => context
-                                .read(addPaymentProvider.notifier)
-                                .addPayment(widget.transactionData.id!, 0),
-                        color: AppColors.accentColor,
-                        child: Text(
-                            vm is Loading ? 'Please wait...' : 'Pay Now',
-                            style: btnAccentStyle),
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
+            child: Stack(alignment: AlignmentDirectional.center, children: [
+              Image.asset('assets/images/watermark.png',
+                  width: MediaQuery.of(context).size.width * 0.8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Click below to make a direct deposit payment by login to your POLI account to make payment and complete the transaction",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16, color: Colors.blueGrey),
+                  ),
+                  SizedBox(height: 30),
+                  Consumer(
+                    builder: (BuildContext context,
+                        T Function<T>(ProviderBase<Object?, T>) watch,
+                        Widget? child) {
+                      final vm = watch(addPaymentProvider);
+                      return Container(
+                        child: RaisedButton(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 15),
+                          onPressed: vm is Loading
+                              ? null
+                              : () => context
+                                  .read(addPaymentProvider.notifier)
+                                  .addPayment(widget.transactionData.id!, 1),
+                          // onPressed: () {
+                          //   print(widget.transactionData.id);
+                          // },
+                          color: AppColors.accentColor,
+                          child: Text(
+                              vm is Loading ? 'Please wait...' : 'Pay Now',
+                              style: btnAccentStyle),
+                        ),
+                      );
+                    },
+                  )
+                ],
+              )
+            ]),
           ),
         ),
       ),

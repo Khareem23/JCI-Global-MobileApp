@@ -19,11 +19,13 @@ _$_CreateBeneficiaryModel _$_$_CreateBeneficiaryModelFromJson(
     accountCurrency: json['accountCurrency'] as String,
     accountNumber: json['accountNumber'] as String,
     accountName: json['accountName'] as String,
+    beneficiaryAddress: json['beneficiaryAddress'] as String,
     accountSWiftCode: json['accountSWiftCode'] as String?,
     accountBsbCode: json['accountBsbCode'] as String?,
     corresBankCountry: json['corresBankCountry'] as String?,
     corresBankName: json['corresBankName'] as String?,
     corresBankIban: json['corresBankIban'] as String?,
+    corresBankAddress: json['corresBankAddress'] as String?,
   );
 }
 
@@ -40,9 +42,11 @@ Map<String, dynamic> _$_$_CreateBeneficiaryModelToJson(
       'accountCurrency': instance.accountCurrency,
       'accountNumber': instance.accountNumber,
       'accountName': instance.accountName,
+      'beneficiaryAddress': instance.beneficiaryAddress,
       'accountSWiftCode': instance.accountSWiftCode,
       'accountBsbCode': instance.accountBsbCode,
       'corresBankCountry': instance.corresBankCountry,
       'corresBankName': instance.corresBankName,
       'corresBankIban': instance.corresBankIban,
+      'corresBankAddress': instance.corresBankAddress,
     };

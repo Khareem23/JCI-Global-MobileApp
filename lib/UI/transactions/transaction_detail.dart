@@ -4,6 +4,7 @@ import 'package:jci_remit_mobile/services/api/user/models/user_transaction.dart'
 import 'package:jci_remit_mobile/utils/extensions.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
+import 'package:intl/intl.dart';
 
 class TransactionDetail extends StatelessWidget {
   final Datum data;
@@ -11,6 +12,8 @@ class TransactionDetail extends StatelessWidget {
   const TransactionDetail({Key? key, required this.data}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormat('#,###,###.#');
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -54,19 +57,19 @@ class TransactionDetail extends StatelessWidget {
                               .copyWith(fontSize: 12),
                         ),
                         TextSpan(
-                          text: data.amountToSend.toString(),
+                          text: formatter.format(data.amountToSend).toString(),
                           style: context.textTheme.headline4!.copyWith(
                               fontSize: 40, fontWeight: FontWeight.w400),
                         )
                       ],
                     ),
                   ),
-                  Text(
-                    formatDate(data.dateSent!, [dd, ' ', M, ' ', yyyy]),
-                    textAlign: TextAlign.center,
-                    style: context.textTheme.headline3!
-                        .copyWith(color: Colors.grey, fontSize: 14),
-                  )
+                  // Text(
+                  //   formatDate(data.dateSent!, [dd, ' ', M, ' ', yyyy]),
+                  //   textAlign: TextAlign.center,
+                  //   style: context.textTheme.headline3!
+                  //       .copyWith(color: Colors.grey, fontSize: 14),
+                  // )
                 ],
               ),
             ),
@@ -109,7 +112,7 @@ class TransactionDetail extends StatelessWidget {
                 ),
                 TrnxDetailItem(
                   title: 'Amount Sent',
-                  item: data.amountToSend.toString(),
+                  item: formatter.format(data.amountToSend).toString(),
                 ),
                 SizedBox(
                   height: 10,
@@ -123,7 +126,7 @@ class TransactionDetail extends StatelessWidget {
                 ),
                 TrnxDetailItem(
                   title: 'Amount Received',
-                  item: data.amountToReceive.toString(),
+                  item: formatter.format(data.amountToReceive).toString(),
                 ),
                 SizedBox(
                   height: 10,
@@ -143,9 +146,11 @@ class TransactionDetail extends StatelessWidget {
                   height: 10,
                 ),
                 TrnxDetailItem(
-                  title: 'Date & Time Processed',
+                  title: 'Date Processed',
+                  // title: 'Date & Time Processed',
                   item:
-                      formatDate(data.dateProcessed!, [dd, ' ', M, ' ', yyyy]),
+                      // formatDate(data.dateProcessed!, [dd, ' ', M, ' ', yyyy]),
+                      formatDate(data.dateSent!, [dd, ' ', M, ' ', yyyy]),
                 ),
               ],
             ),

@@ -32,11 +32,13 @@ class _$CreateBeneficiaryModelTearOff {
       required String accountCurrency,
       required String accountNumber,
       required String accountName,
+      required String beneficiaryAddress,
       String? accountSWiftCode,
       String? accountBsbCode,
       String? corresBankCountry,
       String? corresBankName,
-      String? corresBankIban}) {
+      String? corresBankIban,
+      String? corresBankAddress}) {
     return _CreateBeneficiaryModel(
       customerId: customerId,
       country: country,
@@ -48,11 +50,13 @@ class _$CreateBeneficiaryModelTearOff {
       accountCurrency: accountCurrency,
       accountNumber: accountNumber,
       accountName: accountName,
+      beneficiaryAddress: beneficiaryAddress,
       accountSWiftCode: accountSWiftCode,
       accountBsbCode: accountBsbCode,
       corresBankCountry: corresBankCountry,
       corresBankName: corresBankName,
       corresBankIban: corresBankIban,
+      corresBankAddress: corresBankAddress,
     );
   }
 
@@ -76,11 +80,13 @@ mixin _$CreateBeneficiaryModel {
   String get accountCurrency => throw _privateConstructorUsedError;
   String get accountNumber => throw _privateConstructorUsedError;
   String get accountName => throw _privateConstructorUsedError;
+  String get beneficiaryAddress => throw _privateConstructorUsedError;
   String? get accountSWiftCode => throw _privateConstructorUsedError;
   String? get accountBsbCode => throw _privateConstructorUsedError;
   String? get corresBankCountry => throw _privateConstructorUsedError;
   String? get corresBankName => throw _privateConstructorUsedError;
   String? get corresBankIban => throw _privateConstructorUsedError;
+  String? get corresBankAddress => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -104,11 +110,13 @@ abstract class $CreateBeneficiaryModelCopyWith<$Res> {
       String accountCurrency,
       String accountNumber,
       String accountName,
+      String beneficiaryAddress,
       String? accountSWiftCode,
       String? accountBsbCode,
       String? corresBankCountry,
       String? corresBankName,
-      String? corresBankIban});
+      String? corresBankIban,
+      String? corresBankAddress});
 }
 
 /// @nodoc
@@ -132,11 +140,13 @@ class _$CreateBeneficiaryModelCopyWithImpl<$Res>
     Object? accountCurrency = freezed,
     Object? accountNumber = freezed,
     Object? accountName = freezed,
+    Object? beneficiaryAddress = freezed,
     Object? accountSWiftCode = freezed,
     Object? accountBsbCode = freezed,
     Object? corresBankCountry = freezed,
     Object? corresBankName = freezed,
     Object? corresBankIban = freezed,
+    Object? corresBankAddress = freezed,
   }) {
     return _then(_value.copyWith(
       customerId: customerId == freezed
@@ -179,6 +189,10 @@ class _$CreateBeneficiaryModelCopyWithImpl<$Res>
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
               as String,
+      beneficiaryAddress: beneficiaryAddress == freezed
+          ? _value.beneficiaryAddress
+          : beneficiaryAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       accountSWiftCode: accountSWiftCode == freezed
           ? _value.accountSWiftCode
           : accountSWiftCode // ignore: cast_nullable_to_non_nullable
@@ -198,6 +212,10 @@ class _$CreateBeneficiaryModelCopyWithImpl<$Res>
       corresBankIban: corresBankIban == freezed
           ? _value.corresBankIban
           : corresBankIban // ignore: cast_nullable_to_non_nullable
+              as String?,
+      corresBankAddress: corresBankAddress == freezed
+          ? _value.corresBankAddress
+          : corresBankAddress // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -221,10 +239,12 @@ abstract class _$CreateBeneficiaryModelCopyWith<$Res>
       String accountCurrency,
       String accountNumber,
       String accountName,
+      String beneficiaryAddress,
       String? accountSWiftCode,
       String? accountBsbCode,
       String? corresBankCountry,
       String? corresBankName,
+      String? corresBankAddress,
       String? corresBankIban});
 }
 
@@ -251,11 +271,13 @@ class __$CreateBeneficiaryModelCopyWithImpl<$Res>
     Object? accountCurrency = freezed,
     Object? accountNumber = freezed,
     Object? accountName = freezed,
+    Object? beneficiaryAddress = freezed,
     Object? accountSWiftCode = freezed,
     Object? accountBsbCode = freezed,
     Object? corresBankCountry = freezed,
     Object? corresBankName = freezed,
     Object? corresBankIban = freezed,
+    Object? corresBankAddress = freezed,
   }) {
     return _then(_CreateBeneficiaryModel(
       customerId: customerId == freezed
@@ -298,6 +320,10 @@ class __$CreateBeneficiaryModelCopyWithImpl<$Res>
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
               as String,
+      beneficiaryAddress: beneficiaryAddress == freezed
+          ? _value.beneficiaryAddress
+          : beneficiaryAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       accountSWiftCode: accountSWiftCode == freezed
           ? _value.accountSWiftCode
           : accountSWiftCode // ignore: cast_nullable_to_non_nullable
@@ -318,6 +344,10 @@ class __$CreateBeneficiaryModelCopyWithImpl<$Res>
           ? _value.corresBankIban
           : corresBankIban // ignore: cast_nullable_to_non_nullable
               as String?,
+      corresBankAddress: corresBankAddress == freezed
+          ? _value.corresBankAddress
+          : corresBankAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -336,11 +366,13 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
       required this.accountCurrency,
       required this.accountNumber,
       required this.accountName,
+      required this.beneficiaryAddress,
       this.accountSWiftCode,
       this.accountBsbCode,
       this.corresBankCountry,
       this.corresBankName,
-      this.corresBankIban});
+      this.corresBankIban,
+      this.corresBankAddress});
 
   factory _$_CreateBeneficiaryModel.fromJson(Map<String, dynamic> json) =>
       _$_$_CreateBeneficiaryModelFromJson(json);
@@ -366,6 +398,8 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
   @override
   final String accountName;
   @override
+  final String beneficiaryAddress;
+  @override
   final String? accountSWiftCode;
   @override
   final String? accountBsbCode;
@@ -375,10 +409,12 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
   final String? corresBankName;
   @override
   final String? corresBankIban;
+  @override
+  final String? corresBankAddress;
 
   @override
   String toString() {
-    return 'CreateBeneficiaryModel(customerId: $customerId, country: $country, bankName: $bankName, bankState: $bankState, bankPostalCode: $bankPostalCode, bankCity: $bankCity, bankAddress: $bankAddress, accountCurrency: $accountCurrency, accountNumber: $accountNumber, accountName: $accountName, accountSWiftCode: $accountSWiftCode, accountBsbCode: $accountBsbCode, corresBankCountry: $corresBankCountry, corresBankName: $corresBankName, corresBankIban: $corresBankIban)';
+    return 'CreateBeneficiaryModel(customerId: $customerId, country: $country, bankName: $bankName, bankState: $bankState, bankPostalCode: $bankPostalCode, bankCity: $bankCity, bankAddress: $bankAddress, accountCurrency: $accountCurrency, accountNumber: $accountNumber, accountName: $accountName, beneficiaryAddress: $beneficiaryAddress, accountSWiftCode: $accountSWiftCode, accountBsbCode: $accountBsbCode, corresBankCountry: $corresBankCountry, corresBankName: $corresBankName, corresBankIban: $corresBankIban, corresBankAddress: $corresBankAddress)';
   }
 
   @override
@@ -415,6 +451,9 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
             (identical(other.accountName, accountName) ||
                 const DeepCollectionEquality()
                     .equals(other.accountName, accountName)) &&
+            (identical(other.beneficiaryAddress, beneficiaryAddress) ||
+                const DeepCollectionEquality()
+                    .equals(other.beneficiaryAddress, beneficiaryAddress)) &&
             (identical(other.accountSWiftCode, accountSWiftCode) ||
                 const DeepCollectionEquality()
                     .equals(other.accountSWiftCode, accountSWiftCode)) &&
@@ -429,7 +468,10 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
                     .equals(other.corresBankName, corresBankName)) &&
             (identical(other.corresBankIban, corresBankIban) ||
                 const DeepCollectionEquality()
-                    .equals(other.corresBankIban, corresBankIban)));
+                    .equals(other.corresBankIban, corresBankIban)) &&
+            (identical(other.corresBankAddress, corresBankAddress) ||
+                const DeepCollectionEquality()
+                    .equals(other.corresBankAddress, corresBankAddress)));
   }
 
   @override
@@ -444,12 +486,14 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
       const DeepCollectionEquality().hash(bankAddress) ^
       const DeepCollectionEquality().hash(accountCurrency) ^
       const DeepCollectionEquality().hash(accountNumber) ^
+      const DeepCollectionEquality().hash(beneficiaryAddress) ^
       const DeepCollectionEquality().hash(accountName) ^
       const DeepCollectionEquality().hash(accountSWiftCode) ^
       const DeepCollectionEquality().hash(accountBsbCode) ^
       const DeepCollectionEquality().hash(corresBankCountry) ^
       const DeepCollectionEquality().hash(corresBankName) ^
-      const DeepCollectionEquality().hash(corresBankIban);
+      const DeepCollectionEquality().hash(corresBankIban) ^
+      const DeepCollectionEquality().hash(corresBankAddress);
 
   @JsonKey(ignore: true)
   @override
@@ -475,11 +519,13 @@ abstract class _CreateBeneficiaryModel implements CreateBeneficiaryModel {
       required String accountCurrency,
       required String accountNumber,
       required String accountName,
+      required String beneficiaryAddress,
       String? accountSWiftCode,
       String? accountBsbCode,
       String? corresBankCountry,
       String? corresBankName,
-      String? corresBankIban}) = _$_CreateBeneficiaryModel;
+      String? corresBankIban,
+      String? corresBankAddress}) = _$_CreateBeneficiaryModel;
 
   factory _CreateBeneficiaryModel.fromJson(Map<String, dynamic> json) =
       _$_CreateBeneficiaryModel.fromJson;
@@ -505,6 +551,8 @@ abstract class _CreateBeneficiaryModel implements CreateBeneficiaryModel {
   @override
   String get accountName => throw _privateConstructorUsedError;
   @override
+  String get beneficiaryAddress => throw _privateConstructorUsedError;
+  @override
   String? get accountSWiftCode => throw _privateConstructorUsedError;
   @override
   String? get accountBsbCode => throw _privateConstructorUsedError;
@@ -514,6 +562,8 @@ abstract class _CreateBeneficiaryModel implements CreateBeneficiaryModel {
   String? get corresBankName => throw _privateConstructorUsedError;
   @override
   String? get corresBankIban => throw _privateConstructorUsedError;
+  @override
+  String? get corresBankAddress => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$CreateBeneficiaryModelCopyWith<_CreateBeneficiaryModel> get copyWith =>

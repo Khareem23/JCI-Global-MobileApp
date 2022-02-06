@@ -22,6 +22,7 @@ class BasicInfoScreen extends HookWidget {
     var _accountTypes = ['Individual Account', 'Business Account'];
     final gender = useState('Male');
 
+    final refCode = useState('');
     final firstName = useState('');
     final lastName = useState('');
     final dob = useState<DateTime>(DateTime.now());
@@ -29,15 +30,18 @@ class BasicInfoScreen extends HookWidget {
     var phoneNumber = useState('');
     final accountType = useState('Individual Account');
 
+    final refCodeFocusNode = useFocusNode();
     final fnameFocusNode = useFocusNode();
     final lnameFocusNode = useFocusNode();
     final emailFocusNode = useFocusNode();
     final phoneFocusNode = useFocusNode();
+    final refCodeBgColor = useState(Colors.white);
     final fnameBgColor = useState(Colors.white);
     final lnameBgColor = useState(Colors.white);
     final emailBgColor = useState(Colors.white);
     final phoneBgColor = useState(Colors.white);
     txtFieldListener(phoneFocusNode, phoneBgColor);
+    txtFieldListener(refCodeFocusNode, refCodeBgColor);
     txtFieldListener(fnameFocusNode, fnameBgColor);
     txtFieldListener(lnameFocusNode, lnameBgColor);
     txtFieldListener(emailFocusNode, emailBgColor);
@@ -106,7 +110,7 @@ class BasicInfoScreen extends HookWidget {
                   errorStyle: TextStyle(color: Colors.redAccent),
                   hintText: 'Date of birth',
                   filled: true,
-                  // fillColor: phoneBgColor.value,
+                  // fillColor: AppColors.primaryColor,
                   contentPadding:
                       const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   border: OutlineInputBorder(
@@ -283,9 +287,19 @@ class BasicInfoScreen extends HookWidget {
                   );
                 }).toList(),
               ),
-
               SizedBox(
-                height: 50,
+                height: 20,
+              ),
+              CustomTextFormField(
+                focusNode: refCodeFocusNode,
+                fillColor: refCodeBgColor.value,
+                onChanged: (v) => refCode.value = v,
+                textInputType: TextInputType.text,
+                hintText: 'Referral Code',
+                labelText: 'Referral Code',
+              ),
+              SizedBox(
+                height: 30,
               ),
               CustomButton(
                   width: MediaQuery.of(context).size.width,
@@ -298,6 +312,7 @@ class BasicInfoScreen extends HookWidget {
                         accountType.value == 'Individual Account' ? 0 : 1;
                     context.flow<Register>().update((register) =>
                         register.copyWith(
+                            refCode: refCode.value,
                             firstName: firstName.value,
                             lastName: lastName.value,
                             email: email.value,

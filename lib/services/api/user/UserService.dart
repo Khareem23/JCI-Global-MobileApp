@@ -66,6 +66,28 @@ class UserService extends IUserService {
   @override
   Future<RegisterResDto> register(Register register) async {
     final url = 'Users/register';
+
+    var data = {
+      "email": "jj@ss.com",
+      "firstName": "ie",
+      "phoneNumber": "+2348099338822",
+      "lastName": "rrr",
+      "password": "password",
+      "pin": "123456",
+      "countryOfResidence": "CAN",
+      "countryOfNationality": "ITA",
+      "sourceOfFunds": "null",
+      "state": "Northwest Territories",
+      "city": "wsssfffggghhh",
+      "postalCode": "145",
+      "address": "erttt",
+      "gender": "Female",
+      "dateOfBirth": "2022-01-24T00:00:00.000",
+      "businessName": "null",
+      "businessRegNumber": "null",
+      "accountType": "0",
+      "userRole": "0"
+    };
     try {
       final response =
           await _dio.post(url, data: register.toJson(), options: Options());

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/auth/login/login.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/values/values.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
@@ -43,7 +44,9 @@ class RegisterSuccessScreen extends HookWidget {
             return CustomButton(
                 width: MediaQuery.of(context).size.width,
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  // Navigator.of(context).pop();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
                 title: Text(
                   'Proceed',

@@ -5,6 +5,7 @@ import 'package:jci_remit_mobile/UI/transactions/direct_debit_screen.dart';
 import 'package:jci_remit_mobile/UI/transactions/poli_lander_screen.dart';
 import 'package:jci_remit_mobile/UI/transactions/wire_transfer_screen.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
+import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
 import 'package:jci_remit_mobile/utils/extensions.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
@@ -21,204 +22,217 @@ class TransactionSuccessScreen extends HookWidget {
     final _selectedIndex = useState(1);
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Transaction Status',
-            style: TextStyle(color: Colors.black87),
+          leading: IconButton(
+            icon: Icon(
+              Icons.chevron_left,
+              color: AppColors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
+          title: Text('Transaction Status',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: Sizes.TEXT_SIZE_18,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: AppColors.red,
         ),
         body: Container(
             color: Colors.white,
             child: Center(
                 child: Padding(
               padding: EdgeInsets.all(20),
-              child: ListView(
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Icon(
-                    Feather.check_circle,
-                    color: Colors.green,
-                    size: 80,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Proceed with payment',
-                      style: context.textTheme.headline4!
-                          .copyWith(fontSize: 20, color: Colors.black),
+              child: Stack(alignment: AlignmentDirectional.center, children: [
+                Image.asset('assets/images/watermark.png',
+                    width: MediaQuery.of(context).size.width * 0.8),
+                ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  // SizedBox(
-                  //   height: 15,
-                  // ),
-                  // Text(
-                  //   'Now you can make payment for the transaction.',
-                  //   textAlign: TextAlign.center,
-                  //   style: context.textTheme.headline5!
-                  //       .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
-                  // ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    'How do you want to pay for this transfer?',
-                    textAlign: TextAlign.center,
-                    style: context.textTheme.headline4!.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black54),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: _selectedIndex.value == 1
-                                ? AppColors.primaryColor
-                                : AppColors.blackShade1)),
-                    child: ListTile(
-                        onTap: () {
-                          _selectedIndex.value = 1;
-                        },
-                        selected: _selectedIndex.value == 1,
-                        leading: Icon(Feather.corner_up_right,
-                            color: _selectedIndex.value == 1
-                                ? AppColors.primaryColor
-                                : AppColors.blackShade1),
-                        selectedTileColor: AppColors.primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        title: Text(
-                          'Direct Debit (POLI)',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
+                    Image.asset('assets/images/dollar.png', height: 80),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Proceed with payment',
+                        style: context.textTheme.headline4!
+                            .copyWith(fontSize: 20, color: Colors.black),
+                      ),
+                    ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // Text(
+                    //   'Now you can make payment for the transaction.',
+                    //   textAlign: TextAlign.center,
+                    //   style: context.textTheme.headline5!
+                    //       .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
+                    // ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Text(
+                      'How do you want to pay for this\ntransfer?',
+                      textAlign: TextAlign.center,
+                      style: context.textTheme.headline4!.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black54),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: _selectedIndex.value == 1
+                                  ? AppColors.primaryColor
+                                  : AppColors.blackShade1)),
+                      child: ListTile(
+                          onTap: () {
+                            _selectedIndex.value = 1;
+                          },
+                          selected: _selectedIndex.value == 1,
+                          leading: Icon(Feather.corner_up_right,
                               color: _selectedIndex.value == 1
                                   ? AppColors.primaryColor
                                   : AppColors.blackShade1),
-                        ),
-                        trailing: Icon(AntDesign.right,
-                            color: _selectedIndex.value == 1
-                                ? AppColors.primaryColor
-                                : AppColors.blackShade1)),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
+                          selectedTileColor: AppColors.primaryColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          title: Text(
+                            'Direct Debit (POLI)',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: _selectedIndex.value == 1
+                                    ? AppColors.primaryColor
+                                    : AppColors.blackShade1),
+                          ),
+                          trailing: Icon(AntDesign.right,
+                              color: _selectedIndex.value == 1
+                                  ? AppColors.primaryColor
+                                  : AppColors.blackShade1)),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: _selectedIndex.value == 2
+                                  ? AppColors.primaryColor
+                                  : AppColors.blackShade1)),
+                      child: ListTile(
+                          onTap: () {
+                            _selectedIndex.value = 2;
+                          },
+                          selected: _selectedIndex.value == 2,
+                          leading: Icon(
+                            Feather.corner_right_up,
                             color: _selectedIndex.value == 2
                                 ? AppColors.primaryColor
-                                : AppColors.blackShade1)),
-                    child: ListTile(
-                        onTap: () {
-                          _selectedIndex.value = 2;
-                        },
-                        selected: _selectedIndex.value == 2,
-                        leading: Icon(
-                          Feather.corner_right_up,
-                          color: _selectedIndex.value == 2
-                              ? AppColors.primaryColor
-                              : AppColors.blackShade1,
-                        ),
-                        title: Text('Domestic Wire Transfer',
-                            style: TextStyle(
-                                color: _selectedIndex.value == 2
-                                    ? AppColors.primaryColor
-                                    : AppColors.blackShade1,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400)),
-                        trailing: Icon(
-                          AntDesign.right,
-                          color: _selectedIndex.value == 2
-                              ? AppColors.primaryColor
-                              : AppColors.blackShade1,
-                        )),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: _selectedIndex.value == 3
+                                : AppColors.blackShade1,
+                          ),
+                          title: Text('Domestic Wire Transfer',
+                              style: TextStyle(
+                                  color: _selectedIndex.value == 2
+                                      ? AppColors.primaryColor
+                                      : AppColors.blackShade1,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400)),
+                          trailing: Icon(
+                            AntDesign.right,
+                            color: _selectedIndex.value == 2
                                 ? AppColors.primaryColor
-                                : AppColors.blackShade1)),
-                    child: ListTile(
-                        onTap: () {
-                          _selectedIndex.value = 3;
-                        },
-                        selected: _selectedIndex.value == 3,
-                        selectedTileColor: AppColors.primaryColor,
-                        leading: Icon(
-                          Feather.credit_card,
-                          color: _selectedIndex.value == 3
-                              ? AppColors.primaryColor
-                              : AppColors.blackShade1,
-                        ),
-                        title: Text('Credit Card',
-                            style: TextStyle(
-                                color: _selectedIndex.value == 3
-                                    ? AppColors.primaryColor
-                                    : AppColors.blackShade1,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400)),
-                        trailing: Icon(
-                          AntDesign.right,
-                          color: _selectedIndex.value == 3
-                              ? AppColors.primaryColor
-                              : AppColors.blackShade1,
-                        )),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Text(
-                    'Transaction will be processed upon fund confirmation only. Please use your own account to pay for the transaction. We do not accept any payments made through third party accounts via net banking. Using third party account would result in your transaction being cancelled/rejected in order to protect you from fraud. We do not accept cash/cheque deposit into our account. Pls make use of the listed payment options above.',
-                    textAlign: TextAlign.center,
-                    style: context.textTheme.headline5!
-                        .copyWith(fontWeight: FontWeight.w300, fontSize: 8),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  CustomButton(
-                      color: Colors.black,
-                      onPressed: () {
-                        if (_selectedIndex.value == 1) {
-                          context.navigate(
-                              PoliLanderScreen(transactionData: transaction));
-                          // Poli transfer
-                        } else if (_selectedIndex.value == 2) {
-                          // Domestic Wire Transfer
-                          return context.navigate(
-                              WireTransferScreen(transactionData: transaction));
-                        } else if (_selectedIndex.value == 3) {
-                          // Credit Card
+                                : AppColors.blackShade1,
+                          )),
+                    ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       border: Border.all(
+                    //           color: _selectedIndex.value == 3
+                    //               ? AppColors.primaryColor
+                    //               : AppColors.blackShade1)),
+                    //   child: ListTile(
+                    //       onTap: () {
+                    //         _selectedIndex.value = 3;
+                    //       },
+                    //       selected: _selectedIndex.value == 3,
+                    //       selectedTileColor: AppColors.primaryColor,
+                    //       leading: Icon(
+                    //         Feather.credit_card,
+                    //         color: _selectedIndex.value == 3
+                    //             ? AppColors.primaryColor
+                    //             : AppColors.blackShade1,
+                    //       ),
+                    //       title: Text('Credit Card',
+                    //           style: TextStyle(
+                    //               color: _selectedIndex.value == 3
+                    //                   ? AppColors.primaryColor
+                    //                   : AppColors.blackShade1,
+                    //               fontSize: 16,
+                    //               fontWeight: FontWeight.w400)),
+                    //       trailing: Icon(
+                    //         AntDesign.right,
+                    //         color: _selectedIndex.value == 3
+                    //             ? AppColors.primaryColor
+                    //             : AppColors.blackShade1,
+                    //       )),
+                    // ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Text(
+                      'Transaction will be processed upon fund confirmation only. Please use your own account to pay for the transaction. We do not accept any payments made through third party accounts via net banking. Using third party account would result in your transaction being cancelled/rejected in order to protect you from fraud. We do not accept cash/cheque deposit into our account. Pls make use of the listed payment options above.',
+                      textAlign: TextAlign.justify,
+                      style: context.textTheme.headline5!
+                          .copyWith(fontWeight: FontWeight.w300, fontSize: 9),
+                    ),
+                    SizedBox(
+                      height: 100,
+                    ),
+                    CustomButton(
+                        color: AppColors.primaryColor,
+                        onPressed: () {
+                          if (_selectedIndex.value == 1) {
+                            context.navigate(
+                                PoliLanderScreen(transactionData: transaction));
+                            // Poli transfer
+                          } else if (_selectedIndex.value == 2) {
+                            // Domestic Wire Transfer
+                            return context.navigate(WireTransferScreen(
+                                transactionData: transaction));
+                          } else if (_selectedIndex.value == 3) {
+                            // Credit Card
 
-                        }
-                      },
-                      width: context.screenWidth(1),
-                      title: Text(
-                        'CONTINUE',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: Sizes.TEXT_SIZE_16),
-                      )),
-                  SizedBox(
-                    height: 20,
-                  )
-                ],
-              ),
+                            AppSnackBar.showErrorSnackBar(context,
+                                message: 'Credit Card not Available!');
+                          }
+                        },
+                        width: context.screenWidth(1),
+                        title: Text(
+                          'CONTINUE',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Sizes.TEXT_SIZE_16),
+                        )),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                )
+              ]),
             ))));
   }
 }

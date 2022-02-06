@@ -32,7 +32,7 @@ class UserDashboard extends HookWidget {
               Container(
                 padding:
                     EdgeInsets.only(left: 40, right: 40, top: 0, bottom: 20),
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.23,
                 width: MediaQuery.of(context).size.width,
                 // decoration: BoxDecoration(color: AppColors.black),
                 child: Column(
@@ -105,7 +105,7 @@ class UserDashboard extends HookWidget {
                           //   height: 20,
                           // ),
                           Image.asset("assets/images/logo.png",
-                              width: MediaQuery.of(context).size.width * 0.43),
+                              width: MediaQuery.of(context).size.width * 0.4),
                           InkWell(
                             onTap: () =>
                                 context.navigate(CreateTransactionScreen()),
@@ -140,15 +140,15 @@ class UserDashboard extends HookWidget {
                   ],
                 ),
               ),
-              Expanded(
-                  child: Container(
+              Container(
                 width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.6,
                 decoration: BoxDecoration(
                     color: Color(0xFFF9F9FB),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40))),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Stack(alignment: AlignmentDirectional.center, children: [
                   Image.asset('assets/images/watermark.png',
                       width: MediaQuery.of(context).size.width * 0.8),
@@ -175,7 +175,7 @@ class UserDashboard extends HookWidget {
                           ),
                         ],
                       ),
-                      Expanded(
+                      Container(
                         child: useProvider(userTransactionsProvider).when(
                           data: (transactions) {
                             if (transactions.isEmpty) {
@@ -203,7 +203,7 @@ class UserDashboard extends HookWidget {
                                     name: trnx.fullName!,
                                     receivingCounty: trnx.receivingCountry!,
                                     sendingCountry: trnx.sendingCountry!,
-                                    transactionDate: trnx.dateProcessed!,
+                                    transactionDate: trnx.dateSent!,
                                     transactionType: trnx.transactionType!,
                                   ),
                                 );
@@ -233,9 +233,9 @@ class UserDashboard extends HookWidget {
                         ),
                       ),
 
-                      // Divider(
-                      //   indent: 40,
-                      // ),
+                      SizedBox(
+                        height: 100,
+                      ),
                       // TransactionCard(),
                       // Divider(),
                       // TransactionCard(),
@@ -243,7 +243,7 @@ class UserDashboard extends HookWidget {
                     ],
                   )
                 ]),
-              ))
+              )
             ],
           ),
         ),

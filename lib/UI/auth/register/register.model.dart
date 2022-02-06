@@ -11,6 +11,7 @@ String registerToJson(Register data) => json.encode(data.toJson());
 class Register {
   const Register({
     this.email,
+    this.refCode,
     this.firstName,
     this.phoneNumber,
     this.lastName,
@@ -32,6 +33,7 @@ class Register {
   });
 
   final String? email;
+  final String? refCode;
   final String? firstName;
   final String? phoneNumber;
   final String? lastName;
@@ -53,6 +55,7 @@ class Register {
 
   Register copyWith({
     String? email,
+    String? refCode,
     String? firstName,
     String? phoneNumber,
     String? lastName,
@@ -74,6 +77,7 @@ class Register {
   }) =>
       Register(
         email: email ?? this.email,
+        refCode: refCode ?? this.refCode,
         firstName: firstName ?? this.firstName,
         phoneNumber: phoneNumber ?? this.phoneNumber,
         lastName: lastName ?? this.lastName,
@@ -119,6 +123,7 @@ class Register {
 
   Map<String, dynamic> toJson() => {
         "email": email == null ? null : email,
+        "referralCode": refCode == null ? null : refCode,
         "firstName": firstName == null ? null : firstName,
         "phoneNumber": phoneNumber == null ? null : phoneNumber,
         "lastName": lastName == null ? null : lastName,

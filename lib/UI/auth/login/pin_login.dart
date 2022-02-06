@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/lander/lander.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/custom_text_field.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
@@ -34,9 +35,17 @@ class PinLoginScreen extends HookWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/images/svg/login.svg', height: 150),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LanderScreen()));
+                      },
+                      child: SvgPicture.asset('assets/images/svg/login.svg',
+                          height: 120)),
                   SizedBox(
-                    height: 50,
+                    height: 100,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -34,7 +34,7 @@ class CreateTransactionScreen extends HookWidget {
       'Medical Fees'
     ];
     final sendingCountry = useState('AUS');
-    final receivingCountry = useState('AUS');
+    final receivingCountry = useState('NGA');
     final defaultSendingCountryFlag =
         useState('https://restcountries.eu/data/aus.svg');
     final defaultReceivingCountryFlag =
@@ -42,7 +42,7 @@ class CreateTransactionScreen extends HookWidget {
     final purpose = useTextEditingController();
     final description = useTextEditingController();
     final bonus = useTextEditingController();
-    final sendAmountController = useTextEditingController(text: '1');
+    final sendAmountController = useTextEditingController(text: '20');
     final amount = _useDebouncedSearch(sendAmountController);
 
     return ProviderListener(
@@ -140,272 +140,293 @@ class CreateTransactionScreen extends HookWidget {
                                               // padding: EdgeInsets.all(20),
                                               height: context.screenHeight(1),
                                               child: Form(
-                                                key: formKey,
-                                                child: Column(
-                                                  // controller: ,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Icon(
-                                                          Icons
-                                                              .keyboard_arrow_down,
-                                                          color: Colors.grey,
-                                                          size: 40.0,
-                                                        )),
-                                                    Text(
-                                                      'Purpose of Payment',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: context
-                                                          .textTheme.headline3!
-                                                          .copyWith(
-                                                              color:
-                                                                  Colors.grey,
-                                                              fontSize: 14),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10),
-                                                      child: TextFormField(
-                                                        controller: purpose,
-                                                        validator: (val) {
-                                                          if (val == null ||
-                                                              val.isEmpty)
-                                                            return 'Select Purpose';
-                                                          return null;
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          hintText:
-                                                              'Purpose of transaction',
-                                                          contentPadding:
-                                                              EdgeInsets
-                                                                  .fromLTRB(
-                                                                      20.0,
-                                                                      15.0,
-                                                                      20.0,
-                                                                      15.0),
-                                                          border:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0),
-                                                          ),
-                                                          suffixIcon:
-                                                              PopupMenuButton<
-                                                                  String>(
-                                                            icon: const Icon(Icons
-                                                                .arrow_drop_down),
-                                                            onSelected:
-                                                                (String value) {
-                                                              purpose.text =
-                                                                  value;
-                                                            },
-                                                            itemBuilder:
-                                                                (BuildContext
-                                                                    context) {
-                                                              return purposes.map<
-                                                                  PopupMenuItem<
-                                                                      String>>((String
-                                                                  value) {
-                                                                return new PopupMenuItem(
-                                                                    child: new Text(
-                                                                        value),
-                                                                    value:
-                                                                        value);
-                                                              }).toList();
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Text(
-                                                      'Description of Transaction',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: context
-                                                          .textTheme.headline3!
-                                                          .copyWith(
-                                                              color:
-                                                                  Colors.grey,
-                                                              fontSize: 14),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10),
-                                                      child: TextFormField(
-                                                        controller: description,
-                                                        maxLines: 4,
-                                                        validator: (val) {
-                                                          if (val == null ||
-                                                              val.isEmpty)
-                                                            return 'Enter a description';
-                                                          return null;
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          hintText:
+                                                  key: formKey,
+                                                  child: Stack(
+                                                      alignment:
+                                                          AlignmentDirectional
+                                                              .center,
+                                                      children: [
+                                                        Image.asset(
+                                                            'assets/images/watermark.png',
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.8),
+                                                        Column(
+                                                          // controller: ,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            GestureDetector(
+                                                                onTap: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .keyboard_arrow_down,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  size: 40.0,
+                                                                )),
+                                                            Text(
+                                                              'Purpose of Payment',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: context
+                                                                  .textTheme
+                                                                  .headline3!
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      fontSize:
+                                                                          14),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child:
+                                                                  TextFormField(
+                                                                controller:
+                                                                    purpose,
+                                                                validator:
+                                                                    (val) {
+                                                                  if (val ==
+                                                                          null ||
+                                                                      val.isEmpty)
+                                                                    return 'Select Purpose';
+                                                                  return null;
+                                                                },
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  hintText:
+                                                                      'Purpose of transaction',
+                                                                  contentPadding:
+                                                                      EdgeInsets.fromLTRB(
+                                                                          20.0,
+                                                                          15.0,
+                                                                          20.0,
+                                                                          15.0),
+                                                                  border:
+                                                                      OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5.0),
+                                                                  ),
+                                                                  suffixIcon:
+                                                                      PopupMenuButton<
+                                                                          String>(
+                                                                    icon: const Icon(
+                                                                        Icons
+                                                                            .arrow_drop_down),
+                                                                    onSelected:
+                                                                        (String
+                                                                            value) {
+                                                                      purpose.text =
+                                                                          value;
+                                                                    },
+                                                                    itemBuilder:
+                                                                        (BuildContext
+                                                                            context) {
+                                                                      return purposes.map<
+                                                                          PopupMenuItem<
+                                                                              String>>((String
+                                                                          value) {
+                                                                        return new PopupMenuItem(
+                                                                            child:
+                                                                                new Text(value),
+                                                                            value: value);
+                                                                      }).toList();
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
                                                               'Description of Transaction',
-                                                          contentPadding:
-                                                              EdgeInsets
-                                                                  .fromLTRB(
-                                                                      20.0,
-                                                                      15.0,
-                                                                      20.0,
-                                                                      15.0),
-                                                          border:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Text(
-                                                      'Referral Discount Code',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: context
-                                                          .textTheme.headline3!
-                                                          .copyWith(
-                                                              color:
-                                                                  Colors.grey,
-                                                              fontSize: 14),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10),
-                                                      child: TextFormField(
-                                                        controller: bonus,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          hintText:
-                                                              'Discount Code',
-                                                          contentPadding:
-                                                              EdgeInsets
-                                                                  .fromLTRB(
-                                                                      20.0,
-                                                                      15.0,
-                                                                      20.0,
-                                                                      15.0),
-                                                          border:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    CustomButton(
-                                                        color: Colors.black,
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        onPressed: () {
-                                                          final form = formKey
-                                                              .currentState;
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: context
+                                                                  .textTheme
+                                                                  .headline3!
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      fontSize:
+                                                                          14),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 2,
+                                                            ),
+                                                            Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child:
+                                                                  TextFormField(
+                                                                controller:
+                                                                    description,
+                                                                maxLines: 4,
+                                                                validator:
+                                                                    (val) {
+                                                                  if (val ==
+                                                                          null ||
+                                                                      val.isEmpty)
+                                                                    return 'Enter a description';
+                                                                  return null;
+                                                                },
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  hintText:
+                                                                      'Description of Transaction',
+                                                                  contentPadding:
+                                                                      EdgeInsets.fromLTRB(
+                                                                          20.0,
+                                                                          15.0,
+                                                                          20.0,
+                                                                          15.0),
+                                                                  border:
+                                                                      OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5.0),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              'Referral Discount Code',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: context
+                                                                  .textTheme
+                                                                  .headline3!
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      fontSize:
+                                                                          14),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 2,
+                                                            ),
+                                                            Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child:
+                                                                  TextFormField(
+                                                                controller:
+                                                                    bonus,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  hintText:
+                                                                      'Discount Code',
+                                                                  contentPadding:
+                                                                      EdgeInsets.fromLTRB(
+                                                                          20.0,
+                                                                          15.0,
+                                                                          20.0,
+                                                                          15.0),
+                                                                  border:
+                                                                      OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5.0),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            CustomButton(
+                                                                color: Colors
+                                                                    .black,
+                                                                width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                                onPressed: () {
+                                                                  final form =
+                                                                      formKey
+                                                                          .currentState;
 
-                                                          if (form!
-                                                              .validate()) {
-                                                            form.save();
+                                                                  if (form!
+                                                                      .validate()) {
+                                                                    form.save();
 
-                                                            watch(getRatesParam(RateParam(
-                                                                    sendCurrency:
-                                                                        sendingCountry
-                                                                            .value,
-                                                                    receiveCurrency:
-                                                                        receivingCountry
-                                                                            .value,
-                                                                    amountToSend:
-                                                                        num.tryParse(amount) ??
-                                                                            0)))
-                                                                .whenData(
-                                                                    (value) {
-                                                              final transaction = CreateTransactionModel(
-                                                                  amountToSend:
-                                                                      num.tryParse(amount) ??
-                                                                          0,
-                                                                  exchangeRate:
-                                                                      value
-                                                                          .rate,
-                                                                  paymentPurpose:
-                                                                      purpose
-                                                                          .text,
-                                                                  paymentDescription:
-                                                                      description
-                                                                          .text,
-                                                                  sendingCountry:
-                                                                      sendingCountry
-                                                                          .value,
-                                                                  receivingCountry:
-                                                                      receivingCountry
-                                                                          .value,
-                                                                  amountToReceive:
-                                                                      value
-                                                                          .amountToReceive,
-                                                                  bonusCode:
-                                                                      bonus
-                                                                          .text);
-                                                              context
-                                                                  .read(createTrnxProvider
-                                                                      .notifier)
-                                                                  .createTransaction(
-                                                                      transaction);
-                                                              context.popView();
-                                                            });
-                                                          } else {
-                                                            print(
-                                                                "form is invalid");
-                                                          }
-                                                          // showBeneficiaryModal(
-                                                          //     context, purposes, purpose);
-                                                        },
-                                                        title: Text(
-                                                          'PROCEED',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: Sizes
-                                                                  .TEXT_SIZE_16),
-                                                        )),
-                                                  ],
-                                                ),
-                                              ),
+                                                                    watch(getRatesParam(RateParam(
+                                                                            sendCurrency: sendingCountry
+                                                                                .value,
+                                                                            receiveCurrency: receivingCountry
+                                                                                .value,
+                                                                            amountToSend: num.tryParse(amount) ??
+                                                                                0)))
+                                                                        .whenData(
+                                                                            (value) {
+                                                                      final transaction = CreateTransactionModel(
+                                                                          amountToSend: num.tryParse(amount) ??
+                                                                              0,
+                                                                          exchangeRate: value
+                                                                              .rate,
+                                                                          paymentPurpose: purpose
+                                                                              .text,
+                                                                          paymentDescription: description
+                                                                              .text,
+                                                                          sendingCountry: sendingCountry
+                                                                              .value,
+                                                                          receivingCountry: receivingCountry
+                                                                              .value,
+                                                                          amountToReceive: value
+                                                                              .amountToReceiveLocal,
+                                                                          bonusCode:
+                                                                              bonus.text);
+                                                                      context
+                                                                          .read(createTrnxProvider
+                                                                              .notifier)
+                                                                          .createTransaction(
+                                                                              transaction);
+                                                                      context
+                                                                          .popView();
+                                                                    });
+                                                                  } else {
+                                                                    print(
+                                                                        "form is invalid");
+                                                                  }
+                                                                  // showBeneficiaryModal(
+                                                                  //     context, purposes, purpose);
+                                                                },
+                                                                title: Text(
+                                                                  'PROCEED',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          Sizes
+                                                                              .TEXT_SIZE_16),
+                                                                )),
+                                                          ],
+                                                        ),
+                                                      ])),
                                             ),
                                           ),
                                         ),
@@ -464,7 +485,7 @@ class CreateTransactionScreen extends HookWidget {
                                   children: [
                                     Text(
                                       sendingCountry.value == ''
-                                          ? currencies![0].currency
+                                          ? currencies![0].countryCode
                                           : sendingCountry.value,
                                       style: TextStyle(
                                           fontSize: 30,
@@ -480,9 +501,10 @@ class CreateTransactionScreen extends HookWidget {
                                         color: AppColors.primaryColor,
                                       ),
                                       onSelected: (Datum value) {
-                                        sendingCountry.value = value.alpha3Code;
-                                        defaultSendingCountryFlag.value =
-                                            value.flag;
+                                        sendingCountry.value =
+                                            value.countryCode;
+                                        // defaultSendingCountryFlag.value =
+                                        //     value.flag;
                                       },
                                       itemBuilder: (BuildContext context) {
                                         return currencies!
@@ -492,15 +514,15 @@ class CreateTransactionScreen extends HookWidget {
                                               height: 50,
                                               child: Row(
                                                 children: [
-                                                  SvgPicture.network(
-                                                    value.flag,
-                                                    width: 10,
-                                                    height: 20,
-                                                  ),
+                                                  // SvgPicture.network(
+                                                  //   value.flag,
+                                                  //   width: 10,
+                                                  //   height: 20,
+                                                  // ),
                                                   SizedBox(
                                                     width: 5,
                                                   ),
-                                                  Text(value.currency),
+                                                  Text(value.countryCode),
                                                 ],
                                               ),
                                               value: value);
@@ -634,7 +656,7 @@ class CreateTransactionScreen extends HookWidget {
                                 children: [
                                   Text(
                                     receivingCountry.value == ''
-                                        ? currencies![0].currency
+                                        ? currencies![0].countryCode
                                         : receivingCountry.value,
                                     style: TextStyle(
                                         fontSize: 30,
@@ -650,9 +672,10 @@ class CreateTransactionScreen extends HookWidget {
                                       color: AppColors.primaryColor,
                                     ),
                                     onSelected: (Datum value) {
-                                      receivingCountry.value = value.alpha3Code;
-                                      defaultReceivingCountryFlag.value =
-                                          value.flag;
+                                      receivingCountry.value =
+                                          value.countryCode;
+                                      // defaultReceivingCountryFlag.value =
+                                      //     value.flag;
                                     },
                                     itemBuilder: (BuildContext context) {
                                       return currencies!
@@ -662,15 +685,15 @@ class CreateTransactionScreen extends HookWidget {
                                             height: 50,
                                             child: Row(
                                               children: [
-                                                SvgPicture.network(
-                                                  value.flag,
-                                                  width: 10,
-                                                  height: 20,
-                                                ),
+                                                // SvgPicture.network(
+                                                //   value.flag,
+                                                //   width: 10,
+                                                //   height: 20,
+                                                // ),
                                                 SizedBox(
                                                   width: 5,
                                                 ),
-                                                Text(value.currency),
+                                                Text(value.countryCode),
                                               ],
                                             ),
                                             value: value);
@@ -702,7 +725,8 @@ class CreateTransactionScreen extends HookWidget {
                                       amountToSend: num.tryParse(amount) ?? 0)))
                                   .when(
                                       data: (data) => Text(
-                                          '${(data.rate * num.parse(amount)).round()}',
+                                          '${(data.amountToReceiveLocal)}',
+                                          // '${(data.rate * num.parse(amount)).round()}',
                                           style: TextStyle(
                                               fontSize: 30,
                                               fontWeight: FontWeight.bold,
@@ -713,8 +737,11 @@ class CreateTransactionScreen extends HookWidget {
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black54)),
                                       error: (error, _) => Center(
-                                          child:
-                                              Text('0', style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.black54)))),
+                                          child: Text('0',
+                                              style: TextStyle(
+                                                  fontSize: 40,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black54)))),
                             ],
                           )
                         ],

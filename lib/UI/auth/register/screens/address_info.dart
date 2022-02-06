@@ -302,17 +302,17 @@ class AddressInfo extends HookWidget {
                           },
                           validator: (String? value) {
                             if (value == null) {
-                              return 'Please select a country';
+                              return 'Please select source of funds';
                             }
                             return null;
                           },
-                          items: data.data
-                              .map<DropdownMenuItem<String>>(
-                                  (value) => DropdownMenuItem(
-                                        value: value.alpha3Code,
-                                        child: Text(value.country!),
-                                      ))
-                              .toList()),
+                          items: _sourceOfFunds
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList()),
                       SizedBox(
                         height: 20,
                       ),
