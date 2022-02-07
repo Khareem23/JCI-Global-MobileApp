@@ -63,6 +63,7 @@ class TransactionRepository {
     final customerId = getCustomerId();
     final beneficiaryX =
         beneficiary.copyWith(customerId: int.parse(customerId));
+    print(beneficiaryX);
     final res = await _transactionService.createBeneficiary(
         beneficiaryX, transactionId);
     return res;

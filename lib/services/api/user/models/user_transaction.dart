@@ -49,7 +49,7 @@ class Datum {
     this.receivingCountry,
     this.amountToSend,
     this.amountToCharge,
-    this.amountToReceive,
+    this.amountToReceive_Local,
     this.amountToReceiveNgn,
     this.amountToReceiveUsd,
     this.payInMethod,
@@ -80,7 +80,7 @@ class Datum {
   final String? receivingCountry;
   final num? amountToSend;
   final num? amountToCharge;
-  final num? amountToReceive;
+  final num? amountToReceive_Local;
   final num? amountToReceiveNgn;
   final num? amountToReceiveUsd;
   final String? payInMethod;
@@ -118,8 +118,9 @@ class Datum {
             json["amountToSend"] == null ? null : json["amountToSend"],
         amountToCharge:
             json["amountToCharge"] == null ? null : json["amountToCharge"],
-        amountToReceive:
-            json["amountToReceive"] == null ? null : json["amountToReceive"],
+    amountToReceive_Local:
+            json["amountToReceive_Local"] == null ? null : json["amountToReceive_Local"],
+
         amountToReceiveNgn: json["amountToReceive_NGN"] == null
             ? null
             : json["amountToReceive_NGN"],
@@ -171,7 +172,7 @@ class Datum {
         "receivingCountry": receivingCountry == null ? null : receivingCountry,
         "amountToSend": amountToSend == null ? null : amountToSend,
         "amountToCharge": amountToCharge == null ? null : amountToCharge,
-        "amountToReceive": amountToReceive == null ? null : amountToReceive,
+        "amountToReceive_Local": amountToReceive_Local == null ? null : amountToReceive_Local,
         "amountToReceive_NGN":
             amountToReceiveNgn == null ? null : amountToReceiveNgn,
         "amountToReceive_USD":

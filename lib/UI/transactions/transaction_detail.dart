@@ -126,7 +126,7 @@ class TransactionDetail extends StatelessWidget {
                 ),
                 TrnxDetailItem(
                   title: 'Amount Received',
-                  item: formatter.format(data.amountToReceive).toString(),
+                  item: formatter.format(data.amountToReceive_Local).toString(),
                 ),
                 SizedBox(
                   height: 10,

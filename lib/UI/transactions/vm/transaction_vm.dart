@@ -12,6 +12,7 @@ import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart'
     as r;
 import 'package:jci_remit_mobile/services/api/transaction/model/rate_model.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
+
 part 'transaction_vm.freezed.dart';
 
 @freezed

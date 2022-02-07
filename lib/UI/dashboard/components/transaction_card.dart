@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 
 class TransactionCard extends StatelessWidget {
   final String name, sendingCountry, receivingCounty, transactionType;
-  final num amountToSend, amountToReceive;
+  final num amountToSend, amountToReceive_Local;
   final DateTime transactionDate;
 
   const TransactionCard(
@@ -18,7 +18,7 @@ class TransactionCard extends StatelessWidget {
       required this.sendingCountry,
       required this.receivingCounty,
       required this.amountToSend,
-      required this.amountToReceive,
+      required this.amountToReceive_Local,
       required this.transactionType})
       : super(key: key);
 
@@ -107,7 +107,7 @@ class TransactionCard extends StatelessWidget {
                     ),
                     TextSpan(
                       // text: amountToReceive.toString(),
-                      text: formatter.format(amountToReceive).toString(),
+                      text: formatter.format(amountToReceive_Local).toString(),
                       style: context.textTheme.headline4!
                           .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                     )

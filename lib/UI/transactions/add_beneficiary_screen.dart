@@ -15,11 +15,20 @@ import 'package:jci_remit_mobile/values/values.dart';
 
 class AddBeneficiaryScreen extends HookWidget {
   final TransactionData? transactionData;
+
   const AddBeneficiaryScreen({this.transactionData, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var bankIdentifier = [
+      'ABA/Fed Wire/Routing No',
+      'BSB',
+      'Chips Number',
+      'IFSC code',
+      'Sort code'
+    ];
+    print(transactionData);
     final _formKey = useState(GlobalKey<FormState>());
     var purposes = ['Family Support', 'School', 'Emergency'];
     final country = useTextEditingController();
@@ -37,8 +46,40 @@ class AddBeneficiaryScreen extends HookWidget {
     final cAccNumber = useTextEditingController();
     final cAccName = useTextEditingController();
     final bankCity = useTextEditingController();
+    final bankIdentifierNumber = useTextEditingController();
     final countryCode = useState('');
     final accCurrency = useState('');
+    final bankCountry = useTextEditingController();
+    final bankidentifier_text = useTextEditingController();
+
+    submit() async {
+        var data = {
+          "customerId": bankCountry.text,
+          "country": bankCountry.text,
+          "bankName": bankName.text,
+          "bankState": bankState.text,
+          "bankPostalCode": postalCode.text,
+          "bankCity": bankCity.text,
+          "bankAddress": bankAddress.text,
+          "accountCurrency": accCurrency.value,
+          "accountNumber": accNumber.text,
+          "accountName": accName.text,
+          "accountSWiftCode": swiftCode.text,
+          "accountBSBCode": bsb.text,
+          "beneficiaryAddress": address.text,
+          "beneficiaryCountry": country.text,
+          "bankIdentifierCode": bankidentifier_text.text,
+          "bankIdentifier": bankIdentifierNumber.text,
+          "corresBankCountry": country.text,
+          "corresBankName": cBankName.text,
+          "corresBankIBAN": cAccNumber.text,
+          "corresBankAddress": cBankAddress.text,
+          "corresAccountName": accName.text,
+        };
+
+
+    }
+
     return ProviderListener(
       onChange: (BuildContext context, value) {
         if (value is Success) {
@@ -326,46 +367,98 @@ class AddBeneficiaryScreen extends HookWidget {
                           ),
                         ),
                       ),
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: TextFormField(
-                      //         controller: swiftCode,
-                      //         validator: (val) {
-                      //           if (val == null || val.isEmpty)
-                      //             return 'Enter Swift Code';
-                      //           return null;
-                      //         },
-                      //         decoration: InputDecoration(
-                      //           labelText: 'Swift',
-                      //           hintText: '',
-                      //           contentPadding:
-                      //               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      //           border: OutlineInputBorder(
-                      //             borderRadius: BorderRadius.circular(5.0),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     SizedBox(
-                      //       width: 20,
-                      //     ),
-                      //     Expanded(
-                      //       child: TextFormField(
-                      //         controller: bsb,
-                      //         decoration: InputDecoration(
-                      //           labelText: 'BSB(Optional)',
-                      //           hintText: '',
-                      //           contentPadding:
-                      //               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      //           border: OutlineInputBorder(
-                      //             borderRadius: BorderRadius.circular(5.0),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankCountry,
+                        readOnly: true,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Select Country';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Bank Country*',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          suffixIcon: PopupMenuButton<CountryData>(
+                            icon: const Icon(Icons.arrow_drop_down),
+                            onSelected: (CountryData value) {
+                              bankCountry.text = value.country!;
+                              //countryCode.value = value.alpha3Code!;
+                              // accCurrency.value = value.currency!;
+                              //print(value.alpha3Code);
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return value.map<PopupMenuItem<CountryData>>(
+                                  (CountryData value) {
+                                return new PopupMenuItem(
+                                    child:
+                                        new Text(value.country!.toUpperCase()),
+                                    value: value);
+                              }).toList();
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankidentifier_text,
+                        readOnly: true,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Select Bank Identifier';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Bank Identifier (ABA,BSB)',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          suffixIcon: PopupMenuButton<String>(
+                            icon: const Icon(Icons.arrow_drop_down),
+                            onSelected: (String value) {
+                              bankidentifier_text.text = value;
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return bankIdentifier
+                                  .map<PopupMenuItem<String>>((String value) {
+                                return new PopupMenuItem(
+                                    child: new Text(value), value: value);
+                              }).toList();
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankIdentifierNumber,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Enter Bank Identifier Number';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Bank Identifier Number',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+
                       SizedBox(height: 20),
                       countryCode.value != 'NGA'
                           ? Column(
@@ -465,35 +558,33 @@ class AddBeneficiaryScreen extends HookWidget {
                                         return null;
                                       }
                                       _formKey.value.currentState!.save();
+                                     // submit();
                                       final beneficiary =
                                           CreateBeneficiaryModel(
-                                              country: country.text,
+                                              country: bankCountry.text,
                                               bankName: bankName.text,
                                               bankState: bankState.text,
                                               bankPostalCode: postalCode.text,
                                               bankCity: bankCity.text,
                                               bankAddress: bankAddress.text,
-                                              accountCurrency:
-                                                  accCurrency.value,
+                                              accountCurrency:accCurrency.value,
                                               accountNumber: accNumber.text,
                                               beneficiaryAddress: address.text,
                                               accountSWiftCode: swiftCode.text,
+                                              beneficiaryCountry: country.text,
+                                              bankIdentifierCode: bankIdentifierNumber.text,
+                                              bankIdentifier:bankidentifier_text.text,
                                               accountBsbCode: bsb.text,
                                               corresBankCountry: country.text,
                                               corresBankIban: cAccNumber.text,
                                               corresBankName: cBankName.text,
-                                              corresBankAddress:
-                                                  cBankAddress.text,
+                                              corresBankAddress:cBankAddress.text,
                                               accountName: accName.text);
                                       context
                                           .read(createBeneficiaryProvider
                                               .notifier)
                                           .createBeneficiary(
                                               beneficiary, transactionData?.id);
-                                      // showModal(
-                                      //     context,
-                                      //     purposes,
-                                      //     purpose);
                                     },
                               title: Text(
                                 vm is Loading ? 'LOADING...' : 'PROCEED',
