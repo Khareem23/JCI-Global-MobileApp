@@ -17,7 +17,7 @@ _$_CreateTransactionModel _$_$_CreateTransactionModelFromJson(
     sendingCountry: json['sendingCountry'] as String,
     receivingCountry: json['receivingCountry'] as String,
     amountToReceive: json['amountToReceive'] as num,
-    amountToReceiveNgaUsd: json['amountToReceiveNgaUsd'] as int?,
+    amountToReceiveNgaUsd: json['amountToReceiveNgaUsd'] as num,
     bonusCode: json['bonusCode'] as String?,
   );
 }

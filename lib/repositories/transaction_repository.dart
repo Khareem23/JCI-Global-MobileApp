@@ -70,8 +70,8 @@ class TransactionRepository {
   }
 
   Future<bool> addBeneficiaryToTransaction(
-      num beneficiary, num transactionId) async {
-    final res = await _transactionService.addExistingBeneficiary(
+      String beneficiary, num transactionId) async {
+    final res = await _transactionService.addExistingBeneficiaryByAccountNo(
         beneficiary, transactionId);
     return res;
   }

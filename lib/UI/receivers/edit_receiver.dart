@@ -1,0 +1,358 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/transactions/vm/transaction_vm.dart';
+import 'package:jci_remit_mobile/common/custom_button.dart';
+import 'package:jci_remit_mobile/common/snackbar.dart';
+import 'package:jci_remit_mobile/controllers/request_state_notifier.dart';
+import 'package:jci_remit_mobile/helper/static_config.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/beneficiary_model.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/country_res.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/create_beneficiary_model.dart';
+import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
+import 'package:jci_remit_mobile/services/storage/shared_prefs.dart';
+import 'package:jci_remit_mobile/utils/extensions.dart';
+import 'package:jci_remit_mobile/utils/theme.dart';
+import 'package:jci_remit_mobile/utils/utils.dart';
+import 'package:jci_remit_mobile/values/values.dart';
+
+import 'package:http/http.dart' as http;
+
+class EditReceiverScreen extends StatefulWidget {
+  final BeneficiaryData data;
+
+  EditReceiverScreen({required this.data});
+
+  @override
+  _EditReceiverScreenState createState() => _EditReceiverScreenState();
+}
+
+class _EditReceiverScreenState extends State<EditReceiverScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<ScaffoldState>();
+  var beneficary;
+
+  static final TextEditingController accountNumber = TextEditingController();
+  static final TextEditingController accName = TextEditingController();
+  static final TextEditingController bankName = TextEditingController();
+  static final TextEditingController accCountry = TextEditingController();
+  static final TextEditingController customerNumber = TextEditingController();
+  static final TextEditingController bankAddress = TextEditingController();
+  static final TextEditingController accSwiftCode = TextEditingController();
+  static final TextEditingController id = TextEditingController();
+  static final TextEditingController beneficiaryAddress =
+      TextEditingController();
+  static final TextEditingController bankIdentifierCode =
+      TextEditingController();
+
+  static final TextEditingController beneficiaryCountry =
+      TextEditingController();
+  static final TextEditingController bankIdentifier = TextEditingController();
+
+  getBeneficiary() async {
+    //
+    final util = Util();
+    final token = StorageUtil.getString(StaticConfig.token);
+    final userMap = util.parseJwtPayLoad(token);
+    //print(userMap);
+    final userId = userMap['nameid'];
+
+    var url = 'https://api.jciremit.com/api/transactions/getUserReceiver/' +
+        widget.data.accountNumber.toString();
+
+    try {
+      var response = await http.get(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+      ).timeout(const Duration(seconds: 20));
+      if (response.statusCode == 200) {
+        // If the server did return a 200 OK response,
+        // then parse the JSON.
+        // print("Okay");
+        var body = json.decode(response.body);
+
+        setState(() {
+          beneficary = body["data"];
+        });
+        print(beneficary);
+      } else {
+        throw Exception('Failed to load album');
+      }
+    } on Error catch (e) {
+      return e.stackTrace;
+    }
+  }
+
+  updateBeneficiary() async {
+    
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBeneficiary();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print(beneficary);
+    if (beneficary == null) {
+    } else {
+      accSwiftCode.text = beneficary["accountSWiftCode"].toString();
+      bankAddress.text = beneficary["bankAddress"].toString();
+      customerNumber.text = beneficary["customerId"].toString();
+      id.text = beneficary["id"].toString();
+      accountNumber.text = beneficary["accountNumber"].toString();
+      accName.text = beneficary["accountName"].toString();
+      bankName.text = beneficary["bankName"].toString();
+      beneficiaryAddress.text = beneficary["beneficiaryAddress"].toString();
+      bankIdentifierCode.text = beneficary["bankIdentifierCode"].toString();
+      beneficiaryCountry.text = beneficary["beneficiaryCountry"].toString();
+      bankIdentifier.text = beneficary["bankIdentifier"].toString();
+    }
+
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            color: AppColors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context, 'BeneficiaryUpdateFailed');
+          },
+        ),
+        title: Text('Beneficiary Details',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: Sizes.TEXT_SIZE_18,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: AppColors.red,
+      ),
+      body: Container(
+        padding: EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              Image.asset('assets/images/watermark.png',
+                  width: MediaQuery.of(context).size.width * 0.8),
+              ListView(children: [
+                SizedBox(
+                  height: context.screenHeight(1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Beneficiary Details',
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.headline3!
+                            .copyWith(color: Colors.grey, fontSize: 14),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: accountNumber,
+                        readOnly: true,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Field cannot be empty';
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                        ],
+                        decoration: InputDecoration(
+                          labelText: 'Account Number / IBAN',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: accName,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Field cannot be empty';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Account Name',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankAddress,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Field cannot be empty';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Bank Address',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankName,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Field cannot be empty';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Bank Name',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: accCountry,
+                        validator: (val) {
+                          if (val == null || val.isEmpty)
+                            return 'Field cannot be empty';
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Country',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: accSwiftCode,
+                        decoration: InputDecoration(
+                          labelText: 'Swift Code',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankIdentifier,
+                        decoration: InputDecoration(
+                          labelText: 'Bank Identifier',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: bankIdentifierCode,
+                        decoration: InputDecoration(
+                          labelText: 'Bank Identifier Code',
+                          hintText: '',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 50),
+                      Consumer(
+                        builder: (BuildContext context,
+                            T Function<T>(ProviderBase<Object?, T>) watch,
+                            Widget? child) {
+                          //final vm = watch(addAccountProvider);
+                          return CustomButton(
+                              color: Colors.black,
+                              width: MediaQuery.of(context).size.width,
+                              title: Text('UPDATE'),
+                              onPressed: () {
+                                updateBeneficiary();
+                              }
+                              // if (!_formKey.currentState!
+                              //     .validate()) {
+                              //   return null;
+                              // }
+                              // _formKey.currentState!.save();
+                              // context
+                              //     .read(addAccountProvider.notifier)
+                              //     .addAccount(
+                              //     accCountry.text,
+                              //     bankName.text,
+                              //     accountNumber.text,
+                              //     accName.text,
+                              //     accSwiftCode.text);
+                              // context.popView();
+                              // },
+                              // title: Text(
+                              //   vm is Loading ? 'UPDATING...' : 'UPDATE',
+                              //   style: TextStyle(
+                              //       color: Colors.white,
+                              //       fontWeight: FontWeight.bold,
+                              //       fontSize: Sizes.TEXT_SIZE_16),
+                              );
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              ]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -18,16 +18,46 @@ import 'package:jci_remit_mobile/utils/extensions.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectBeneficiaryScreen extends HookWidget {
   final TransactionData transactionData;
+
   const SelectBeneficiaryScreen({Key? key, required this.transactionData})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final selectedBeneficiary = useState(0);
+    String stringSelected = "";
     final _selectedIndex = useState(-1);
+
+    _save(stringSelected) async {
+      final prefs = await SharedPreferences.getInstance();
+      final key = 'account_number';
+      final value = stringSelected;
+      prefs.setString(key, value);
+      print('saved $value');
+    }
+
+    _read() async {
+      final prefs = await SharedPreferences.getInstance();
+      final key = 'account_number';
+      final value = prefs.getString(key) ?? 0;
+      print('read: $value');
+    }
+    // void loadCounter() async {
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   setState(() {
+    //     _counter = (prefs.getInt('counter') ?? 0);
+    //   });
+    // }
+    //
+    // @override
+    // void initState() {
+    //   super.initState();
+    //   loadCounter();
+    // }
     return ProviderListener(
         onChange: (BuildContext context, value) {
           if (value is Success) {
@@ -72,12 +102,16 @@ class SelectBeneficiaryScreen extends HookWidget {
                       onPressed: _selectedIndex.value != -1
                           ? vm is Loading
                               ? null
-                              : () {
+                              : () async {
+                                  //_read();
+                        final prefs = await SharedPreferences.getInstance();
+                        final key = 'account_number';
+                        final value = prefs.getString(key) ?? 0;
                                   context
                                       .read(addExistingBeneficiaryProvider
                                           .notifier)
                                       .addExistingBeneficiary(
-                                          selectedBeneficiary.value,
+                                          value.toString(),
                                           transactionData.id!);
                                   // showModal(
                                   //     context,
@@ -161,6 +195,7 @@ class SelectBeneficiaryScreen extends HookWidget {
                         ),
                         useProvider(getBeneficiariesProvider).when(
                             data: (List<BeneficiaryData> beneficiary) {
+                              //print(beneficiary);
                               return ListView.separated(
                                 shrinkWrap: true,
                                 itemCount: beneficiary.length,
@@ -179,10 +214,12 @@ class SelectBeneficiaryScreen extends HookWidget {
                                                       : Colors.grey)),
                                       child: ListTile(
                                           onTap: () {
-                                            selectedBeneficiary.value =
-                                                beneficiary[index].customerId;
+                                            // selectedBeneficiary.value =
+                                            //     beneficiary[index].accountNumber as String;
+                                            stringSelected = beneficiary[index]
+                                                .accountNumber as String;
                                             _selectedIndex.value = index;
-                                            print(_selectedIndex.value);
+                                            _save(stringSelected);
                                           },
                                           contentPadding: EdgeInsets.zero,
                                           leading: CircleAvatar(

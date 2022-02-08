@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
 part 'create_transaction_model.freezed.dart';
+
 part 'create_transaction_model.g.dart';
 
 CreateTransactionModel createTransactionModelFromJson(String str) =>
@@ -25,7 +26,7 @@ abstract class CreateTransactionModel with _$CreateTransactionModel {
     required String sendingCountry,
     required String receivingCountry,
     required num amountToReceive,
-    int? amountToReceiveNgaUsd,
+    required num amountToReceiveNgaUsd,
     String? bonusCode,
   }) = _CreateTransactionModel;
 

@@ -30,7 +30,7 @@ class _$CreateTransactionModelTearOff {
       required String sendingCountry,
       required String receivingCountry,
       required num amountToReceive,
-      int? amountToReceiveNgaUsd,
+        required num amountToReceiveNgaUsd,
       String? bonusCode}) {
     return _CreateTransactionModel(
       customerId: customerId,
@@ -64,7 +64,7 @@ mixin _$CreateTransactionModel {
   String get sendingCountry => throw _privateConstructorUsedError;
   String get receivingCountry => throw _privateConstructorUsedError;
   num get amountToReceive => throw _privateConstructorUsedError;
-  int? get amountToReceiveNgaUsd => throw _privateConstructorUsedError;
+  num get amountToReceiveNgaUsd => throw _privateConstructorUsedError;
   String? get bonusCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -87,7 +87,7 @@ abstract class $CreateTransactionModelCopyWith<$Res> {
       String sendingCountry,
       String receivingCountry,
       num amountToReceive,
-      int? amountToReceiveNgaUsd,
+        num amountToReceiveNgaUsd,
       String? bonusCode});
 }
 
@@ -149,7 +149,7 @@ class _$CreateTransactionModelCopyWithImpl<$Res>
       amountToReceiveNgaUsd: amountToReceiveNgaUsd == freezed
           ? _value.amountToReceiveNgaUsd
           : amountToReceiveNgaUsd // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num,
       bonusCode: bonusCode == freezed
           ? _value.bonusCode
           : bonusCode // ignore: cast_nullable_to_non_nullable
@@ -174,7 +174,7 @@ abstract class _$CreateTransactionModelCopyWith<$Res>
       String sendingCountry,
       String receivingCountry,
       num amountToReceive,
-      int? amountToReceiveNgaUsd,
+        num amountToReceiveNgaUsd,
       String? bonusCode});
 }
 
@@ -238,7 +238,7 @@ class __$CreateTransactionModelCopyWithImpl<$Res>
       amountToReceiveNgaUsd: amountToReceiveNgaUsd == freezed
           ? _value.amountToReceiveNgaUsd
           : amountToReceiveNgaUsd // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num,
       bonusCode: bonusCode == freezed
           ? _value.bonusCode
           : bonusCode // ignore: cast_nullable_to_non_nullable
@@ -259,7 +259,7 @@ class _$_CreateTransactionModel implements _CreateTransactionModel {
       required this.sendingCountry,
       required this.receivingCountry,
       required this.amountToReceive,
-      this.amountToReceiveNgaUsd,
+      required this.amountToReceiveNgaUsd,
       this.bonusCode});
 
   factory _$_CreateTransactionModel.fromJson(Map<String, dynamic> json) =>
@@ -282,7 +282,7 @@ class _$_CreateTransactionModel implements _CreateTransactionModel {
   @override
   final num amountToReceive;
   @override
-  final int? amountToReceiveNgaUsd;
+  final num amountToReceiveNgaUsd;
   @override
   final String? bonusCode;
 
@@ -363,7 +363,7 @@ abstract class _CreateTransactionModel implements CreateTransactionModel {
       required String sendingCountry,
       required String receivingCountry,
       required num amountToReceive,
-      int? amountToReceiveNgaUsd,
+        required num amountToReceiveNgaUsd,
       String? bonusCode}) = _$_CreateTransactionModel;
 
   factory _CreateTransactionModel.fromJson(Map<String, dynamic> json) =
@@ -386,7 +386,7 @@ abstract class _CreateTransactionModel implements CreateTransactionModel {
   @override
   num get amountToReceive => throw _privateConstructorUsedError;
   @override
-  int? get amountToReceiveNgaUsd => throw _privateConstructorUsedError;
+  num get amountToReceiveNgaUsd => throw _privateConstructorUsedError;
   @override
   String? get bonusCode => throw _privateConstructorUsedError;
   @override

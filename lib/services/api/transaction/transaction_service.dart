@@ -212,7 +212,18 @@ class TransactionService {
     final url = 'Transactions/createTransaction';
     try {
       final response = await _dio.post(url,
-          data: transaction.toJson(),
+          data: {
+            "customerId": transaction.customerId,
+            "amountToSend": transaction.amountToSend,
+            "exchangeRate": transaction.exchangeRate,
+            "paymentPurpose": transaction.paymentPurpose,
+            "paymentDescription": transaction.paymentDescription,
+            "sendingCountry": transaction.sendingCountry,
+            "receivingCountry": transaction.receivingCountry,
+            "amountToReceive_Local": transaction.amountToReceive,
+            "amountToReceive_USD": transaction.amountToReceiveNgaUsd,
+            "bonusCode": transaction.bonusCode
+          },
           options: Options(headers: {"requireToken": true}));
       final result = transactionResFromJson(response.data);
       return result;
@@ -238,56 +249,77 @@ class TransactionService {
 
       final response = transactionId == null
           ? await _dio.post(url,
-             // data: beneficiary.toJson(),
-          data : {
-            "customerId": beneficiary.customerId,
-            "country": beneficiary.beneficiaryCountry,
-            "bankName": beneficiary.bankName,
-            "bankState": beneficiary.bankState,
-            "bankPostalCode": beneficiary.bankPostalCode,
-            "bankCity": beneficiary.bankCity,
-            "bankAddress": beneficiary.bankAddress,
-            "accountCurrency": beneficiary.accountCurrency,
-            "accountNumber": beneficiary.accountNumber,
-            "accountName": beneficiary.accountName,
-            "accountSWiftCode": beneficiary.accountSWiftCode,
-            "accountBSBCode": beneficiary.accountBsbCode,
-            "beneficiaryAddress": beneficiary.beneficiaryAddress,
-            "beneficiaryCountry": beneficiary.country,
-            "bankIdentifierCode": beneficiary.bankIdentifierCode,
-            "bankIdentifier": beneficiary.bankIdentifier,
-            "corresBankCountry": beneficiary.country,
-            "corresBankName": beneficiary.corresBankName,
-            "corresBankIBAN": beneficiary.corresBankIban,
-            "corresBankAddress": beneficiary.corresBankAddress,
-            "corresAccountName": beneficiary.corresBankCountry,
-          },
+              // data: beneficiary.toJson(),
+              data: {
+                "customerId": beneficiary.customerId,
+                "country": beneficiary.beneficiaryCountry,
+                "bankName": beneficiary.bankName,
+                "bankState": beneficiary.bankState,
+                "bankPostalCode": beneficiary.bankPostalCode,
+                "bankCity": beneficiary.bankCity,
+                "bankAddress": beneficiary.bankAddress,
+                "accountCurrency": beneficiary.accountCurrency,
+                "accountNumber": beneficiary.accountNumber,
+                "accountName": beneficiary.accountName,
+                "accountSWiftCode": beneficiary.accountSWiftCode,
+                "accountBSBCode": beneficiary.accountBsbCode,
+                "beneficiaryAddress": beneficiary.beneficiaryAddress,
+                "beneficiaryCountry": beneficiary.country,
+                "bankIdentifierCode": beneficiary.bankIdentifierCode,
+                "bankIdentifier": beneficiary.bankIdentifier,
+                "corresBankCountry": beneficiary.country,
+                "corresBankName": beneficiary.corresBankName,
+                "corresBankIBAN": beneficiary.corresBankIban,
+                "corresBankAddress": beneficiary.corresBankAddress,
+                "corresAccountName": beneficiary.corresBankCountry,
+              },
               options: Options(headers: {"requireToken": true}))
           : await _dio.patch(url,
-          data : {
-            "customerId": beneficiary.customerId,
-            "country": beneficiary.beneficiaryCountry,
-            "bankName": beneficiary.bankName,
-            "bankState": beneficiary.bankState,
-            "bankPostalCode": beneficiary.bankPostalCode,
-            "bankCity": beneficiary.bankCity,
-            "bankAddress": beneficiary.bankAddress,
-            "accountCurrency": beneficiary.accountCurrency,
-            "accountNumber": beneficiary.accountNumber,
-            "accountName": beneficiary.accountName,
-            "accountSWiftCode": beneficiary.accountSWiftCode,
-            "accountBSBCode": beneficiary.accountBsbCode,
-            "beneficiaryAddress": beneficiary.beneficiaryAddress,
-            "beneficiaryCountry": beneficiary.country,
-            "bankIdentifierCode": beneficiary.bankIdentifierCode,
-            "bankIdentifier": beneficiary.bankIdentifier,
-            "corresBankCountry": beneficiary.country,
-            "corresBankName": beneficiary.corresBankName,
-            "corresBankIBAN": beneficiary.corresBankIban,
-            "corresBankAddress": beneficiary.corresBankAddress,
-            "corresAccountName": beneficiary.corresBankCountry,
-          },
+              data: {
+                "customerId": beneficiary.customerId,
+                "country": beneficiary.beneficiaryCountry,
+                "bankName": beneficiary.bankName,
+                "bankState": beneficiary.bankState,
+                "bankPostalCode": beneficiary.bankPostalCode,
+                "bankCity": beneficiary.bankCity,
+                "bankAddress": beneficiary.bankAddress,
+                "accountCurrency": beneficiary.accountCurrency,
+                "accountNumber": beneficiary.accountNumber,
+                "accountName": beneficiary.accountName,
+                "accountSWiftCode": beneficiary.accountSWiftCode,
+                "accountBSBCode": beneficiary.accountBsbCode,
+                "beneficiaryAddress": beneficiary.beneficiaryAddress,
+                "beneficiaryCountry": beneficiary.country,
+                "bankIdentifierCode": beneficiary.bankIdentifierCode,
+                "bankIdentifier": beneficiary.bankIdentifier,
+                "corresBankCountry": beneficiary.country,
+                "corresBankName": beneficiary.corresBankName,
+                "corresBankIBAN": beneficiary.corresBankIban,
+                "corresBankAddress": beneficiary.corresBankAddress,
+                "corresAccountName": beneficiary.corresBankCountry,
+              },
               options: Options(headers: {"requireToken": true}));
+
+      return response.data != null;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+  Future<bool> addExistingBeneficiaryByAccountNo(
+      String beneficiary, num transactionId) async {
+    final url =
+        'Transactions/addExistingBeneficiaryToTransactionByAccountNo/$transactionId/$beneficiary';
+    print(url);
+    try {
+      final response = await _dio.patch(url,
+          options: Options(headers: {"requireToken": true}));
 
       return response.data != null;
     } on DioError catch (e) {

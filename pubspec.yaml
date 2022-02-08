@@ -41,7 +41,9 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   shared_preferences: ^2.0.6
   top_snackbar_flutter: ^1.0.0
+  http: ^0.13.4
   flutter_launcher_icons:
+  pretty_json:
 
 dev_dependencies:
   flutter_test:

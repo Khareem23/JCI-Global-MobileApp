@@ -21,8 +21,8 @@ class PersonalDataScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _genders = ['Male', 'Female'];
-    var _accountTypes = ['Individual-Account', 'Business-Account'];
+    var _genders = ['Select One','Male', 'Female'];
+    var _accountTypes = ['Select One','Individual-Account', 'Business-Account'];
     final _formKey = useState(GlobalKey<FormState>());
     final dob = useState<DateTime>(DateTime.now());
     final _email = useTextEditingController(text: userDto.email);
@@ -138,36 +138,36 @@ class PersonalDataScreen extends HookWidget {
                           height: 20,
                         ),
 
-                        DropdownButtonFormField<String>(
-                          value: _gender.text,
-                          hint: Text("Select Gender"),
-                          decoration: InputDecoration(
-                            labelText: 'Gender',
-                            contentPadding: const EdgeInsets.only(
-                                left: 14.0, bottom: 8.0, top: 8.0),
-                            border: Borders.customOutlineInputBorder(),
-                            enabledBorder: Borders.customOutlineInputBorder(),
-                            focusedBorder: Borders.customOutlineInputBorder(
-                                color: AppColors.primaryColor),
-                            // focusColor: AppColors.accentColor.withOpacity(0.8),
-                          ),
-                          onChanged: (String? newValue) {
-                            _gender.text = newValue!;
-                          },
-                          validator: (String? value) {
-                            if (value?.isEmpty ?? true) {
-                              return 'Please select a gender';
-                            }
-                            return null;
-                          },
-                          items: _genders
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
+                        // DropdownButtonFormField<String>(
+                        //   value: _gender.text,
+                        //   hint: Text("Select Gender"),
+                        //   decoration: InputDecoration(
+                        //     labelText: 'Gender',
+                        //     contentPadding: const EdgeInsets.only(
+                        //         left: 14.0, bottom: 8.0, top: 8.0),
+                        //     border: Borders.customOutlineInputBorder(),
+                        //     enabledBorder: Borders.customOutlineInputBorder(),
+                        //     focusedBorder: Borders.customOutlineInputBorder(
+                        //         color: AppColors.primaryColor),
+                        //     // focusColor: AppColors.accentColor.withOpacity(0.8),
+                        //   ),
+                        //   onChanged: (String? newValue) {
+                        //     _gender.text = newValue!;
+                        //   },
+                        //   validator: (String? value) {
+                        //     if (value?.isEmpty ?? true) {
+                        //       return 'Please select a gender';
+                        //     }
+                        //     return null;
+                        //   },
+                        //   items: _genders
+                        //       .map<DropdownMenuItem<String>>((String value) {
+                        //     return DropdownMenuItem<String>(
+                        //       value: value,
+                        //       child: Text(value),
+                        //     );
+                        //   }).toList(),
+                        // ),
                         SizedBox(
                           height: 20,
                         ),
@@ -327,7 +327,7 @@ class PersonalDataScreen extends HookWidget {
                         //     ),
                         //   ),
                         // ),
-                        Spacer(),
+                        SizedBox(height: 50),
                         Consumer(
                           builder: (BuildContext context,
                               T Function<T>(ProviderBase<Object?, T>) watch,

@@ -214,7 +214,8 @@ class _$BeneficiaryDataTearOff {
   const _$BeneficiaryDataTearOff();
 
   _BeneficiaryData call(
-      {required int customerId,
+      {
+        required int customerId,
       String? country,
       String? bankName,
       String? bankState,
@@ -286,7 +287,8 @@ abstract class $BeneficiaryDataCopyWith<$Res> {
           BeneficiaryData value, $Res Function(BeneficiaryData) then) =
       _$BeneficiaryDataCopyWithImpl<$Res>;
   $Res call(
-      {int customerId,
+      {
+       int customerId,
       String? country,
       String? bankName,
       String? bankState,
@@ -331,6 +333,7 @@ class _$BeneficiaryDataCopyWithImpl<$Res>
     Object? corresBankIban = freezed,
   }) {
     return _then(_value.copyWith(
+
       customerId: customerId == freezed
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -403,7 +406,8 @@ abstract class _$BeneficiaryDataCopyWith<$Res>
       __$BeneficiaryDataCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int customerId,
+      {
+        int customerId,
       String? country,
       String? bankName,
       String? bankState,
@@ -450,6 +454,7 @@ class __$BeneficiaryDataCopyWithImpl<$Res>
     Object? corresBankIban = freezed,
   }) {
     return _then(_BeneficiaryData(
+
       customerId: customerId == freezed
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -518,7 +523,7 @@ class __$BeneficiaryDataCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_BeneficiaryData implements _BeneficiaryData {
   const _$_BeneficiaryData(
-      {required this.customerId,
+      {  required this.customerId,
       this.country,
       this.bankName,
       this.bankState,
@@ -576,7 +581,7 @@ class _$_BeneficiaryData implements _BeneficiaryData {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _BeneficiaryData &&
+
             (identical(other.customerId, customerId) ||
                 const DeepCollectionEquality()
                     .equals(other.customerId, customerId)) &&
@@ -621,7 +626,7 @@ class _$_BeneficiaryData implements _BeneficiaryData {
                     .equals(other.corresBankName, corresBankName)) &&
             (identical(other.corresBankIban, corresBankIban) ||
                 const DeepCollectionEquality()
-                    .equals(other.corresBankIban, corresBankIban)));
+                    .equals(other.corresBankIban, corresBankIban));
   }
 
   @override
@@ -656,7 +661,7 @@ class _$_BeneficiaryData implements _BeneficiaryData {
 
 abstract class _BeneficiaryData implements BeneficiaryData {
   const factory _BeneficiaryData(
-      {required int customerId,
+      { required int customerId,
       String? country,
       String? bankName,
       String? bankState,

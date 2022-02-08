@@ -114,7 +114,7 @@ class AddExistingBeneficiaryRequestNotifier extends RequestStateNotifier<void> {
 
   AddExistingBeneficiaryRequestNotifier(this._api);
 
-  Future<void> addExistingBeneficiary(num beneficiary, num transactionId) =>
+  Future<void> addExistingBeneficiary(String beneficiary, num transactionId) =>
       makeRequest(
           () => _api.addBeneficiaryToTransaction(beneficiary, transactionId));
 }

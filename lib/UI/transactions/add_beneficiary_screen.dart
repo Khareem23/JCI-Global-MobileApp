@@ -52,33 +52,7 @@ class AddBeneficiaryScreen extends HookWidget {
     final bankCountry = useTextEditingController();
     final bankidentifier_text = useTextEditingController();
 
-    submit() async {
-        var data = {
-          "customerId": bankCountry.text,
-          "country": bankCountry.text,
-          "bankName": bankName.text,
-          "bankState": bankState.text,
-          "bankPostalCode": postalCode.text,
-          "bankCity": bankCity.text,
-          "bankAddress": bankAddress.text,
-          "accountCurrency": accCurrency.value,
-          "accountNumber": accNumber.text,
-          "accountName": accName.text,
-          "accountSWiftCode": swiftCode.text,
-          "accountBSBCode": bsb.text,
-          "beneficiaryAddress": address.text,
-          "beneficiaryCountry": country.text,
-          "bankIdentifierCode": bankidentifier_text.text,
-          "bankIdentifier": bankIdentifierNumber.text,
-          "corresBankCountry": country.text,
-          "corresBankName": cBankName.text,
-          "corresBankIBAN": cAccNumber.text,
-          "corresBankAddress": cBankAddress.text,
-          "corresAccountName": accName.text,
-        };
 
-
-    }
 
     return ProviderListener(
       onChange: (BuildContext context, value) {

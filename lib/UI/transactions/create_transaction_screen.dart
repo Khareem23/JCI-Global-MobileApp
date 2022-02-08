@@ -395,6 +395,8 @@ class CreateTransactionScreen extends HookWidget {
                                                                               .value,
                                                                           amountToReceive: value
                                                                               .amountToReceiveLocal,
+                                                                          amountToReceiveNgaUsd: value
+                                                                              .amountToReceiveUSD,
                                                                           bonusCode:
                                                                               bonus.text);
                                                                       context
@@ -553,8 +555,8 @@ class CreateTransactionScreen extends HookWidget {
                                   TextFormField(
                                     controller: sendAmountController,
                                     keyboardType: TextInputType.number,
-                                    textAlign: TextAlign
-                                        .end, //Setting this attribute to true does the trick
+                                    textAlign: TextAlign.end,
+                                    //Setting this attribute to true does the trick
                                     style: new TextStyle(
                                         fontSize: 30,
                                         fontWeight: FontWeight.bold,
@@ -726,7 +728,6 @@ class CreateTransactionScreen extends HookWidget {
                                   .when(
                                       data: (data) => Text(
                                           '${(data.amountToReceiveLocal)}',
-                                          // '${(data.rate * num.parse(amount)).round()}',
                                           style: TextStyle(
                                               fontSize: 30,
                                               fontWeight: FontWeight.bold,
@@ -738,10 +739,8 @@ class CreateTransactionScreen extends HookWidget {
                                               color: Colors.black54)),
                                       error: (error, _) => Center(
                                           child: Text('0',
-                                              style: TextStyle(
-                                                  fontSize: 40,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black54)))),
+                                              style:
+                                                  TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.black54)))),
                             ],
                           )
                         ],
@@ -784,6 +783,7 @@ String _useDebouncedSearch(TextEditingController textEditingController) {
 
 class RateSuccess extends StatelessWidget {
   final RateData rate;
+
   const RateSuccess({Key? key, required this.rate}) : super(key: key);
 
   @override
