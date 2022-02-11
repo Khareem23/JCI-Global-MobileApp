@@ -25,7 +25,7 @@ class EditReceiverScreen extends StatefulWidget {
   final data;
 
   //SecondScreen({Key key, @required this.text}) : super(key: key);
-  EditReceiverScreen({Key? key, required this.data}): super(key: key);
+  EditReceiverScreen({Key? key, required this.data}) : super(key: key);
 
   @override
   _EditReceiverScreenState createState() => _EditReceiverScreenState();
@@ -54,6 +54,11 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
   static final TextEditingController bankIdentifier = TextEditingController();
 
   updateBeneficiary() async {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Center(child: CircularProgressIndicator());
+        });
     // var data = {
     //   "accSwiftCode": accSwiftCode.text,
     //   "customerId": customerNumber.text,
@@ -113,6 +118,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
       ).timeout(const Duration(seconds: 20));
       print(response.body);
       if (response.statusCode == 200) {
+        Navigator.of(context).pop();
         // If the server did return a 200 OK response,
         // then parse the JSON.
         // print("Okay");
@@ -123,9 +129,11 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
         // });
         // print(beneficary);
       } else {
+        Navigator.of(context).pop();
         throw Exception('Failed to load album');
       }
     } on Error catch (e) {
+      Navigator.of(context).pop();
       return e.stackTrace;
     }
 
@@ -140,7 +148,6 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     if (widget.data == null) {
     } else {
       accSwiftCode.text = widget.data["accountSWiftCode"].toString();
