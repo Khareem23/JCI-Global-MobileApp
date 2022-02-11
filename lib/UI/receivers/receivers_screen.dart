@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/dashboard/user_dashboard.dart';
 import 'package:jci_remit_mobile/UI/receivers/edit_receiver.dart';
 import 'package:jci_remit_mobile/UI/transactions/add_beneficiary_screen.dart';
 import 'package:jci_remit_mobile/UI/transactions/transaction_success.dart';
@@ -161,10 +162,14 @@ class ReceiversScreen extends HookWidget {
                                                     //       builder: (context) => EditBeneficiaryScreen(
                                                     //           data: beneficiary[index].accountNumber )),
                                                     // );
-                                                    context.navigate(
-                                                        EditReceiverScreen(
-                                                      data: beneficiary[index],
-                                                    ));
+                                                    // context.navigate(
+                                                    //     EditReceiverScreen(
+                                                    //   data: beneficiary[index],
+                                                    // ));
+                                                    _editTransaction(
+                                                        beneficiary[index]
+                                                            .accountNumber,
+                                                        context);
                                                   },
                                                   //_editTransaction(beneficiary[index].accountNumber),
                                                   icon: Icon(
@@ -175,7 +180,8 @@ class ReceiversScreen extends HookWidget {
                                                   onPressed: () =>
                                                       _deleteTransaction(
                                                           beneficiary[index]
-                                                              .accountNumber),
+                                                              .accountNumber,
+                                                          context),
                                                   icon: Icon(Icons.delete,
                                                       color: AppColors
                                                           .pinkShade1)),
@@ -228,8 +234,129 @@ class ReceiversScreen extends HookWidget {
     );
   }
 
-  _deleteTransaction(String? accountNumber) async {
+  successPopup(context, body) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: AppColors.backgroundColor.withOpacity(0.4),
+        builder: (_) {
+          return Center(
+              child: Theme(
+            data: ThemeData(fontFamily: 'Gothic'),
+            child: Column(children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.28),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: AppColors.whiteShade1,
+                ),
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 225,
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/checked.png",
+                        width: 40, height: 40),
+                    SizedBox(height: 10),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          children: [
+                            Text(
+                              "Success",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  fontSize: 24,
+                                  fontFamily: 'Gothic',
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.red),
+                            ),
+                            Text(
+                              body,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  fontSize: 16,
+                                  fontFamily: 'Gothic',
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.pinkShade1),
+                            ),
+                          ],
+                        )),
+                    SizedBox(height: 50),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  AddBeneficiaryScreen(),
+                            ),
+                            (Route route) => false,
+                          );
+                        },
+                        child: Text("Close",
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                decoration: TextDecoration.none)))
+                  ],
+                ),
+              )
+            ]),
+          ));
+        });
+  }
 
+  _editTransaction(String? accountNumber, BuildContext context) async {
+    var BeneficiaryData;
+    final util = Util();
+    final token = StorageUtil.getString(StaticConfig.token);
+    final userMap = util.parseJwtPayLoad(token);
+    //print(userMap);
+    final userId = userMap['nameid'];
+
+    var url = 'https://api.jciremit.com/api/transactions/getUserReceiver/' +
+        accountNumber.toString();
+
+    try {
+      var response = await http.get(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+      ).timeout(const Duration(seconds: 20));
+      if (response.statusCode == 200) {
+        // If the server did return a 200 OK response,
+        // then parse the JSON.
+        // print("Okay");
+        var body = json.decode(response.body);
+
+        // setState(() {
+        BeneficiaryData = body["data"];
+        //print(BeneficiaryData);
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (BuildContext context) =>
+                EditReceiverScreen(data: BeneficiaryData),
+          ),
+          (Route route) => false,
+        );
+      } else {
+        throw Exception('Failed to load album');
+      }
+    } on Error catch (e) {
+      return e.stackTrace;
+    }
+  }
+
+  _deleteTransaction(String? accountNumber, BuildContext context) async {
     final util = Util();
     final token = StorageUtil.getString(StaticConfig.token);
     final userMap = util.parseJwtPayLoad(token);
@@ -239,7 +366,6 @@ class ReceiversScreen extends HookWidget {
     var url =
         'https://api.jciremit.com/api/transactions/deleteReceiverByAccountNo/' +
             accountNumber.toString();
-
     try {
       var response = await http.delete(
         Uri.parse(url),
@@ -253,11 +379,12 @@ class ReceiversScreen extends HookWidget {
         // If the server did return a 200 OK response,
         // then parse the JSON.
         // print("Okay");
+
         var body = json.decode(response.body);
         print(body);
-
+        successPopup(context, body['message']);
       } else {
-        throw Exception('Failed to load album');
+        throw Exception('Failed to load');
       }
     } on Error catch (e) {
       return e.stackTrace;

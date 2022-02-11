@@ -119,6 +119,7 @@ class AddBeneficiaryScreen extends HookWidget {
                             return 'Enter Account Name';
                           return null;
                         },
+
                         decoration: InputDecoration(
                           labelText: 'Beneficiary Name*',
                           hintText: '',

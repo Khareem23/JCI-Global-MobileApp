@@ -22,9 +22,10 @@ import 'package:jci_remit_mobile/values/values.dart';
 import 'package:http/http.dart' as http;
 
 class EditReceiverScreen extends StatefulWidget {
-  final BeneficiaryData data;
+  final data;
 
-  EditReceiverScreen({required this.data});
+  //SecondScreen({Key key, @required this.text}) : super(key: key);
+  EditReceiverScreen({Key? key, required this.data}): super(key: key);
 
   @override
   _EditReceiverScreenState createState() => _EditReceiverScreenState();
@@ -44,51 +45,13 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
   static final TextEditingController accSwiftCode = TextEditingController();
   static final TextEditingController id = TextEditingController();
   static final TextEditingController beneficiaryAddress =
-  TextEditingController();
+      TextEditingController();
   static final TextEditingController bankIdentifierCode =
-  TextEditingController();
+      TextEditingController();
 
   static final TextEditingController beneficiaryCountry =
-  TextEditingController();
+      TextEditingController();
   static final TextEditingController bankIdentifier = TextEditingController();
-
-  getBeneficiary() async {
-    //
-    final util = Util();
-    final token = StorageUtil.getString(StaticConfig.token);
-    final userMap = util.parseJwtPayLoad(token);
-    //print(userMap);
-    final userId = userMap['nameid'];
-
-    var url = 'https://api.jciremit.com/api/transactions/getUserReceiver/' +
-        widget.data.accountNumber.toString();
-
-    try {
-      var response = await http.get(
-        Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-      ).timeout(const Duration(seconds: 20));
-      if (response.statusCode == 200) {
-        // If the server did return a 200 OK response,
-        // then parse the JSON.
-        // print("Okay");
-        var body = json.decode(response.body);
-
-        setState(() {
-          beneficary = body["data"];
-        });
-        print(beneficary);
-      } else {
-        throw Exception('Failed to load album');
-      }
-    } on Error catch (e) {
-      return e.stackTrace;
-    }
-  }
 
   updateBeneficiary() async {
     // var data = {
@@ -127,7 +90,6 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
       "corresAccountName": beneficary["corresAccountName"]
     };
 
-
     final util = Util();
     final token = StorageUtil.getString(StaticConfig.token);
     final userMap = util.parseJwtPayLoad(token);
@@ -141,7 +103,8 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
 
     try {
       var response = await http.put(
-        Uri.parse(url), body: jsonEncode(data),
+        Uri.parse(url),
+        body: jsonEncode(data),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json',
@@ -172,24 +135,25 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
   @override
   void initState() {
     super.initState();
-    getBeneficiary();
+    //print(widget.data);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(beneficary);
-    if (beneficary == null) {} else {
-      accSwiftCode.text = beneficary["accountSWiftCode"].toString();
-      bankAddress.text = beneficary["bankAddress"].toString();
-      customerNumber.text = beneficary["customerId"].toString();
-      id.text = beneficary["id"].toString();
-      accountNumber.text = beneficary["accountNumber"].toString();
-      accName.text = beneficary["accountName"].toString();
-      bankName.text = beneficary["bankName"].toString();
-      beneficiaryAddress.text = beneficary["beneficiaryAddress"].toString();
-      bankIdentifierCode.text = beneficary["bankIdentifierCode"].toString();
-      beneficiaryCountry.text = beneficary["beneficiaryCountry"].toString();
-      bankIdentifier.text = beneficary["bankIdentifier"].toString();
+    
+    if (widget.data == null) {
+    } else {
+      accSwiftCode.text = widget.data["accountSWiftCode"].toString();
+      bankAddress.text = widget.data["bankAddress"].toString();
+      customerNumber.text = widget.data["customerId"].toString();
+      id.text = widget.data["id"].toString();
+      accountNumber.text = widget.data["accountNumber"].toString();
+      accName.text = widget.data["accountName"].toString();
+      bankName.text = widget.data["bankName"].toString();
+      beneficiaryAddress.text = widget.data["beneficiaryAddress"].toString();
+      bankIdentifierCode.text = widget.data["bankIdentifierCode"].toString();
+      beneficiaryCountry.text = widget.data["beneficiaryCountry"].toString();
+      bankIdentifier.text = widget.data["bankIdentifier"].toString();
     }
 
     return Scaffold(
@@ -219,10 +183,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
             alignment: AlignmentDirectional.center,
             children: [
               Image.asset('assets/images/watermark.png',
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.8),
+                  width: MediaQuery.of(context).size.width * 0.8),
               ListView(children: [
                 SizedBox(
                   height: context.screenHeight(1),
@@ -254,7 +215,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           labelText: 'Account Number / IBAN',
                           hintText: '',
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -274,7 +235,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           labelText: 'Account Name',
                           hintText: '',
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -294,7 +255,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           labelText: 'Bank Address',
                           hintText: '',
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -314,7 +275,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           labelText: 'Bank Name',
                           hintText: '',
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -334,7 +295,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           labelText: 'Country',
                           hintText: '',
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -349,7 +310,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           labelText: 'Swift Code',
                           hintText: '',
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -364,7 +325,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           labelText: 'Bank Identifier',
                           hintText: '',
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -379,7 +340,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           labelText: 'Bank Identifier Code',
                           hintText: '',
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -393,10 +354,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                           //final vm = watch(addAccountProvider);
                           return CustomButton(
                               color: Colors.black,
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width,
+                              width: MediaQuery.of(context).size.width,
                               title: Text(
                                 'UPDATE',
                                 style: TextStyle(
@@ -407,28 +365,28 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                               onPressed: () {
                                 updateBeneficiary();
                               }
-                            // if (!_formKey.currentState!
-                            //     .validate()) {
-                            //   return null;
-                            // }
-                            // _formKey.currentState!.save();
-                            // context
-                            //     .read(addAccountProvider.notifier)
-                            //     .addAccount(
-                            //     accCountry.text,
-                            //     bankName.text,
-                            //     accountNumber.text,
-                            //     accName.text,
-                            //     accSwiftCode.text);
-                            // context.popView();
-                            // },
-                            // title: Text(
-                            //   vm is Loading ? 'UPDATING...' : 'UPDATE',
-                            //   style: TextStyle(
-                            //       color: Colors.white,
-                            //       fontWeight: FontWeight.bold,
-                            //       fontSize: Sizes.TEXT_SIZE_16),
-                          );
+                              // if (!_formKey.currentState!
+                              //     .validate()) {
+                              //   return null;
+                              // }
+                              // _formKey.currentState!.save();
+                              // context
+                              //     .read(addAccountProvider.notifier)
+                              //     .addAccount(
+                              //     accCountry.text,
+                              //     bankName.text,
+                              //     accountNumber.text,
+                              //     accName.text,
+                              //     accSwiftCode.text);
+                              // context.popView();
+                              // },
+                              // title: Text(
+                              //   vm is Loading ? 'UPDATING...' : 'UPDATE',
+                              //   style: TextStyle(
+                              //       color: Colors.white,
+                              //       fontWeight: FontWeight.bold,
+                              //       fontSize: Sizes.TEXT_SIZE_16),
+                              );
                         },
                       ),
                     ],
