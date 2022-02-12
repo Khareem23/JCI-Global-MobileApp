@@ -140,7 +140,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
+
     if (widget.data == null) {
     } else {
       accSwiftCode.text = widget.data["accountSWiftCode"].toString();
