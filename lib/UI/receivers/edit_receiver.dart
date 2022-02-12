@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/UI/receivers/receivers_screen.dart';
 import 'package:jci_remit_mobile/UI/transactions/vm/transaction_vm.dart';
 import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
@@ -34,6 +35,7 @@ class EditReceiverScreen extends StatefulWidget {
 class _EditReceiverScreenState extends State<EditReceiverScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<ScaffoldState>();
+  GlobalKey _orderFormKey = GlobalKey();
   var beneficary;
 
   static final TextEditingController accountNumber = TextEditingController();
@@ -59,41 +61,32 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
         builder: (_) {
           return Center(child: CircularProgressIndicator());
         });
-    // var data = {
-    //   "accSwiftCode": accSwiftCode.text,
-    //   "customerId": customerNumber.text,
-    //   "accountNumber": accountNumber.text,
-    //   "bankName": bankName.text,
-    //   "accName": accName.text,
-    //   "id": beneficary["id"],
-    //   "bankAddress": bankAddress.text,
-    //   "beneficiaryAddress": beneficiaryAddress.text,
-    //   "bankIdentifier": bankIdentifier.text,
-    // };
+
     var data = {
-      "id": beneficary["id"],
+      "id": widget.data["id"],
       "customerId": customerNumber.text,
-      "country": beneficary["country"],
+      "country": widget.data["country"],
       "bankName": bankName.text,
       "bankState": "NA",
       "bankPostalCode": "NA",
       "bankCity": "NA",
       "bankAddress": bankAddress.text,
-      "accountCurrency": beneficary["accountCurrency"],
+      "accountCurrency": widget.data["accountCurrency"],
       "accountNumber": accountNumber.text,
       "accountName": accName.text,
       "accountSWiftCode": accSwiftCode.text,
-      "accountBSBCode": beneficary["accountBSBCode"],
+      "accountBSBCode": widget.data["accountBSBCode"],
       "beneficiaryAddress": beneficiaryAddress.text,
-      "beneficiaryCountry": beneficary["beneficiaryCountry"],
+      "beneficiaryCountry": widget.data["beneficiaryCountry"],
       "bankIdentifierCode": bankIdentifierCode.text,
       "bankIdentifier": bankIdentifier.text,
-      "corresBankCountry": beneficary["corresBankCountry"],
-      "corresBankName": beneficary["corresBankName"],
-      "corresBankIBAN": beneficary["corresBankIBAN"],
-      "corresBankAddress": beneficary["corresBankAddress"],
-      "corresAccountName": beneficary["corresAccountName"]
+      "corresBankCountry": widget.data["corresBankCountry"],
+      "corresBankName": widget.data["corresBankName"],
+      "corresBankIBAN": widget.data["corresBankIBAN"],
+      "corresBankAddress": widget.data["corresBankAddress"],
+      "corresAccountName": widget.data["corresAccountName"]
     };
+    print(data);
 
     final util = Util();
     final token = StorageUtil.getString(StaticConfig.token);
@@ -102,7 +95,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
     final userId = userMap['nameid'];
 
     var url = 'https://api.jciremit.com/api/transactions/UpdateReceiver/' +
-        beneficary["id"].toString();
+        widget.data["id"].toString();
     print(url);
     print(data);
 
@@ -118,12 +111,14 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
       ).timeout(const Duration(seconds: 20));
       print(response.body);
       if (response.statusCode == 200) {
-        Navigator.of(context).pop();
+       // Navigator.of(context).pop();
         // If the server did return a 200 OK response,
         // then parse the JSON.
         // print("Okay");
         // var body = json.decode(response.body);
-
+        var body = json.decode(response.body);
+        print(body);
+        successPopup(context, body['message']);
         // setState(() {
         //   beneficary = body["data"];
         // });
@@ -150,10 +145,10 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
   Widget build(BuildContext context) {
     if (widget.data == null) {
     } else {
+
       accSwiftCode.text = widget.data["accountSWiftCode"].toString();
       bankAddress.text = widget.data["bankAddress"].toString();
       customerNumber.text = widget.data["customerId"].toString();
-      id.text = widget.data["id"].toString();
       accountNumber.text = widget.data["accountNumber"].toString();
       accName.text = widget.data["accountName"].toString();
       bankName.text = widget.data["bankName"].toString();
@@ -272,6 +267,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                         height: 20,
                       ),
                       TextFormField(
+
                         controller: bankName,
                         validator: (val) {
                           if (val == null || val.isEmpty)
@@ -313,6 +309,7 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
                       ),
                       TextFormField(
                         controller: accSwiftCode,
+
                         decoration: InputDecoration(
                           labelText: 'Swift Code',
                           hintText: '',
@@ -406,4 +403,83 @@ class _EditReceiverScreenState extends State<EditReceiverScreen> {
       ),
     );
   }
+
+  successPopup(context, body) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: AppColors.backgroundColor.withOpacity(0.4),
+        builder: (_) {
+          return Center(
+              child: Theme(
+                data: ThemeData(fontFamily: 'Gothic'),
+                child: Column(children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.28),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.whiteShade1,
+                    ),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 225,
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset("assets/images/checked.png",
+                            width: 40, height: 40),
+                        SizedBox(height: 10),
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Success",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      fontSize: 24,
+                                      fontFamily: 'Gothic',
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.red),
+                                ),
+                                Text(
+                                  body,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      fontSize: 16,
+                                      fontFamily: 'Gothic',
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.pinkShade1),
+                                ),
+                              ],
+                            )),
+                        SizedBox(height: 50),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      ReceiversScreen(),
+                                ),
+                                    (Route route) => false,
+                              );
+                            },
+                            child: Text("Close",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                    decoration: TextDecoration.none)))
+                      ],
+                    ),
+                  )
+                ]),
+              ));
+        });
+  }
+
 }

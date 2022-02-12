@@ -293,7 +293,7 @@ class ReceiversScreen extends HookWidget {
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  AddBeneficiaryScreen(),
+                                  ReceiversScreen(),
                             ),
                             (Route route) => false,
                           );
@@ -340,7 +340,7 @@ class ReceiversScreen extends HookWidget {
 
         // setState(() {
         BeneficiaryData = body["data"];
-        //print(BeneficiaryData);
+        print(BeneficiaryData);
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (BuildContext context) =>
@@ -357,6 +357,14 @@ class ReceiversScreen extends HookWidget {
   }
 
   _deleteTransaction(String? accountNumber, BuildContext context) async {
+
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Center(child: CircularProgressIndicator());
+        });
+
+
     final util = Util();
     final token = StorageUtil.getString(StaticConfig.token);
     final userMap = util.parseJwtPayLoad(token);
