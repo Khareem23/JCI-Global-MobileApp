@@ -14,6 +14,10 @@ final registerNotifierProvider =
 
 final countryProvider =
     FutureProvider<Country>((_) => UserService().getCountries());
+
+final countryProviderWithCode =
+FutureProvider<Country>((_) => UserService().getCountriesAll());
+
 final statesProvider = FutureProvider.family<c.State, String>(
     (_, countryCode) => UserService().getStates(countryCode));
 

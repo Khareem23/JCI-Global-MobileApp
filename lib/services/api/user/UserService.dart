@@ -182,6 +182,26 @@ class UserService extends IUserService {
   }
 
   @override
+  Future<Country> getCountriesAll() async {
+    final url = 'Users/getCountriesWithCode';
+    try {
+      final response = await _dio.get(url);
+      Country result = Country.fromJson(response.data);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        Failure result = Failure.fromJson(e.response!.data);
+        throw result.message;
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+
+
+  @override
   Future<State> getStates(String countryCode) async {
     final url = 'Users/getCountryStates/$countryCode';
     try {
