@@ -35,7 +35,7 @@ _$_TransactionData _$_$_TransactionDataFromJson(Map<String, dynamic> json) {
     receivingCountry: json['receivingCountry'] as String?,
     amountToSend: json['amountToSend'] as num?,
     amountToCharge: json['amountToCharge'] as num?,
-    amountToReceive: json['amountToReceive'] as num?,
+    amountToReceive: json['amountToReceive_Local'] as num?,
     amountToReceiveNgn: json['amountToReceiveNgn'] as num?,
     amountToReceiveUsd: json['amountToReceiveUsd'] as num?,
     payInMethod: json['payInMethod'] as String?,

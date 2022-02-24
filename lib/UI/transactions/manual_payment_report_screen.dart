@@ -22,6 +22,7 @@ import 'package:jci_remit_mobile/utils/theme.dart';
 class ManualPaymentReportScreen extends HookWidget {
   final BankAccountData accountData;
   final TransactionData transactionData;
+
   const ManualPaymentReportScreen(
       {Key? key, required this.accountData, required this.transactionData})
       : super(key: key);
@@ -52,6 +53,7 @@ class ManualPaymentReportScreen extends HookWidget {
       },
       provider: addPaymentProvider,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(
@@ -69,639 +71,628 @@ class ManualPaymentReportScreen extends HookWidget {
                   fontWeight: FontWeight.bold)),
           backgroundColor: AppColors.red,
         ),
-        body:
-        Column(
-          children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Stack(alignment: AlignmentDirectional.center, children: [
-                      Image.asset('assets/images/watermark.png',
-                          width: MediaQuery.of(context).size.width * 0.8),
-                      Column(
+        body: SingleChildScrollView(
+          child: IntrinsicHeight(
+            child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Stack(alignment: AlignmentDirectional.center, children: [
+                  Image.asset('assets/images/watermark.png',
+                      width: MediaQuery.of(context).size.width * 0.8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Transaction Details:',
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.headline4!.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.accentColor,
+                            fontSize: 16),
+                      ),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Divider(),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Transaction Details:',
-                            textAlign: TextAlign.center,
-                            style: context.textTheme.headline4!.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.accentColor,
-                                fontSize: 16),
-                          ),
-
                           SizedBox(
-                            height: 10,
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Transaction ID",
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  transactionData.id.toString(),
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
                           ),
-                          Divider(),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
+                              Text(
+                                "FullName",
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14),
+                              ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Transaction ID",
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          fontWeight: FontWeight.w800,
-                                          color: AppColors.primaryColor,
-                                          fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      transactionData.id.toString(),
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                  ],
-                                ),
+                                height: 10,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "FullName",
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    transactionData.fullName.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Email ",
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          fontWeight: FontWeight.w800,
-                                          color: AppColors.primaryColor,
-                                          fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      transactionData.senderEmail.toString(),
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                  ],
-                                ),
+                              Text(
+                                transactionData.fullName.toString(),
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Reference Number",
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    transactionData.transactionRefNumber.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              )
                             ],
-                          ),
-
-                          SizedBox(
-                            height: 20,
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Sending Country ",
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          fontWeight: FontWeight.w800,
-                                          color: AppColors.primaryColor,
-                                          fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      transactionData.sendingCountry.toString(),
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Receiving Country",
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    transactionData.receivingCountry.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Amount To Send ",
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          fontWeight: FontWeight.w800,
-                                          color: AppColors.primaryColor,
-                                          fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      transactionData.amountToSend.toString(),
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Amount To Receive",
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    transactionData.amountToReceive.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-
-                          SizedBox(
-                            height: 20,
-                          ),
-
-                          Text(
-                            "Payment Purpose ",
-                            textAlign: TextAlign.start,
-                            style: context.textTheme.headline3!.copyWith(
-                                fontWeight: FontWeight.w800,
-                                color: AppColors.primaryColor,
-                                fontSize: 14),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            transactionData.paymentPurpose.toString(),
-                            textAlign: TextAlign.start,
-                            style: context.textTheme.headline3!.copyWith(
-                                color: AppColors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16),
-                          ),
-
-                          SizedBox(
-                            height: 20,
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Date ",
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          fontWeight: FontWeight.w800,
-                                          color: AppColors.primaryColor,
-                                          fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      transactionData.dateSent.toString(),
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Transaction Status",
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    transactionData.transactionStatus.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-
-                          // SizedBox(
-                          //   height: 20,
-                          // ),
-                          // Text(
-                          //   'Payment Method',
-                          //   textAlign: TextAlign.center,
-                          //   style: context.textTheme.headline3!.copyWith(
-                          //       fontWeight: FontWeight.w800,
-                          //       color: AppColors.accentColor,
-                          //       fontSize: 16),
-                          // ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Text(
-                          //   'Domestic Wire Transfer',
-                          //   textAlign: TextAlign.center,
-                          //   style: context.textTheme.headline3!.copyWith(
-                          //       color: AppColors.blackShade1,
-                          //       fontWeight: FontWeight.w600,
-                          //       fontSize: 18),
-                          // ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Text(
-                            'Beneficiary Details:',
-                            textAlign: TextAlign.center,
-                            style: context.textTheme.headline4!.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.accentColor,
-                                fontSize: 16),
-                          ),
-                          Divider(),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Account Holder's Name",
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          fontWeight: FontWeight.w800,
-                                          color: AppColors.primaryColor,
-                                          fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      accountData.accountName.toString(),
-                                      textAlign: TextAlign.start,
-                                      style: context.textTheme.headline3!.copyWith(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Country",
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    accountData.country.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Account Number",
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    accountData.bankAccountNumber.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Payment Date",
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    formatDate(DateTime.now(), [dd, ' ', M, ' ', yyyy]),
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.headline3!.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  TransactionService()
-                                      .downloadFile(transactionData.id!, context);
-                                },
-                                // context.read(downloadProvider(transactionData.id!)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text('Download Payment Info'),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Icon(Feather.download)
-                                  ],
-                                ),
-                              ),
-                              // Consumer(
-                              //   builder: (BuildContext context,
-                              //       T Function<T>(ProviderBase<Object?, T>) watch,
-                              //       Widget? child) {
-                              //     AsyncValue<String> message =
-                              //         watch(downloadProvider(transactionData.id!));
-                              //     return message.when(
-                              //       loading: () => SizedBox(
-                              //           width: 10,
-                              //           height: 10,
-                              //           child: const CircularProgressIndicator(
-                              //             strokeWidth: 2,
-                              //           )),
-                              //       error: (err, stack) => Text('Error: $err'),
-                              //       data: (message) {
-                              //         return Text(message);
-                              //       },
-                              //     );
-                              //   },
-                              // ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Consumer(
-                            builder: (BuildContext context,
-                                T Function<T>(ProviderBase<Object?, T>) watch,
-                                Widget? child) {
-                              final vm = watch(uploadProvider);
-                              return InkWell(
-                                onTap: () => pickFile(
-                                    context, selectedFile, transactionData.id!),
-                                child: Container(
-                                  height: context.screenHeight(0.07),
-                                  width: context.screenWidth(1),
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(border: Border.all()),
-                                  child: Row(
-                                    children: [
-                                      Icon(Feather.file),
-                                      Spacer(),
-                                      Text('Upload Payment Confirmation'),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      status(vm)
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          Text(
-                            selectedFile.value,
-                            overflow: TextOverflow.fade,
-                          ),
-                          Spacer(),
-                          Consumer(
-                            builder: (BuildContext context,
-                                T Function<T>(ProviderBase<Object?, T>) watch,
-                                Widget? child) {
-                              final vm = watch(addPaymentProvider);
-                              return CustomButton(
-                                  color: AppColors.primaryColor,
-                                  onPressed: vm is Loading
-                                      ? null
-                                      : () {
-                                    if (selectedFile.value != "") {
-                                      context
-                                          .read(addPaymentProvider.notifier)
-                                          .addPayment(transactionData.id!, 3);
-                                    } else {
-                                      AppSnackBar.showErrorSnackBar(context,
-                                          message:
-                                          "Please upload proof of payment!");
-                                    }
-                                  },
-                                  width: context.screenWidth(1),
-                                  title: Text(
-                                    vm is Loading ? 'LOADING' : 'COMPLETE',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: Sizes.TEXT_SIZE_16),
-                                  ));
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
                           )
                         ],
                       ),
-                    ])),
+                      SizedBox(
+                        height: 20,
+                      ),
 
-              ),
-            )
-          ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Email ",
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  transactionData.senderEmail.toString(),
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Reference Number",
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                transactionData.transactionRefNumber.toString(),
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Sending Country ",
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  transactionData.sendingCountry.toString(),
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Receiving Country",
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                transactionData.receivingCountry.toString(),
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Amount To Send ",
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  transactionData.amountToSend.toString(),
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Amount To Receive",
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                transactionData.amountToReceive.toString(),
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      Text(
+                        "Payment Purpose ",
+                        textAlign: TextAlign.start,
+                        style: context.textTheme.headline3!.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primaryColor,
+                            fontSize: 14),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        transactionData.paymentPurpose.toString(),
+                        textAlign: TextAlign.start,
+                        style: context.textTheme.headline3!.copyWith(
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
+                      ),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Date ",
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  transactionData.dateSent.toString(),
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Transaction Status",
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                transactionData.transactionStatus.toString(),
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Text(
+                      //   'Payment Method',
+                      //   textAlign: TextAlign.center,
+                      //   style: context.textTheme.headline3!.copyWith(
+                      //       fontWeight: FontWeight.w800,
+                      //       color: AppColors.accentColor,
+                      //       fontSize: 16),
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Text(
+                      //   'Domestic Wire Transfer',
+                      //   textAlign: TextAlign.center,
+                      //   style: context.textTheme.headline3!.copyWith(
+                      //       color: AppColors.blackShade1,
+                      //       fontWeight: FontWeight.w600,
+                      //       fontSize: 18),
+                      // ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Text(
+                        'Beneficiary Details:',
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.headline4!.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.accentColor,
+                            fontSize: 16),
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Account Holder's Name",
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  accountData.accountName.toString(),
+                                  textAlign: TextAlign.start,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Country",
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                accountData.country.toString(),
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Account Number",
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                accountData.bankAccountNumber.toString(),
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Payment Date",
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                formatDate(
+                                    DateTime.now(), [dd, ' ', M, ' ', yyyy]),
+                                textAlign: TextAlign.center,
+                                style: context.textTheme.headline3!.copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              TransactionService()
+                                  .downloadFile(transactionData.id!, context);
+                            },
+                            // context.read(downloadProvider(transactionData.id!)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text('Download Payment Info'),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(Feather.download)
+                              ],
+                            ),
+                          ),
+                          // Consumer(
+                          //   builder: (BuildContext context,
+                          //       T Function<T>(ProviderBase<Object?, T>) watch,
+                          //       Widget? child) {
+                          //     AsyncValue<String> message =
+                          //         watch(downloadProvider(transactionData.id!));
+                          //     return message.when(
+                          //       loading: () => SizedBox(
+                          //           width: 10,
+                          //           height: 10,
+                          //           child: const CircularProgressIndicator(
+                          //             strokeWidth: 2,
+                          //           )),
+                          //       error: (err, stack) => Text('Error: $err'),
+                          //       data: (message) {
+                          //         return Text(message);
+                          //       },
+                          //     );
+                          //   },
+                          // ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Consumer(
+                        builder: (BuildContext context,
+                            T Function<T>(ProviderBase<Object?, T>) watch,
+                            Widget? child) {
+                          final vm = watch(uploadProvider);
+                          return InkWell(
+                            onTap: () => pickFile(
+                                context, selectedFile, transactionData.id!),
+                            child: Container(
+                              height: context.screenHeight(0.07),
+                              width: context.screenWidth(1),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(border: Border.all()),
+                              child: Row(
+                                children: [
+                                  Icon(Feather.file),
+                                  Spacer(),
+                                  Text('Upload Payment Confirmation'),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  status(vm)
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      Text(
+                        selectedFile.value,
+                        overflow: TextOverflow.fade,
+                      ),
+                      Spacer(),
+                      Consumer(
+                        builder: (BuildContext context,
+                            T Function<T>(ProviderBase<Object?, T>) watch,
+                            Widget? child) {
+                          final vm = watch(addPaymentProvider);
+                          return CustomButton(
+                              color: AppColors.primaryColor,
+                              onPressed: vm is Loading
+                                  ? null
+                                  : () {
+                                      if (selectedFile.value != "") {
+                                        context
+                                            .read(addPaymentProvider.notifier)
+                                            .addPayment(transactionData.id!, 3);
+                                      } else {
+                                        AppSnackBar.showErrorSnackBar(context,
+                                            message:
+                                                "Please upload proof of payment!");
+                                      }
+                                    },
+                              width: context.screenWidth(1),
+                              title: Text(
+                                vm is Loading ? 'LOADING' : 'COMPLETE',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Sizes.TEXT_SIZE_16),
+                              ));
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      )
+                    ],
+                  ),
+                ])),
+          ),
         ),
-
-
-
-
-
-
       ),
     );
   }
@@ -744,12 +735,12 @@ class ManualPaymentReportScreen extends HookWidget {
     }
   }
 
-  // void download() async {
-  //   int id = await FlutterAndroidDownloader.download(
-  //       "https://qd.myapp.com/myapp/qqteam/AndroidQQ/mobileqq_android.apk",
-  //       "/storage/emulated/0/Download",
-  //       "qq.apk",
-  //       "QQ", {});
-  //   print("ID => $id");
-  // }
+// void download() async {
+//   int id = await FlutterAndroidDownloader.download(
+//       "https://qd.myapp.com/myapp/qqteam/AndroidQQ/mobileqq_android.apk",
+//       "/storage/emulated/0/Download",
+//       "qq.apk",
+//       "QQ", {});
+//   print("ID => $id");
+// }
 }
