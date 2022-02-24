@@ -29,7 +29,8 @@ class ManualPaymentReportScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final selectedFile = useState('');
-
+    print(accountData);
+    print(transactionData);
     // useEffect(() {
     //   Future.microtask(() => FlutterAndroidDownloader.listen((data) {
     //         print("success $data");
@@ -77,24 +78,384 @@ class ManualPaymentReportScreen extends HookWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Transaction Reference Number',
+                    'Transaction Details:',
                     textAlign: TextAlign.center,
-                    style: context.textTheme.headline3!.copyWith(
-                        fontWeight: FontWeight.w800,
+                    style: context.textTheme.headline4!.copyWith(
+                        fontWeight: FontWeight.w400,
                         color: AppColors.accentColor,
                         fontSize: 16),
                   ),
+
                   SizedBox(
-                    height: 10,
+                    height: 40,
                   ),
-                  Text(
-                    transactionData.id.toString(),
-                    textAlign: TextAlign.center,
-                    style: context.textTheme.headline3!.copyWith(
-                        color: AppColors.blackShade1,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18),
+                  Divider(),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Transaction ID",
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primaryColor,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              transactionData.id.toString(),
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "FullName",
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryColor,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            transactionData.fullName.toString(),
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Email ",
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primaryColor,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              transactionData.senderEmail.toString(),
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Reference Number",
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryColor,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            transactionData.transactionRefNumber.toString(),
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Sending Country ",
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primaryColor,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              transactionData.sendingCountry.toString(),
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Receiving Country",
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryColor,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            transactionData.receivingCountry.toString(),
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Amount To Send ",
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primaryColor,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              transactionData.amountToSend.toString(),
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Amount To Receive",
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryColor,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            transactionData.amountToReceive.toString(),
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Payment Purpose ",
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primaryColor,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              transactionData.paymentPurpose.toString(),
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Payment Description",
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryColor,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            transactionData.paymentDescription.toString(),
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Date ",
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primaryColor,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              transactionData.dateSent.toString(),
+                              textAlign: TextAlign.start,
+                              style: context.textTheme.headline3!.copyWith(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Transaction Status",
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryColor,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            transactionData.transactionStatus.toString(),
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.headline3!.copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+
                   SizedBox(
                     height: 20,
                   ),
@@ -167,7 +528,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "Location",
+                            "Country",
                             textAlign: TextAlign.center,
                             style: context.textTheme.headline3!.copyWith(
                                 fontWeight: FontWeight.w800,

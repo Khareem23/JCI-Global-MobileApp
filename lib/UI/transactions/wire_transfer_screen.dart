@@ -15,6 +15,7 @@ import 'vm/transaction_vm.dart';
 
 class WireTransferScreen extends HookWidget {
   final TransactionData transactionData;
+
   const WireTransferScreen({required this.transactionData, Key? key})
       : super(key: key);
 
@@ -61,7 +62,7 @@ class WireTransferScreen extends HookWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Enter Beneficiary Details',
+                          'Select Bank',
                           textAlign: TextAlign.center,
                           style: context.textTheme.headline3!
                               .copyWith(color: Colors.black, fontSize: 14),
@@ -118,23 +119,36 @@ class WireTransferScreen extends HookWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        Text(selectedAccount.value.accountName!,
+                        Text(
+                            "Account Name: " +
+                                selectedAccount.value.accountName!,
                             style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold)),
+                                fontSize: 20, fontWeight: FontWeight.normal)),
                         SizedBox(
-                          height: 5,
+                          height: 15,
                         ),
-                        Text(selectedAccount.value.bankAccountNumber!,
+                        Text(
+                            "Bank Account Number: " +
+                                selectedAccount.value.bankAccountNumber!,
                             style: TextStyle(fontSize: 20)),
                         SizedBox(
-                          height: 5,
+                          height: 15,
                         ),
-                        Text(selectedAccount.value.bankName!,
+                        Text("Bank Name: " + selectedAccount.value.bankName!,
                             style: TextStyle(fontSize: 20)),
                         SizedBox(
-                          height: 5,
+                          height: 15,
                         ),
-                        Text(selectedAccount.value.bankSwiftCode!,
+                        Text(
+                            "Bank Swift Code: " +
+                                selectedAccount.value.bankSwiftCode!,
+                            style: TextStyle(fontSize: 20)),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                            "Bank Country : " +
+                                selectedAccount.value.country!,
                             style: TextStyle(fontSize: 20)),
                         Spacer(),
                         CustomButton(
