@@ -56,6 +56,17 @@ final getbankAccountsProvider =
   return await trnxRepo.getBankAccounts();
 });
 
+// final statesProvider = FutureProvider.family<c.State, String>(
+//         (_, countryCode) => UserService().getStates(countryCode));
+
+
+final getbankAccountsBySendingCountryCodeProvider =
+FutureProvider.family<List<BankAccountData>, String>((ref, countryCode) async {
+  final trnxRepo = TransactionRepository(ref);
+  return await trnxRepo.getBankAccountsBySendingCountry(countryCode);
+});
+
+
 final getBeneficiariesProvider =
     FutureProvider.autoDispose<List<BeneficiaryData>>((ref) async {
   final trnxRepo = TransactionRepository(ref);

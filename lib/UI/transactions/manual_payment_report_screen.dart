@@ -156,6 +156,29 @@ class ManualPaymentReportScreen extends HookWidget {
                         height: 20,
                       ),
 
+
+                      Text(
+                        "Reference Number",
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.headline3!.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primaryColor,
+                            fontSize: 14),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        transactionData.transactionRefNumber.toString(),
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.headline3!.copyWith(
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,25 +213,11 @@ class ManualPaymentReportScreen extends HookWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                "Reference Number",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
-                              ),
+
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.transactionRefNumber.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
-                              ),
+
                             ],
                           )
                         ],

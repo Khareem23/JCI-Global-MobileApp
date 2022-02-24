@@ -44,6 +44,11 @@ class TransactionRepository {
     return res.data!;
   }
 
+  Future<List<BankAccountData>> getBankAccountsBySendingCountry(String countryCode) async {
+    final res = await _transactionService.getBankAccountsBySendingCountry(countryCode);
+    return res.data!;
+  }
+
   Future<List<BeneficiaryData>> getBeneficiaries() async {
     final res = await _transactionService.getBeneficiaries();
     return res.data!;

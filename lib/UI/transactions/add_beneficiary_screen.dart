@@ -386,11 +386,6 @@ class AddBeneficiaryScreen extends HookWidget {
                       TextFormField(
                         controller: bankidentifier_text,
                         readOnly: true,
-                        validator: (val) {
-                          if (val == null || val.isEmpty)
-                            return 'Select Bank Identifier';
-                          return null;
-                        },
                         decoration: InputDecoration(
                           hintText: 'Bank Identifier (ABA,BSB)',
                           contentPadding:
@@ -418,11 +413,11 @@ class AddBeneficiaryScreen extends HookWidget {
                       ),
                       TextFormField(
                         controller: bankIdentifierNumber,
-                        validator: (val) {
-                          if (val == null || val.isEmpty)
-                            return 'Enter Bank Identifier Number';
-                          return null;
-                        },
+                        // validator: (val) {
+                        //   if (val == null || val.isEmpty)
+                        //     return 'Enter Bank Identifier Number';
+                        //   return null;
+                        // },
                         decoration: InputDecoration(
                           labelText: 'Bank Identifier Number',
                           hintText: '',

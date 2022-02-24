@@ -117,6 +117,24 @@ class TransactionService {
     }
   }
 
+  Future<BankAccountModel> getBankAccountsBySendingCountry(String countryCode) async {
+    final url = '/JCIBank/GetAllBankAccountBySendingCountry/'+ countryCode;
+    try {
+      final response = await _dio.get(url,
+          options: Options(headers: {"requireToken": true}));
+      final result = bankAccountModelFromJson(response.data);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
   Future<BeneficiaryModel> getBeneficiaries() async {
     final url = '/Transactions/getUserReceivers';
     try {

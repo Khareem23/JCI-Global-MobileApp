@@ -23,6 +23,10 @@ class WireTransferScreen extends HookWidget {
   Widget build(BuildContext context) {
     final _formKey = useState(GlobalKey<FormState>());
     final bank = useTextEditingController();
+    // var states =
+    // getbankAccountsBySendingCountryCodeProvider(List<BankAccountData>rec, countryOfResidence.value);
+print(transactionData);
+
     final selectedAccount = useState<BankAccountData>(BankAccountData(
         id: 1,
         country: '',
@@ -49,10 +53,12 @@ class WireTransferScreen extends HookWidget {
                   fontWeight: FontWeight.bold)),
           backgroundColor: AppColors.red,
         ),
+
         body: Stack(alignment: AlignmentDirectional.center, children: [
           Image.asset('assets/images/watermark.png',
               width: MediaQuery.of(context).size.width * 0.8),
-          useProvider(getbankAccountsProvider).when(
+
+          useProvider(getbankAccountsBySendingCountryCodeProvider(transactionData.sendingCountry.toString())).when(
               data: (List<BankAccountData> accounts) {
                 return Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -62,7 +68,7 @@ class WireTransferScreen extends HookWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Select Bank',
+                          'Select Beneficiary Bank',
                           textAlign: TextAlign.center,
                           style: context.textTheme.headline3!
                               .copyWith(color: Colors.black, fontSize: 14),
