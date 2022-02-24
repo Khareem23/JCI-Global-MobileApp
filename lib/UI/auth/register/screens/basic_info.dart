@@ -16,7 +16,7 @@ class BasicInfoScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = useState(GlobalKey<FormState>());
-    final initialCountry = useState('NG');
+    final initialCountry = useState('AUS');
     PhoneNumber number = PhoneNumber(isoCode: initialCountry.value);
     var _genders = ['Male', 'Female'];
     var _accountTypes = ['Individual Account', 'Business Account'];
