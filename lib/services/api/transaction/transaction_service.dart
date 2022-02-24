@@ -189,13 +189,13 @@ class TransactionService {
       num transactionId, num paymentTypeId) async {
     final url =
         'Transactions/AddPaymentToTransaction/$transactionId/PaymentTypeID/$paymentTypeId';
-
+print(url);
     try {
       final response = await _dio.patch(url,
           options: Options(headers: {"requireToken": true}));
       final result = response.data['data'];
-      // print(result);
-      return result['paymentLinkURL'];
+      print(response.data["message"]);
+      return response.data["message"];
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {
         // Failure result = Failure.fromJson(e.response!.data);
