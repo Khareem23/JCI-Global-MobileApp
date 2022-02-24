@@ -528,7 +528,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "Location",
+                            "Country",
                             textAlign: TextAlign.center,
                             style: context.textTheme.headline3!.copyWith(
                                 fontWeight: FontWeight.w800,
