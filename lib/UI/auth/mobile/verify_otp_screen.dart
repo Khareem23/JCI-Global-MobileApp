@@ -19,6 +19,7 @@ import 'viewmodels/verify_otp_state.dart';
 
 class VerifyOTPScreen extends StatefulWidget {
   const VerifyOTPScreen({Key? key}) : super(key: key);
+
   @override
   _VerifyOTPScreenState createState() => _VerifyOTPScreenState();
 }
@@ -31,6 +32,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
   String text = '';
   String currentText = "";
   bool isCompleted = false;
+
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
       border: Border.all(color: Colors.deepPurpleAccent),
@@ -154,7 +156,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                                 //   return AppSnackBar.showErrorSnackBar(context,
                                 //       message:
                                 //           'Looks like you didn\'t enter your OTP correctly');
-
+                                print(currentText);
                                 context
                                     .read(verifyOtpProvider.notifier)
                                     .validateOtp(currentText);

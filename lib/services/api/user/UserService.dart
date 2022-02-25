@@ -132,6 +132,7 @@ class UserService extends IUserService {
     try {
       final response = await _dio.post(url,
           options: Options(headers: {"requireToken": true}));
+      print(response.data);
       return true;
     } on DioError catch (e) {
       if (e.response != null && e.response!.data != '') {

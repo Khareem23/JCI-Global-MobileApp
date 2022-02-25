@@ -35,8 +35,8 @@ class AuthController extends StateNotifier<AuthState> {
       //  final user = await _authRepository.getUser();
       state = AuthNotVerified();
     } else if (status == AuthenticationStatus.logout) {
-      await _authRepository.removeToken();
-      state = AuthUnauthenticated();
+      //await _authRepository.removeToken();
+      state = AuthPinNeeded();
     } else {
       final bool hasToken = _authRepository.hasToken();
       if (hasToken) {
