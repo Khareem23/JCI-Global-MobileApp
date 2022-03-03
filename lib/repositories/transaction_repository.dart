@@ -103,6 +103,14 @@ class TransactionRepository {
     return result;
   }
 
+  Future<String> addPaymentToTransaction2(
+      num transactionId, num paymentTypeId) async {
+    final result = await _transactionService.addPaymentToTransaction2(
+        transactionId, paymentTypeId);
+
+    return result;
+  }
+
   // Stream<String> downloadFile(num transactionId) async* {
   //   final result = _transactionService.downloadFile(transactionId);
   //   yield* result;

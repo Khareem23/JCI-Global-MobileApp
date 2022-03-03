@@ -79,7 +79,7 @@ class _PoliLanderScreenState extends State<PoliLanderScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16, color: Colors.blueGrey),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 100),
                   Consumer(
                     builder: (BuildContext context,
                         T Function<T>(ProviderBase<Object?, T>) watch,
@@ -93,11 +93,11 @@ class _PoliLanderScreenState extends State<PoliLanderScreen> {
                               ? null
                               : () => context
                                   .read(addPaymentProvider.notifier)
-                                  .addPayment(widget.transactionData.id!, 1),
+                                  .addPayment3(widget.transactionData.id!, 1),
                           // onPressed: () {
                           //   print(widget.transactionData.id);
                           // },
-                          color: AppColors.accentColor,
+                          color: AppColors.primaryColor,
                           child: Text(
                               vm is Loading ? 'Please wait...' : 'Pay Now',
                               style: btnAccentStyle),

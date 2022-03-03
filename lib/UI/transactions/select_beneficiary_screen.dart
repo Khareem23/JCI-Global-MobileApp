@@ -97,7 +97,7 @@ class SelectBeneficiaryScreen extends HookWidget {
                 return Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: CustomButton(
-                      color: Colors.black,
+                      color: AppColors.primaryColor,
                       width: MediaQuery.of(context).size.width,
                       onPressed: _selectedIndex.value != -1
                           ? vm is Loading

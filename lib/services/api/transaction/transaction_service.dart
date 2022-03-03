@@ -225,6 +225,30 @@ print(url);
     }
   }
 
+  Future<String> addPaymentToTransaction2(
+      num transactionId, num paymentTypeId) async {
+    final url =
+        'Transactions/AddPaymentToTransaction/$transactionId/PaymentTypeID/$paymentTypeId';
+    print(url);
+    try {
+      final response = await _dio.patch(url,
+          options: Options(headers: {"requireToken": true}));
+      final result = response.data['data']['paymentLinkURL'];
+      print(response.data["message"]);
+      return result;
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.data != '') {
+        // Failure result = Failure.fromJson(e.response!.data);
+        throw e.response!.data['message'];
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
+
+
   Future<TransactionRes> createTransaction(
       CreateTransactionModel transaction) async {
     final url = 'Transactions/createTransaction';
