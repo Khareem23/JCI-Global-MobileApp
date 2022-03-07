@@ -74,7 +74,7 @@ class ManualPaymentReportScreen extends HookWidget {
         body: SingleChildScrollView(
           child: IntrinsicHeight(
             child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Stack(alignment: AlignmentDirectional.center, children: [
                   Image.asset('assets/images/watermark.png',
                       width: MediaQuery.of(context).size.width * 0.8),
@@ -121,32 +121,45 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "FullName",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 5, bottom: 0),
+                                child: Expanded(
+                                  child: Text(
+                                    "FullName",
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.headline3!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w800,
+                                            color: AppColors.primaryColor,
+                                            fontSize: 14),
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.fullName.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 20, bottom: 0),
+                                child: Text(
+                                  transactionData.fullName.toString(),
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )
@@ -155,11 +168,9 @@ class ManualPaymentReportScreen extends HookWidget {
                       SizedBox(
                         height: 20,
                       ),
-
-
                       Text(
                         "Reference Number",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                         style: context.textTheme.headline3!.copyWith(
                             fontWeight: FontWeight.w800,
                             color: AppColors.primaryColor,
@@ -174,7 +185,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         style: context.textTheme.headline3!.copyWith(
                             color: AppColors.black,
                             fontWeight: FontWeight.w600,
-                            fontSize: 16),
+                            fontSize: 12),
                       ),
                       SizedBox(
                         height: 20,
@@ -205,21 +216,11 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-
-                              SizedBox(
-                                height: 10,
-                              ),
-
-                            ],
-                          )
                         ],
                       ),
 
@@ -253,32 +254,48 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Receiving Country",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Expanded(
+                                  child: Text(
+                                    "Receiving Country",
+                                    textAlign: TextAlign.right,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.headline3!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w800,
+                                            color: AppColors.primaryColor,
+                                            fontSize: 14),
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.receivingCountry.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Expanded(
+                                  child: Text(
+                                    transactionData.receivingCountry.toString(),
+                                    textAlign: TextAlign.right,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.headline3!
+                                        .copyWith(
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12),
+                                  ),
+                                ),
                               ),
                             ],
                           )
@@ -314,32 +331,45 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
+
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Amount To Receive",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Expanded(
+                                  child: Text(
+                                    "Amount To Receive",
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.headline3!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w800,
+                                            color: AppColors.primaryColor,
+                                            fontSize: 14),
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.amountToReceive.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 20, bottom: 0),
+                                child: Text(
+                                  transactionData.amountToReceive.toString(),
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )
@@ -367,7 +397,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         style: context.textTheme.headline3!.copyWith(
                             color: AppColors.black,
                             fontWeight: FontWeight.w600,
-                            fontSize: 16),
+                            fontSize: 12),
                       ),
 
                       SizedBox(
@@ -400,7 +430,7 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
@@ -408,24 +438,32 @@ class ManualPaymentReportScreen extends HookWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                "Transaction Status",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  "Transaction Status",
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.transactionStatus.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  transactionData.transactionStatus.toString(),
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )
@@ -495,7 +533,7 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
@@ -503,13 +541,17 @@ class ManualPaymentReportScreen extends HookWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                "Country",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  "Country",
+                                  textAlign: TextAlign.center,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
@@ -520,7 +562,7 @@ class ManualPaymentReportScreen extends HookWidget {
                                 style: context.textTheme.headline3!.copyWith(
                                     color: AppColors.black,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                                    fontSize: 12),
                               ),
                             ],
                           )
@@ -552,32 +594,40 @@ class ManualPaymentReportScreen extends HookWidget {
                                 style: context.textTheme.headline3!.copyWith(
                                     color: AppColors.black,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                                    fontSize: 12),
                               ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                "Payment Date",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  "Payment Date",
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                formatDate(
-                                    DateTime.now(), [dd, ' ', M, ' ', yyyy]),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  formatDate(
+                                      DateTime.now(), [dd, ' ', M, ' ', yyyy]),
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )

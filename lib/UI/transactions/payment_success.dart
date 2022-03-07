@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/utils/navigator.dart';
 import 'package:jci_remit_mobile/utils/theme.dart';
 import 'package:jci_remit_mobile/values/values.dart';
@@ -60,12 +62,13 @@ class PaymentSuccess extends StatelessWidget {
                           horizontal: 40, vertical: 15),
                       onPressed: () => context.popToFirst(),
                       color: AppColors.accentColor,
-                      child: Text('Go Home', style: btnAccentStyle),
+                      child: Text('Return Home', style: btnAccentStyle),
                     ),
                   )
                 ],
               ),
             ),
+
           ])),
     );
   }
