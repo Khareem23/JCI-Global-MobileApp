@@ -48,7 +48,7 @@ class ReceiversScreen extends HookWidget {
                     Row(
                       children: [
                         Text(
-                          'All Beneficiaries',
+                          'Beneficiaries',
                           style: context.textTheme.headline4!
                               .copyWith(fontSize: 30, color: AppColors.white),
                         ),
@@ -78,7 +78,7 @@ class ReceiversScreen extends HookWidget {
                       ],
                     ),
                     Text(
-                      'See all your beneficiaries in one place',
+                      'View and edit profile',
                       style: context.textTheme.headline5!
                           .copyWith(fontSize: 12, color: AppColors.white),
                     ),
@@ -115,104 +115,128 @@ class ReceiversScreen extends HookWidget {
                                         'You do not have a saved beneficiary. Do you want to create one?',
                                   );
                                 }
-                                return ListView.separated(
-                                  shrinkWrap: true,
-                                  itemCount: beneficiary.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    if (beneficiary.length > 0)
-                                      return Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border:
-                                                Border.all(color: Colors.grey)),
-                                        child: ListTile(
-                                          onTap: () {
-                                            // selectedBeneficiary.value =
-                                            //     beneficiary[index].customerId;
-                                            // _selectedIndex.value = index;
-                                            // print(_selectedIndex.value);
-                                          },
-                                          contentPadding: EdgeInsets.zero,
-                                          leading: CircleAvatar(
-                                              child: Text(
-                                                  '${beneficiary[index].accountName![0]}'),
-                                              backgroundColor:
-                                                  Color(0xFFefecfd)),
-                                          title: Text(
-                                            beneficiary[index].accountName!,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w800,
-                                                fontSize: 14,
-                                                color: Colors.black87),
-                                          ),
-                                          subtitle: Text(
-                                              '${beneficiary[index].bankName} - ${beneficiary[index].accountNumber}'),
-                                          trailing: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              IconButton(
-                                                  onPressed: () {
-                                                    // Navigator.push(
-                                                    //   context,
-                                                    //   MaterialPageRoute(
-                                                    //       builder: (context) => EditBeneficiaryScreen(
-                                                    //           data: beneficiary[index].accountNumber )),
-                                                    // );
-                                                    // context.navigate(
-                                                    //     EditReceiverScreen(
-                                                    //   data: beneficiary[index],
-                                                    // ));
-                                                    _editTransaction(
-                                                        beneficiary[index]
-                                                            .accountNumber,
-                                                        context);
-                                                  },
-                                                  //_editTransaction(beneficiary[index].accountNumber),
-                                                  icon: Icon(
-                                                    Icons.edit,
-                                                    color: AppColors.pinkShade1,
-                                                  )),
-                                              IconButton(
-                                                  onPressed: () =>
-                                                      _deleteTransaction(
-                                                          beneficiary[index]
-                                                              .accountNumber,
-                                                          context),
-                                                  icon: Icon(Icons.delete,
-                                                      color: AppColors
-                                                          .pinkShade1)),
-                                            ],
-                                          ),
+
+                                return Container(
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        // mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                      Text(
+                                        'Total Beneficiaries : ' + beneficiary.length.toString(),
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold ,
+                                          color: AppColors.black
                                         ),
-                                      );
-                                    else
-                                      return EmptyStateWidget(
-                                        refreshCallBack: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    AddBeneficiaryScreen(
-                                                        transactionData: null)),
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                      ListView.separated(
+                                        shrinkWrap: true,
+                                        itemCount: beneficiary.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          if (beneficiary.length > 0)
+                                            return Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 20),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: Colors.grey)),
+                                              child: ListTile(
+                                                onTap: () {
+                                                  // selectedBeneficiary.value =
+                                                  //     beneficiary[index].customerId;
+                                                  // _selectedIndex.value = index;
+                                                  // print(_selectedIndex.value);
+                                                },
+                                                contentPadding: EdgeInsets.zero,
+                                                leading: CircleAvatar(
+                                                    child: Text(
+                                                        '${beneficiary[index].accountName![0]}'),
+                                                    backgroundColor:
+                                                        Color(0xFFefecfd)),
+                                                title: Text(
+                                                  beneficiary[index]
+                                                      .accountName!,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      fontSize: 14,
+                                                      color: Colors.black87),
+                                                ),
+                                                subtitle: Text(
+                                                    '${beneficiary[index].bankName} - ${beneficiary[index].accountNumber}'),
+                                                trailing: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          // Navigator.push(
+                                                          //   context,
+                                                          //   MaterialPageRoute(
+                                                          //       builder: (context) => EditBeneficiaryScreen(
+                                                          //           data: beneficiary[index].accountNumber )),
+                                                          // );
+                                                          // context.navigate(
+                                                          //     EditReceiverScreen(
+                                                          //   data: beneficiary[index],
+                                                          // ));
+                                                          _editTransaction(
+                                                              beneficiary[index]
+                                                                  .accountNumber,
+                                                              context);
+                                                        },
+                                                        //_editTransaction(beneficiary[index].accountNumber),
+                                                        icon: Icon(
+                                                          Icons.edit,
+                                                          color: AppColors
+                                                              .pinkShade1,
+                                                        )),
+                                                    IconButton(
+                                                        onPressed: () =>
+                                                            _deleteTransaction(
+                                                                beneficiary[
+                                                                        index]
+                                                                    .accountNumber,
+                                                                context),
+                                                        icon: Icon(Icons.delete,
+                                                            color: AppColors
+                                                                .pinkShade1)),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          else
+                                            return EmptyStateWidget(
+                                              refreshCallBack: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AddBeneficiaryScreen(
+                                                              transactionData:
+                                                                  null)),
+                                                );
+                                              },
+                                              textOnButton: 'Create',
+                                              errorTitle: 'Oops!',
+                                              error:
+                                                  'You do not have a saved beneficiary. Do you want to create one?',
+                                            );
+                                        },
+                                        separatorBuilder:
+                                            (BuildContext context, int index) {
+                                          return SizedBox(
+                                            height: 10,
                                           );
                                         },
-                                        textOnButton: 'Create',
-                                        errorTitle: 'Oops!',
-                                        error:
-                                            'You do not have a saved beneficiary. Do you want to create one?',
-                                      );
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return SizedBox(
-                                      height: 10,
-                                    );
-                                  },
-                                );
+                                      )
+                                    ]));
                               },
                               error: (Object error, StackTrace? stackTrace) {
                                 return NetworkErrorWidget(
@@ -313,6 +337,11 @@ class ReceiversScreen extends HookWidget {
   }
 
   _editTransaction(String? accountNumber, BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Center(child: CircularProgressIndicator());
+        });
     var BeneficiaryData;
     final util = Util();
     final token = StorageUtil.getString(StaticConfig.token);
@@ -357,13 +386,11 @@ class ReceiversScreen extends HookWidget {
   }
 
   _deleteTransaction(String? accountNumber, BuildContext context) async {
-
     showDialog(
         context: context,
         builder: (_) {
           return Center(child: CircularProgressIndicator());
         });
-
 
     final util = Util();
     final token = StorageUtil.getString(StaticConfig.token);
