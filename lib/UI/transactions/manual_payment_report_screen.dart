@@ -30,6 +30,8 @@ class ManualPaymentReportScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final selectedFile = useState('');
+    final result = useState('');
+    String firstDropDownData = "error";
     print(accountData);
     print(transactionData);
     // useEffect(() {
@@ -41,14 +43,18 @@ class ManualPaymentReportScreen extends HookWidget {
     return ProviderListener(
       onChange: (BuildContext context, value) {
         if (value is Error) {
+          firstDropDownData = "error";
+          result.value = "error";
           AppSnackBar.showErrorSnackBar(context,
               message:
                   "Sorry, we couldn't complete your transaction at the moment. Please try again.");
         }
         if (value is Success) {
+          firstDropDownData = "success";
+          result.value = "success";
           AppSnackBar.showSuccessSnackBar(context,
               message: "Your payment is complete!");
-          context.navigate(PaymentSuccess());
+          //context.navigate(PaymentSuccess());
         }
       },
       provider: addPaymentProvider,
@@ -336,7 +342,6 @@ class ManualPaymentReportScreen extends HookWidget {
                               ],
                             ),
                           ),
-
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -636,48 +641,7 @@ class ManualPaymentReportScreen extends HookWidget {
                       SizedBox(
                         height: 40,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              TransactionService()
-                                  .downloadFile(transactionData.id!, context);
-                            },
-                            // context.read(downloadProvider(transactionData.id!)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text('Download Payment Info'),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(Feather.download)
-                              ],
-                            ),
-                          ),
-                          // Consumer(
-                          //   builder: (BuildContext context,
-                          //       T Function<T>(ProviderBase<Object?, T>) watch,
-                          //       Widget? child) {
-                          //     AsyncValue<String> message =
-                          //         watch(downloadProvider(transactionData.id!));
-                          //     return message.when(
-                          //       loading: () => SizedBox(
-                          //           width: 10,
-                          //           height: 10,
-                          //           child: const CircularProgressIndicator(
-                          //             strokeWidth: 2,
-                          //           )),
-                          //       error: (err, stack) => Text('Error: $err'),
-                          //       data: (message) {
-                          //         return Text(message);
-                          //       },
-                          //     );
-                          //   },
-                          // ),
-                        ],
-                      ),
+
                       SizedBox(
                         height: 20,
                       ),
@@ -728,6 +692,8 @@ class ManualPaymentReportScreen extends HookWidget {
                                         context
                                             .read(addPaymentProvider.notifier)
                                             .addPayment(transactionData.id!, 3);
+                                        firstDropDownData = "success";
+                                        print(firstDropDownData);
                                       } else {
                                         AppSnackBar.showErrorSnackBar(context,
                                             message:
@@ -746,7 +712,34 @@ class ManualPaymentReportScreen extends HookWidget {
                       ),
                       SizedBox(
                         height: 20,
-                      )
+                      ),
+                      result.value == "success"
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    TransactionService().downloadFile(
+                                        transactionData.id!, context);
+                                  },
+                                  // context.read(downloadProvider(transactionData.id!)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text('Download Payment Info'),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Icon(Feather.download)
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
                 ])),

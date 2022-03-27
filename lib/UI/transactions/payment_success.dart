@@ -57,18 +57,20 @@ class PaymentSuccess extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   Container(
-                    child: RaisedButton(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 15),
-                      onPressed: () => context.popToFirst(),
-                      color: AppColors.accentColor,
-                      child: Text('Return Home', style: btnAccentStyle),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: RaisedButton(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 15),
+                        onPressed: () => context.popToFirst(),
+                        color: AppColors.primaryColor,
+                        child: Text('Return Home', style: btnAccentStyle),
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-
           ])),
     );
   }
