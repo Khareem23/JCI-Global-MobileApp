@@ -31,6 +31,7 @@ class ManualPaymentReportScreen extends HookWidget {
   Widget build(BuildContext context) {
     final selectedFile = useState('');
     final result = useState('');
+    final initial = useState('');
     String firstDropDownData = "error";
     print(accountData);
     print(transactionData);
@@ -52,6 +53,7 @@ class ManualPaymentReportScreen extends HookWidget {
         if (value is Success) {
           firstDropDownData = "success";
           result.value = "success";
+          initial.value = "completed";
           AppSnackBar.showSuccessSnackBar(context,
               message: "Your payment is complete!");
           //context.navigate(PaymentSuccess());
@@ -642,80 +644,86 @@ class ManualPaymentReportScreen extends HookWidget {
                         height: 40,
                       ),
 
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Consumer(
-                        builder: (BuildContext context,
-                            T Function<T>(ProviderBase<Object?, T>) watch,
-                            Widget? child) {
-                          final vm = watch(uploadProvider);
-                          return InkWell(
-                            onTap: () => pickFile(
-                                context, selectedFile, transactionData.id!),
-                            child: Container(
-                              height: context.screenHeight(0.07),
-                              width: context.screenWidth(1),
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(border: Border.all()),
-                              child: Row(
-                                children: [
-                                  Icon(Feather.file),
-                                  Spacer(),
-                                  Text('Upload Payment Confirmation'),
-                                  SizedBox(
-                                    width: 10,
+                      initial.value == ""
+                          ? Consumer(
+                              builder: (BuildContext context,
+                                  T Function<T>(ProviderBase<Object?, T>) watch,
+                                  Widget? child) {
+                                final vm = watch(uploadProvider);
+                                return InkWell(
+                                  onTap: () => pickFile(context, selectedFile,
+                                      transactionData.id!),
+                                  child: Container(
+                                    height: context.screenHeight(0.07),
+                                    width: context.screenWidth(1),
+                                    padding: EdgeInsets.all(10),
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Row(
+                                      children: [
+                                        Icon(Feather.file),
+                                        Spacer(),
+                                        Text('Upload Payment Confirmation'),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        status(vm)
+                                      ],
+                                    ),
                                   ),
-                                  status(vm)
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                                );
+                              },
+                            )
+                          : Container(),
+
                       Text(
                         selectedFile.value,
                         overflow: TextOverflow.fade,
                       ),
                       Spacer(),
-                      Consumer(
-                        builder: (BuildContext context,
-                            T Function<T>(ProviderBase<Object?, T>) watch,
-                            Widget? child) {
-                          final vm = watch(addPaymentProvider);
-                          return CustomButton(
-                              color: AppColors.primaryColor,
-                              onPressed: vm is Loading
-                                  ? null
-                                  : () {
-                                      if (selectedFile.value != "") {
-                                        context
-                                            .read(addPaymentProvider.notifier)
-                                            .addPayment(transactionData.id!, 3);
-                                        firstDropDownData = "success";
-                                        print(firstDropDownData);
-                                      } else {
-                                        AppSnackBar.showErrorSnackBar(context,
-                                            message:
-                                                "Please upload proof of payment!");
-                                      }
-                                    },
-                              width: context.screenWidth(1),
-                              title: Text(
-                                vm is Loading ? 'LOADING' : 'COMPLETE',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Sizes.TEXT_SIZE_16),
-                              ));
-                        },
-                      ),
+                      initial.value == ""
+                          ? Consumer(
+                              builder: (BuildContext context,
+                                  T Function<T>(ProviderBase<Object?, T>) watch,
+                                  Widget? child) {
+                                final vm = watch(addPaymentProvider);
+                                return CustomButton(
+                                    color: AppColors.primaryColor,
+                                    onPressed: vm is Loading
+                                        ? null
+                                        : () {
+                                            if (selectedFile.value != "") {
+                                              context
+                                                  .read(addPaymentProvider
+                                                      .notifier)
+                                                  .addPayment(
+                                                      transactionData.id!, 3);
+                                              firstDropDownData = "success";
+                                              print(firstDropDownData);
+                                            } else {
+                                              AppSnackBar.showErrorSnackBar(
+                                                  context,
+                                                  message:
+                                                      "Please upload proof of payment!");
+                                            }
+                                          },
+                                    width: context.screenWidth(1),
+                                    title: Text(
+                                      vm is Loading ? 'LOADING' : 'COMPLETE',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: Sizes.TEXT_SIZE_16),
+                                    ));
+                              },
+                            )
+                          : Container(),
                       SizedBox(
                         height: 20,
                       ),
                       result.value == "success"
                           ? Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 InkWell(
                                   onTap: () {
@@ -723,15 +731,23 @@ class ManualPaymentReportScreen extends HookWidget {
                                         transactionData.id!, context);
                                   },
                                   // context.read(downloadProvider(transactionData.id!)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text('Download Payment Info'),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Icon(Feather.download)
-                                    ],
+                                  child: Container(
+                                    height: context.screenHeight(0.09),
+                                    width: context.screenWidth(0.9),
+                                    padding: EdgeInsets.all(5),
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text('Download Payment Info'),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Icon(Feather.download)
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
