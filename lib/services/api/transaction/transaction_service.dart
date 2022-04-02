@@ -117,8 +117,9 @@ class TransactionService {
     }
   }
 
-  Future<BankAccountModel> getBankAccountsBySendingCountry(String countryCode) async {
-    final url = '/JCIBank/GetAllBankAccountBySendingCountry/'+ countryCode;
+  Future<BankAccountModel> getBankAccountsBySendingCountry(
+      String countryCode) async {
+    final url = '/JCIBank/GetAllBankAccountBySendingCountry/' + countryCode;
     try {
       final response = await _dio.get(url,
           options: Options(headers: {"requireToken": true}));
@@ -153,8 +154,8 @@ class TransactionService {
     }
   }
 
-  Future<RateModel> getRate(
-      String sendCurrencyCode, String receiveCurrencyCode, num amount) async {
+  Future<RateModel> getRate(String sendCurrencyCode, String receiveCurrencyCode,
+      num amount) async {
     final url = 'Transactions/convertSendingToReceiving';
     try {
       final response = await _dio.post(url,
@@ -177,12 +178,12 @@ class TransactionService {
     }
   }
 
-  Future<bool> uploadPaymentConfirmation(
-      num transactionId, String filePath) async {
+  Future<bool> uploadPaymentConfirmation(num transactionId,
+      String filePath) async {
     File file = File(filePath);
     final url = 'Transactions/uploadPaymentConfirmation/$transactionId';
     final mimeTypeData =
-        lookupMimeType(file.path, headerBytes: [0xFF, 0xD8])!.split('/');
+    lookupMimeType(file.path, headerBytes: [0xFF, 0xD8])!.split('/');
     FormData formData = FormData.fromMap({
       "fileToUpload": await MultipartFile.fromFile(file.path,
           contentType: MediaType(mimeTypeData[0], mimeTypeData[1]))
@@ -203,11 +204,11 @@ class TransactionService {
     }
   }
 
-  Future<String> addPaymentToTransaction(
-      num transactionId, num paymentTypeId) async {
+  Future<String> addPaymentToTransaction(num transactionId,
+      num paymentTypeId) async {
     final url =
         'Transactions/AddPaymentToTransaction/$transactionId/PaymentTypeID/$paymentTypeId';
-print(url);
+    print(url);
     try {
       final response = await _dio.patch(url,
           options: Options(headers: {"requireToken": true}));
@@ -225,8 +226,8 @@ print(url);
     }
   }
 
-  Future<String> addPaymentToTransaction2(
-      num transactionId, num paymentTypeId) async {
+  Future<String> addPaymentToTransaction2(num transactionId,
+      num paymentTypeId) async {
     final url =
         'Transactions/AddPaymentToTransaction/$transactionId/PaymentTypeID/$paymentTypeId';
     print(url);
@@ -246,7 +247,6 @@ print(url);
       }
     }
   }
-
 
 
   Future<TransactionRes> createTransaction(
@@ -281,8 +281,8 @@ print(url);
   }
 
   // Create beneficiary on transaction screen or beneficiary screen
-  Future<bool> createBeneficiary(
-      CreateBeneficiaryModel beneficiary, num? transactionId) async {
+  Future<bool> createBeneficiary(CreateBeneficiaryModel beneficiary,
+      num? transactionId) async {
     final url = transactionId == null
         ? 'Transactions/addReceiver'
         : 'Transactions/addNewBeneficiaryToTransaction/$transactionId';
@@ -291,56 +291,56 @@ print(url);
 
       final response = transactionId == null
           ? await _dio.post(url,
-              // data: beneficiary.toJson(),
-              data: {
-                "customerId": beneficiary.customerId,
-                "country": beneficiary.beneficiaryCountry,
-                "bankName": beneficiary.bankName,
-                "bankState": beneficiary.bankState,
-                "bankPostalCode": beneficiary.bankPostalCode,
-                "bankCity": beneficiary.bankCity,
-                "bankAddress": beneficiary.bankAddress,
-                "accountCurrency": beneficiary.accountCurrency,
-                "accountNumber": beneficiary.accountNumber,
-                "accountName": beneficiary.accountName,
-                "accountSWiftCode": beneficiary.accountSWiftCode,
-                "accountBSBCode": beneficiary.accountBsbCode,
-                "beneficiaryAddress": beneficiary.beneficiaryAddress,
-                "beneficiaryCountry": beneficiary.country,
-                "bankIdentifierCode": beneficiary.bankIdentifierCode,
-                "bankIdentifier": beneficiary.bankIdentifier,
-                "corresBankCountry": beneficiary.country,
-                "corresBankName": beneficiary.corresBankName,
-                "corresBankIBAN": beneficiary.corresBankIban,
-                "corresBankAddress": beneficiary.corresBankAddress,
-                "corresAccountName": beneficiary.corresBankCountry,
-              },
-              options: Options(headers: {"requireToken": true}))
+          // data: beneficiary.toJson(),
+          data: {
+            "customerId": beneficiary.customerId,
+            "country": beneficiary.beneficiaryCountry,
+            "bankName": beneficiary.bankName,
+            "bankState": beneficiary.bankState,
+            "bankPostalCode": beneficiary.bankPostalCode,
+            "bankCity": beneficiary.bankCity,
+            "bankAddress": beneficiary.bankAddress,
+            "accountCurrency": beneficiary.accountCurrency,
+            "accountNumber": beneficiary.accountNumber,
+            "accountName": beneficiary.accountName,
+            "accountSWiftCode": beneficiary.accountSWiftCode,
+            "accountBSBCode": beneficiary.accountBsbCode,
+            "beneficiaryAddress": beneficiary.beneficiaryAddress,
+            "beneficiaryCountry": beneficiary.country,
+            "bankIdentifierCode": beneficiary.bankIdentifierCode,
+            "bankIdentifier": beneficiary.bankIdentifier,
+            "corresBankCountry": beneficiary.country,
+            "corresBankName": beneficiary.corresBankName,
+            "corresBankIBAN": beneficiary.corresBankIban,
+            "corresBankAddress": beneficiary.corresBankAddress,
+            "corresAccountName": beneficiary.corresBankCountry,
+          },
+          options: Options(headers: {"requireToken": true}))
           : await _dio.patch(url,
-              data: {
-                "customerId": beneficiary.customerId,
-                "country": beneficiary.beneficiaryCountry,
-                "bankName": beneficiary.bankName,
-                "bankState": beneficiary.bankState,
-                "bankPostalCode": beneficiary.bankPostalCode,
-                "bankCity": beneficiary.bankCity,
-                "bankAddress": beneficiary.bankAddress,
-                "accountCurrency": beneficiary.accountCurrency,
-                "accountNumber": beneficiary.accountNumber,
-                "accountName": beneficiary.accountName,
-                "accountSWiftCode": beneficiary.accountSWiftCode,
-                "accountBSBCode": beneficiary.accountBsbCode,
-                "beneficiaryAddress": beneficiary.beneficiaryAddress,
-                "beneficiaryCountry": beneficiary.country,
-                "bankIdentifierCode": beneficiary.bankIdentifierCode,
-                "bankIdentifier": beneficiary.bankIdentifier,
-                "corresBankCountry": beneficiary.country,
-                "corresBankName": beneficiary.corresBankName,
-                "corresBankIBAN": beneficiary.corresBankIban,
-                "corresBankAddress": beneficiary.corresBankAddress,
-                "corresAccountName": beneficiary.corresBankCountry,
-              },
-              options: Options(headers: {"requireToken": true}));
+          data: {
+            "customerId": beneficiary.customerId,
+            "country": beneficiary.beneficiaryCountry,
+            "bankName": beneficiary.bankName,
+            "bankState": beneficiary.bankState,
+            "bankPostalCode": beneficiary.bankPostalCode,
+            "bankCity": beneficiary.bankCity,
+            "bankAddress": beneficiary.bankAddress,
+            "accountCurrency": beneficiary.accountCurrency,
+            "accountNumber": beneficiary.accountNumber,
+            "accountName": beneficiary.accountName,
+            "accountSWiftCode": beneficiary.accountSWiftCode,
+            "accountBSBCode": beneficiary.accountBsbCode,
+            "beneficiaryAddress": beneficiary.beneficiaryAddress,
+            "beneficiaryCountry": beneficiary.country,
+            "bankIdentifierCode": beneficiary.bankIdentifierCode,
+            "bankIdentifier": beneficiary.bankIdentifier,
+            "corresBankCountry": beneficiary.country,
+            "corresBankName": beneficiary.corresBankName,
+            "corresBankIBAN": beneficiary.corresBankIban,
+            "corresBankAddress": beneficiary.corresBankAddress,
+            "corresAccountName": beneficiary.corresBankCountry,
+          },
+          options: Options(headers: {"requireToken": true}));
 
       return response.data != null;
     } on DioError catch (e) {
@@ -354,8 +354,8 @@ print(url);
     }
   }
 
-  Future<bool> addExistingBeneficiaryByAccountNo(
-      String beneficiary, num transactionId) async {
+  Future<bool> addExistingBeneficiaryByAccountNo(String beneficiary,
+      num transactionId) async {
     final url =
         'Transactions/addExistingBeneficiaryToTransactionByAccountNo/$transactionId/$beneficiary';
     print(url);
@@ -375,8 +375,8 @@ print(url);
     }
   }
 
-  Future<bool> addExistingBeneficiary(
-      num beneficiary, num transactionId) async {
+  Future<bool> addExistingBeneficiary(num beneficiary,
+      num transactionId) async {
     final url =
         'Transactions/addExistingBeneficiaryToTransaction/$transactionId/$beneficiary';
     try {
@@ -452,35 +452,81 @@ print(url);
   //     }
   //   }
   // }
+  bool downloading = true;
+  String downloadingStr = "No data";
+  String savePath = "";
 
-  downloadFile(num transactionId, context) async {
-    final util = Util();
-    final token = StorageUtil.getString(StaticConfig.token);
-    final userMap = util.parseJwtPayLoad(token);
-    final email = userMap['email'];
-    print(email);
+  Future<String> getFilePath(uniqueFileName) async {
+    String path = '';
 
-    final baseUrl =
-        "http://skynetz2-001-site4.gtempurl.com/api/TransactionReceipt/download-receipt";
-    final url = baseUrl + "/$transactionId/$email";
-    print(url);
+    Directory dir = await getApplicationDocumentsDirectory();
+
+    path = '${dir.path}/$uniqueFileName';
+
+    return path;
+  }
+
+
+  Future downloadFile2(String pdf) async {
     try {
-      var res = await http.get(Uri.parse(url), headers: {
-        "content-type": "application/json",
-      });
+      Dio dio = Dio();
 
-      var body = json.decode(res.body);
-      if (body['status'] != 'failed') {
-        print(body);
-        AppSnackBar.showSuccessSnackBar(context, message: body['message']);
-      } else {
-        print(body['message']);
-        AppSnackBar.showErrorSnackBar(context, message: body['message']);
-      }
-    } on TimeoutException catch (e) {
-      print('Timeout: $e');
-    } on Error catch (e) {
-      print('Error: $e');
+      String name = pdf;
+      String fileName = name.substring(name.lastIndexOf("/") + 1);
+
+      savePath = await getFilePath(fileName);
+      await dio.download(pdf, savePath, onReceiveProgress: (rec, total) {
+        // setState(() {
+        //   downloading = true;
+        //   // download = (rec / total) * 100;
+        //   downloadingStr =
+        //   "Downloading Image : $rec" ;
+        //
+        // });
+
+
+      });
+      // setState(() {
+      //   downloading = false;
+      //   downloadingStr = "Completed";
+      // });
+    } catch (e) {
+      print(e.toString());
+      //}
     }
   }
-}
+
+    downloadFile(num transactionId, context) async {
+      final util = Util();
+      final token = StorageUtil.getString(StaticConfig.token);
+      final userMap = util.parseJwtPayLoad(token);
+      final email = userMap['email'];
+      final baseUrl =
+          "http://jciremitreceipt.decloud23.com/api/TransactionReceipt/download-receipt";
+      final url = baseUrl + "/$transactionId/$email";
+      print(url);
+      try {
+        var res = await http.get(Uri.parse(url), headers: {
+          "content-type": "application/json",
+        });
+
+        var body = json.decode(res.body);
+        print(body);
+        if (body['status'] != 'failed') {
+
+          var downloadUrl = body['path'];
+          print(downloadUrl);
+          downloadFile2(downloadUrl);
+
+          AppSnackBar.showSuccessSnackBar(context, message: body['message']);
+        } else {
+          print(body['message']);
+          AppSnackBar.showErrorSnackBar(context, message: body['message']);
+        }
+      } on TimeoutException catch (e) {
+        print('Timeout: $e');
+      } on Error catch (e) {
+        print('Error: $e');
+      }
+    }
+  }
