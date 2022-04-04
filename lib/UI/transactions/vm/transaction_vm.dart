@@ -156,4 +156,9 @@ class AddPaymentNotifier extends RequestStateNotifier<String> {
 
   Future<void> addPayment(num transactionId, num paymentTypeId) => makeRequest(
       () => _api.addPaymentToTransaction(transactionId, paymentTypeId));
+
+  Future<void> addPayment3(num transactionId, num paymentTypeId) => makeRequest(
+          () => _api.addPaymentToTransaction2(transactionId, paymentTypeId));
 }
+
+

@@ -168,20 +168,20 @@ class UserDto {
 
 class CustomerReferredTransaction {
   CustomerReferredTransaction({
-    required this.id,
+   // required this.id,
     this.totalNoTransaction,
     this.payoutBalance,
     this.customerId,
   });
 
-  int id;
+ // int id;
   int? totalNoTransaction;
   num? payoutBalance;
   int? customerId;
 
   factory CustomerReferredTransaction.fromJson(Map<String, dynamic> json) =>
       CustomerReferredTransaction(
-        id: json["id"] == null ? null : json["id"],
+        //id: json["id"] == null ? null : json["id"],
         totalNoTransaction: json["total_No_Transaction"] == null
             ? null
             : json["total_No_Transaction"],
@@ -191,7 +191,7 @@ class CustomerReferredTransaction {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
+        //"id": id == null ? null : id,
         "total_No_Transaction":
             totalNoTransaction == null ? null : totalNoTransaction,
         "payout_Balance": payoutBalance == null ? null : payoutBalance,

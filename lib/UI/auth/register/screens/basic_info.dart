@@ -239,12 +239,6 @@ class BasicInfoScreen extends HookWidget {
                 onChanged: (String? newValue) {
                   gender.value = newValue!;
                 },
-                validator: (String? value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Please select a gender';
-                  }
-                  return null;
-                },
                 items: _genders.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,

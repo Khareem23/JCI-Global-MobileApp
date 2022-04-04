@@ -23,7 +23,6 @@ class AddressInfo extends HookWidget {
 
 
     var _countriesWorld = [
-
       "Afghanistan",
       "Albania",
       "Algeria",

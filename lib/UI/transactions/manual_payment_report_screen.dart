@@ -30,6 +30,9 @@ class ManualPaymentReportScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final selectedFile = useState('');
+    final result = useState('');
+    final initial = useState('');
+    String firstDropDownData = "error";
     print(accountData);
     print(transactionData);
     // useEffect(() {
@@ -41,14 +44,19 @@ class ManualPaymentReportScreen extends HookWidget {
     return ProviderListener(
       onChange: (BuildContext context, value) {
         if (value is Error) {
+          firstDropDownData = "error";
+          result.value = "error";
           AppSnackBar.showErrorSnackBar(context,
               message:
                   "Sorry, we couldn't complete your transaction at the moment. Please try again.");
         }
         if (value is Success) {
+          firstDropDownData = "success";
+          result.value = "success";
+          initial.value = "completed";
           AppSnackBar.showSuccessSnackBar(context,
               message: "Your payment is complete!");
-          context.navigate(PaymentSuccess());
+          //context.navigate(PaymentSuccess());
         }
       },
       provider: addPaymentProvider,
@@ -74,7 +82,7 @@ class ManualPaymentReportScreen extends HookWidget {
         body: SingleChildScrollView(
           child: IntrinsicHeight(
             child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Stack(alignment: AlignmentDirectional.center, children: [
                   Image.asset('assets/images/watermark.png',
                       width: MediaQuery.of(context).size.width * 0.8),
@@ -121,32 +129,45 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "FullName",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 5, bottom: 0),
+                                child: Expanded(
+                                  child: Text(
+                                    "FullName",
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.headline3!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w800,
+                                            color: AppColors.primaryColor,
+                                            fontSize: 14),
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.fullName.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 20, bottom: 0),
+                                child: Text(
+                                  transactionData.fullName.toString(),
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )
@@ -155,11 +176,9 @@ class ManualPaymentReportScreen extends HookWidget {
                       SizedBox(
                         height: 20,
                       ),
-
-
                       Text(
                         "Reference Number",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                         style: context.textTheme.headline3!.copyWith(
                             fontWeight: FontWeight.w800,
                             color: AppColors.primaryColor,
@@ -174,7 +193,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         style: context.textTheme.headline3!.copyWith(
                             color: AppColors.black,
                             fontWeight: FontWeight.w600,
-                            fontSize: 16),
+                            fontSize: 12),
                       ),
                       SizedBox(
                         height: 20,
@@ -205,21 +224,11 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-
-                              SizedBox(
-                                height: 10,
-                              ),
-
-                            ],
-                          )
                         ],
                       ),
 
@@ -253,32 +262,48 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Receiving Country",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Expanded(
+                                  child: Text(
+                                    "Receiving Country",
+                                    textAlign: TextAlign.right,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.headline3!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w800,
+                                            color: AppColors.primaryColor,
+                                            fontSize: 14),
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.receivingCountry.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Expanded(
+                                  child: Text(
+                                    transactionData.receivingCountry.toString(),
+                                    textAlign: TextAlign.right,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.headline3!
+                                        .copyWith(
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12),
+                                  ),
+                                ),
                               ),
                             ],
                           )
@@ -314,32 +339,44 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Amount To Receive",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Expanded(
+                                  child: Text(
+                                    "Amount To Receive",
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.headline3!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w800,
+                                            color: AppColors.primaryColor,
+                                            fontSize: 14),
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.amountToReceive.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 20, bottom: 0),
+                                child: Text(
+                                  transactionData.amountToReceive.toString(),
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )
@@ -367,7 +404,7 @@ class ManualPaymentReportScreen extends HookWidget {
                         style: context.textTheme.headline3!.copyWith(
                             color: AppColors.black,
                             fontWeight: FontWeight.w600,
-                            fontSize: 16),
+                            fontSize: 12),
                       ),
 
                       SizedBox(
@@ -400,7 +437,7 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
@@ -408,24 +445,32 @@ class ManualPaymentReportScreen extends HookWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                "Transaction Status",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  "Transaction Status",
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                transactionData.transactionStatus.toString(),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  transactionData.transactionStatus.toString(),
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )
@@ -495,7 +540,7 @@ class ManualPaymentReportScreen extends HookWidget {
                                   style: context.textTheme.headline3!.copyWith(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
@@ -503,13 +548,17 @@ class ManualPaymentReportScreen extends HookWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                "Country",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  "Country",
+                                  textAlign: TextAlign.center,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
@@ -520,7 +569,7 @@ class ManualPaymentReportScreen extends HookWidget {
                                 style: context.textTheme.headline3!.copyWith(
                                     color: AppColors.black,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                                    fontSize: 12),
                               ),
                             ],
                           )
@@ -552,32 +601,40 @@ class ManualPaymentReportScreen extends HookWidget {
                                 style: context.textTheme.headline3!.copyWith(
                                     color: AppColors.black,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                                    fontSize: 12),
                               ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                "Payment Date",
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  "Payment Date",
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                formatDate(
-                                    DateTime.now(), [dd, ' ', M, ' ', yyyy]),
-                                textAlign: TextAlign.center,
-                                style: context.textTheme.headline3!.copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 10, bottom: 0),
+                                child: Text(
+                                  formatDate(
+                                      DateTime.now(), [dd, ' ', M, ' ', yyyy]),
+                                  textAlign: TextAlign.right,
+                                  style: context.textTheme.headline3!.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )
@@ -586,117 +643,119 @@ class ManualPaymentReportScreen extends HookWidget {
                       SizedBox(
                         height: 40,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              TransactionService()
-                                  .downloadFile(transactionData.id!, context);
-                            },
-                            // context.read(downloadProvider(transactionData.id!)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text('Download Payment Info'),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(Feather.download)
-                              ],
-                            ),
-                          ),
-                          // Consumer(
-                          //   builder: (BuildContext context,
-                          //       T Function<T>(ProviderBase<Object?, T>) watch,
-                          //       Widget? child) {
-                          //     AsyncValue<String> message =
-                          //         watch(downloadProvider(transactionData.id!));
-                          //     return message.when(
-                          //       loading: () => SizedBox(
-                          //           width: 10,
-                          //           height: 10,
-                          //           child: const CircularProgressIndicator(
-                          //             strokeWidth: 2,
-                          //           )),
-                          //       error: (err, stack) => Text('Error: $err'),
-                          //       data: (message) {
-                          //         return Text(message);
-                          //       },
-                          //     );
-                          //   },
-                          // ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Consumer(
-                        builder: (BuildContext context,
-                            T Function<T>(ProviderBase<Object?, T>) watch,
-                            Widget? child) {
-                          final vm = watch(uploadProvider);
-                          return InkWell(
-                            onTap: () => pickFile(
-                                context, selectedFile, transactionData.id!),
-                            child: Container(
-                              height: context.screenHeight(0.07),
-                              width: context.screenWidth(1),
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(border: Border.all()),
-                              child: Row(
-                                children: [
-                                  Icon(Feather.file),
-                                  Spacer(),
-                                  Text('Upload Payment Confirmation'),
-                                  SizedBox(
-                                    width: 10,
+
+                      initial.value == ""
+                          ? Consumer(
+                              builder: (BuildContext context,
+                                  T Function<T>(ProviderBase<Object?, T>) watch,
+                                  Widget? child) {
+                                final vm = watch(uploadProvider);
+                                return InkWell(
+                                  onTap: () => pickFile(context, selectedFile,
+                                      transactionData.id!),
+                                  child: Container(
+                                    height: context.screenHeight(0.07),
+                                    width: context.screenWidth(1),
+                                    padding: EdgeInsets.all(10),
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Row(
+                                      children: [
+                                        Icon(Feather.file),
+                                        Spacer(),
+                                        Text('Upload Payment Confirmation'),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        status(vm)
+                                      ],
+                                    ),
                                   ),
-                                  status(vm)
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                                );
+                              },
+                            )
+                          : Container(),
+
                       Text(
                         selectedFile.value,
                         overflow: TextOverflow.fade,
                       ),
                       Spacer(),
-                      Consumer(
-                        builder: (BuildContext context,
-                            T Function<T>(ProviderBase<Object?, T>) watch,
-                            Widget? child) {
-                          final vm = watch(addPaymentProvider);
-                          return CustomButton(
-                              color: AppColors.primaryColor,
-                              onPressed: vm is Loading
-                                  ? null
-                                  : () {
-                                      if (selectedFile.value != "") {
-                                        context
-                                            .read(addPaymentProvider.notifier)
-                                            .addPayment(transactionData.id!, 3);
-                                      } else {
-                                        AppSnackBar.showErrorSnackBar(context,
-                                            message:
-                                                "Please upload proof of payment!");
-                                      }
-                                    },
-                              width: context.screenWidth(1),
-                              title: Text(
-                                vm is Loading ? 'LOADING' : 'COMPLETE',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Sizes.TEXT_SIZE_16),
-                              ));
-                        },
-                      ),
+                      initial.value == ""
+                          ? Consumer(
+                              builder: (BuildContext context,
+                                  T Function<T>(ProviderBase<Object?, T>) watch,
+                                  Widget? child) {
+                                final vm = watch(addPaymentProvider);
+                                return CustomButton(
+                                    color: AppColors.primaryColor,
+                                    onPressed: vm is Loading
+                                        ? null
+                                        : () {
+                                            if (selectedFile.value != "") {
+                                              context
+                                                  .read(addPaymentProvider
+                                                      .notifier)
+                                                  .addPayment(
+                                                      transactionData.id!, 3);
+                                              firstDropDownData = "success";
+                                              print(firstDropDownData);
+                                            } else {
+                                              AppSnackBar.showErrorSnackBar(
+                                                  context,
+                                                  message:
+                                                      "Please upload proof of payment!");
+                                            }
+                                          },
+                                    width: context.screenWidth(1),
+                                    title: Text(
+                                      vm is Loading ? 'LOADING' : 'COMPLETE',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: Sizes.TEXT_SIZE_16),
+                                    ));
+                              },
+                            )
+                          : Container(),
                       SizedBox(
                         height: 20,
-                      )
+                      ),
+                      result.value == "success"
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    TransactionService().downloadFile(
+                                        transactionData.id!, context);
+                                  },
+                                  // context.read(downloadProvider(transactionData.id!)),
+                                  child: Container(
+                                    height: context.screenHeight(0.09),
+                                    width: context.screenWidth(0.9),
+                                    padding: EdgeInsets.all(5),
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text('Download Payment Info'),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Icon(Feather.download)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
                 ])),

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:jci_remit_mobile/UI/transactions/poli_webview.dart';
 import 'package:jci_remit_mobile/UI/transactions/transaction_success.dart';
+import 'package:jci_remit_mobile/common/custom_button.dart';
 import 'package:jci_remit_mobile/common/snackbar.dart';
 import 'package:jci_remit_mobile/controllers/request_state_notifier.dart';
 import 'package:jci_remit_mobile/services/api/transaction/model/transaction_res.dart';
@@ -60,6 +61,29 @@ class _PoliLanderScreenState extends State<PoliLanderScreen> {
                   fontWeight: FontWeight.bold)),
           backgroundColor: AppColors.red,
         ),
+        bottomSheet: Consumer(
+          builder: (BuildContext context,
+              T Function<T>(ProviderBase<Object?, T>) watch,
+              Widget? child) {
+            final vm = watch(addExistingBeneficiaryProvider);
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: CustomButton(
+                  color: AppColors.primaryColor,
+                  width: MediaQuery.of(context).size.width,
+                  onPressed: vm is Loading
+                      ? null
+                      : () => context
+                      .read(addPaymentProvider.notifier)
+                      .addPayment3(widget.transactionData.id!, 1),
+                  title: Text(
+                    vm is Loading ? 'PLEASE WAIT...' : 'PROCEED',
+                    style: btnAccentStyle,
+                  )),
+            );
+          },
+        ),
+
         body: Container(
           padding: EdgeInsets.all(20),
           color: Colors.white,
@@ -79,32 +103,32 @@ class _PoliLanderScreenState extends State<PoliLanderScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16, color: Colors.blueGrey),
                   ),
-                  SizedBox(height: 30),
-                  Consumer(
-                    builder: (BuildContext context,
-                        T Function<T>(ProviderBase<Object?, T>) watch,
-                        Widget? child) {
-                      final vm = watch(addPaymentProvider);
-                      return Container(
-                        child: RaisedButton(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 15),
-                          onPressed: vm is Loading
-                              ? null
-                              : () => context
-                                  .read(addPaymentProvider.notifier)
-                                  .addPayment(widget.transactionData.id!, 1),
-                          // onPressed: () {
-                          //   print(widget.transactionData.id);
-                          // },
-                          color: AppColors.accentColor,
-                          child: Text(
-                              vm is Loading ? 'Please wait...' : 'Pay Now',
-                              style: btnAccentStyle),
-                        ),
-                      );
-                    },
-                  )
+                  SizedBox(height: 100),
+                  // Consumer(
+                  //   builder: (BuildContext context,
+                  //       T Function<T>(ProviderBase<Object?, T>) watch,
+                  //       Widget? child) {
+                  //     final vm = watch(addPaymentProvider);
+                  //     return Container(
+                  //       child: RaisedButton(
+                  //         padding: const EdgeInsets.symmetric(
+                  //             horizontal: 40, vertical: 15),
+                  //         onPressed: vm is Loading
+                  //             ? null
+                  //             : () => context
+                  //                 .read(addPaymentProvider.notifier)
+                  //                 .addPayment3(widget.transactionData.id!, 1),
+                  //         // onPressed: () {
+                  //         //   print(widget.transactionData.id);
+                  //         // },
+                  //         color: AppColors.primaryColor,
+                  //         child: Text(
+                  //             vm is Loading ? 'Please wait...' : 'Pay Now',
+                  //             style: btnAccentStyle),
+                  //       ),
+                  //     );
+                  //   },
+                  // )
                 ],
               )
             ]),

@@ -86,7 +86,7 @@ class CreateTransactionScreen extends HookWidget {
             return Padding(
               padding: const EdgeInsets.all(20.0),
               child: CustomButton(
-                  color: Colors.black,
+                  color: AppColors.primaryColor,
                   width: MediaQuery.of(context).size.width,
                   onPressed: vm is Loading
                       ? null
@@ -356,8 +356,7 @@ class CreateTransactionScreen extends HookWidget {
                                                               height: 10,
                                                             ),
                                                             CustomButton(
-                                                                color: Colors
-                                                                    .black,
+                                                                color: AppColors.primaryColor,
                                                                 width: MediaQuery.of(
                                                                         context)
                                                                     .size

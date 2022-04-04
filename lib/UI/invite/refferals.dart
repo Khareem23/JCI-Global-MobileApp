@@ -126,7 +126,7 @@ class _RefferalsState extends State<Refferals> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Refferals',
+                              'Referrals',
                               style: context.textTheme.headline4!.copyWith(
                                   fontSize: 30, color: AppColors.white),
                             ),
