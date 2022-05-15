@@ -23,7 +23,7 @@ class _$CreateBeneficiaryModelTearOff {
 
   _CreateBeneficiaryModel call(
       {int? customerId,
-      required String country,
+      required String bankCountry,
       required String bankName,
       required String bankState,
       required String bankPostalCode,
@@ -44,7 +44,7 @@ class _$CreateBeneficiaryModelTearOff {
       String? corresBankAddress}) {
     return _CreateBeneficiaryModel(
       customerId: customerId,
-      country: country,
+      bankCountry: bankCountry,
       bankName: bankName,
       bankState: bankState,
       bankPostalCode: bankPostalCode,
@@ -78,7 +78,7 @@ const $CreateBeneficiaryModel = _$CreateBeneficiaryModelTearOff();
 mixin _$CreateBeneficiaryModel {
   int? get customerId => throw _privateConstructorUsedError;
 
-  String get country => throw _privateConstructorUsedError;
+  String get bankCountry => throw _privateConstructorUsedError;
 
   String get bankName => throw _privateConstructorUsedError;
 
@@ -131,7 +131,7 @@ abstract class $CreateBeneficiaryModelCopyWith<$Res> {
 
   $Res call(
       {int? customerId,
-      String country,
+      String bankCountry,
       String bankName,
       String bankState,
       String bankPostalCode,
@@ -165,7 +165,7 @@ class _$CreateBeneficiaryModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? customerId = freezed,
-    Object? country = freezed,
+    Object? bankCountry = freezed,
     Object? bankName = freezed,
     Object? bankState = freezed,
     Object? bankPostalCode = freezed,
@@ -190,9 +190,9 @@ class _$CreateBeneficiaryModelCopyWithImpl<$Res>
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as int?,
-      country: country == freezed
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
+      bankCountry: bankCountry == freezed
+          ? _value.bankCountry
+          : bankCountry // ignore: cast_nullable_to_non_nullable
               as String,
       bankName: bankName == freezed
           ? _value.bankName
@@ -280,7 +280,7 @@ abstract class _$CreateBeneficiaryModelCopyWith<$Res>
   @override
   $Res call(
       {int? customerId,
-      String country,
+      String bankCountry,
       String bankName,
       String bankState,
       String bankPostalCode,
@@ -315,7 +315,7 @@ class __$CreateBeneficiaryModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? customerId = freezed,
-    Object? country = freezed,
+    Object? bankCountry = freezed,
     Object? bankName = freezed,
     Object? bankState = freezed,
     Object? bankPostalCode = freezed,
@@ -340,9 +340,9 @@ class __$CreateBeneficiaryModelCopyWithImpl<$Res>
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as int?,
-      country: country == freezed
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
+      bankCountry: bankCountry == freezed
+          ? _value.bankCountry
+          : bankCountry // ignore: cast_nullable_to_non_nullable
               as String,
       bankName: bankName == freezed
           ? _value.bankName
@@ -425,7 +425,7 @@ class __$CreateBeneficiaryModelCopyWithImpl<$Res>
 class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
   const _$_CreateBeneficiaryModel(
       {this.customerId,
-      required this.country,
+      required this.bankCountry,
       required this.bankName,
       required this.bankState,
       required this.bankPostalCode,
@@ -451,7 +451,7 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
   @override
   final int? customerId;
   @override
-  final String country;
+  final String bankCountry;
   @override
   final String bankName;
   @override
@@ -493,7 +493,7 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
 
   @override
   String toString() {
-    return 'CreateBeneficiaryModel(customerId: $customerId, country: $country, bankName: $bankName, bankState: $bankState, bankPostalCode: $bankPostalCode, bankCity: $bankCity, bankAddress: $bankAddress, accountCurrency: $accountCurrency, accountNumber: $accountNumber, accountName: $accountName, beneficiaryAddress: $beneficiaryAddress, accountSWiftCode: $accountSWiftCode,  beneficiaryCountry:$beneficiaryCountry, bankIdentifierCode:$bankIdentifierCode, bankIdentifier:$bankIdentifier,  accountBsbCode: $accountBsbCode, corresBankCountry: $corresBankCountry, corresBankName: $corresBankName, corresBankIban: $corresBankIban, corresBankAddress: $corresBankAddress)';
+    return 'CreateBeneficiaryModel(customerId: $customerId, country: $bankCountry, bankName: $bankName, bankState: $bankState, bankPostalCode: $bankPostalCode, bankCity: $bankCity, bankAddress: $bankAddress, accountCurrency: $accountCurrency, accountNumber: $accountNumber, accountName: $accountName, beneficiaryAddress: $beneficiaryAddress, accountSWiftCode: $accountSWiftCode,  beneficiaryCountry:$beneficiaryCountry, bankIdentifierCode:$bankIdentifierCode, bankIdentifier:$bankIdentifier,  accountBsbCode: $accountBsbCode, corresBankCountry: $corresBankCountry, corresBankName: $corresBankName, corresBankIban: $corresBankIban, corresBankAddress: $corresBankAddress)';
   }
 
   @override
@@ -503,9 +503,9 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
             (identical(other.customerId, customerId) ||
                 const DeepCollectionEquality()
                     .equals(other.customerId, customerId)) &&
-            (identical(other.country, country) ||
+            (identical(other.bankCountry, bankCountry) ||
                 const DeepCollectionEquality()
-                    .equals(other.country, country)) &&
+                    .equals(other.bankCountry, bankCountry)) &&
             (identical(other.bankName, bankName) ||
                 const DeepCollectionEquality()
                     .equals(other.bankName, bankName)) &&
@@ -566,7 +566,7 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(customerId) ^
-      const DeepCollectionEquality().hash(country) ^
+      const DeepCollectionEquality().hash(bankCountry) ^
       const DeepCollectionEquality().hash(bankName) ^
       const DeepCollectionEquality().hash(bankState) ^
       const DeepCollectionEquality().hash(bankPostalCode) ^
@@ -601,7 +601,7 @@ class _$_CreateBeneficiaryModel implements _CreateBeneficiaryModel {
 abstract class _CreateBeneficiaryModel implements CreateBeneficiaryModel {
   const factory _CreateBeneficiaryModel(
       {int? customerId,
-      required String country,
+      required String bankCountry,
       required String bankName,
       required String bankState,
       required String bankPostalCode,
@@ -628,7 +628,7 @@ abstract class _CreateBeneficiaryModel implements CreateBeneficiaryModel {
   int? get customerId => throw _privateConstructorUsedError;
 
   @override
-  String get country => throw _privateConstructorUsedError;
+  String get bankCountry => throw _privateConstructorUsedError;
 
   @override
   String get bankName => throw _privateConstructorUsedError;

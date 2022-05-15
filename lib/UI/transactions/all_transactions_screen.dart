@@ -67,6 +67,7 @@ class AllTransactionsScreen extends HookWidget {
                                     data: trnx,
                                   ));
                                 },
+
                                 child: TransactionCard(
                                     amountToReceive_Local: trnx.amountToReceive_Local!,
                                     amountToSend: trnx.amountToSend!,

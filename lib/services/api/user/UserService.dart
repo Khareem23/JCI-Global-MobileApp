@@ -83,22 +83,25 @@ class UserService extends IUserService {
       "address": "erttt",
       "gender": "Female",
       "dateOfBirth": "2022-01-24T00:00:00.000",
-      "businessName": "null",
-      "businessRegNumber": "null",
+      "businessName": "",
+      "businessRegNumber": "",
       "accountType": "0",
       "userRole": "0"
     };
+    print(data);
     try {
       final response =
           await _dio.post(url, data: register.toJson(), options: Options());
+      print(response);
       RegisterResDto result = RegisterResDto.fromJson(response.data);
+      //print(result);
       return result;
     } on DioError catch (e) {
       if (e.response != null) {
         Failure result = Failure.fromJson(e.response!.data);
         throw result.message;
       } else {
-        print(e.error);
+        //print(e.error);
         throw e.error;
       }
     }

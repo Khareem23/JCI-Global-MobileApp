@@ -16,13 +16,14 @@ final countryProvider =
     FutureProvider<Country>((_) => UserService().getCountries());
 
 final countryProviderWithCode =
-FutureProvider<Country>((_) => UserService().getCountriesAll());
+    FutureProvider<Country>((_) => UserService().getCountriesAll());
 
 final statesProvider = FutureProvider.family<c.State, String>(
     (_, countryCode) => UserService().getStates(countryCode));
 
 class RegisterController extends StateNotifier<RegisterState> {
   final AuthRepository authRepository;
+
   RegisterController(ProviderReference ref)
       : authRepository = ref.read(authRepositoryProvider),
         super(RegisterInitial());
@@ -31,11 +32,12 @@ class RegisterController extends StateNotifier<RegisterState> {
     state = RegisterLoading();
     try {
       final res = await authRepository.register(register);
+      // print(res);
       if (res.data != null) {
         state = RegisterSuccess();
       } else {
         state = RegisterError(
-            'An Error occured. Please contact helpdesk for assistance.');
+            'An Error occurred. Please contact helpdesk for assistance.');
       }
     } catch (e) {
       state = RegisterError(e.toString());

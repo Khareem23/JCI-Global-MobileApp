@@ -46,7 +46,7 @@ class TransactionService {
   }
 
   Future<CurrencyModel> getAllSendingCurrency() async {
-    final url = 'Rates/getAllTransactionSendingCurrency';
+    final url = 'Rates/getAllSendCountryTransactionRate';//getAllTransactionSendingCurrency
     try {
       final response = await _dio.get(url,
           options: Options(headers: {"requireToken": true}));
@@ -64,7 +64,7 @@ class TransactionService {
   }
 
   Future<CurrencyModel> getAllReceivingCurrency() async {
-    final url = 'Rates/getAllTransactionReceivingCurrency';
+    final url = 'Rates/getAllReceiveTransactionRate'; //getAllTransactionReceivingCurrency
     try {
       final response = await _dio.get(url,
           options: Options(headers: {"requireToken": true}));
@@ -294,7 +294,7 @@ class TransactionService {
           // data: beneficiary.toJson(),
           data: {
             "customerId": beneficiary.customerId,
-            "country": beneficiary.beneficiaryCountry,
+            "bankCountry": beneficiary.bankCountry,
             "bankName": beneficiary.bankName,
             "bankState": beneficiary.bankState,
             "bankPostalCode": beneficiary.bankPostalCode,
@@ -306,10 +306,10 @@ class TransactionService {
             "accountSWiftCode": beneficiary.accountSWiftCode,
             "accountBSBCode": beneficiary.accountBsbCode,
             "beneficiaryAddress": beneficiary.beneficiaryAddress,
-            "beneficiaryCountry": beneficiary.country,
+            "beneficiaryCountry": beneficiary.beneficiaryCountry,
             "bankIdentifierCode": beneficiary.bankIdentifierCode,
             "bankIdentifier": beneficiary.bankIdentifier,
-            "corresBankCountry": beneficiary.country,
+            "corresBankCountry": beneficiary.bankCountry,
             "corresBankName": beneficiary.corresBankName,
             "corresBankIBAN": beneficiary.corresBankIban,
             "corresBankAddress": beneficiary.corresBankAddress,
@@ -319,7 +319,7 @@ class TransactionService {
           : await _dio.patch(url,
           data: {
             "customerId": beneficiary.customerId,
-            "country": beneficiary.beneficiaryCountry,
+            "bankCountry": beneficiary.bankCountry,
             "bankName": beneficiary.bankName,
             "bankState": beneficiary.bankState,
             "bankPostalCode": beneficiary.bankPostalCode,
@@ -331,10 +331,10 @@ class TransactionService {
             "accountSWiftCode": beneficiary.accountSWiftCode,
             "accountBSBCode": beneficiary.accountBsbCode,
             "beneficiaryAddress": beneficiary.beneficiaryAddress,
-            "beneficiaryCountry": beneficiary.country,
+            "beneficiaryCountry": beneficiary.beneficiaryCountry,
             "bankIdentifierCode": beneficiary.bankIdentifierCode,
             "bankIdentifier": beneficiary.bankIdentifier,
-            "corresBankCountry": beneficiary.country,
+            "corresBankCountry": beneficiary.bankCountry,
             "corresBankName": beneficiary.corresBankName,
             "corresBankIBAN": beneficiary.corresBankIban,
             "corresBankAddress": beneficiary.corresBankAddress,

@@ -18,7 +18,7 @@ String createBeneficiaryModelToJson(CreateBeneficiaryModel data) =>
 class CreateBeneficiaryModel with _$CreateBeneficiaryModel {
   const factory CreateBeneficiaryModel({
     int? customerId,
-    required String country,
+    required String bankCountry,
     required String bankName,
     required String bankState,
     required String bankPostalCode,

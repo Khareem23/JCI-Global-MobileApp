@@ -10,7 +10,7 @@ _$_CreateBeneficiaryModel _$_$_CreateBeneficiaryModelFromJson(
     Map<String, dynamic> json) {
   return _$_CreateBeneficiaryModel(
     customerId: json['customerId'] as int?,
-    country: json['country'] as String,
+    bankCountry: json['bankCountry'] as String,
     bankName: json['bankName'] as String,
     bankState: json['bankState'] as String,
     bankPostalCode: json['bankPostalCode'] as String,
@@ -33,7 +33,7 @@ Map<String, dynamic> _$_$_CreateBeneficiaryModelToJson(
         _$_CreateBeneficiaryModel instance) =>
     <String, dynamic>{
       'customerId': instance.customerId,
-      'country': instance.country,
+      'bankCountry': instance.bankCountry,
       'bankName': instance.bankName,
       'bankState': instance.bankState,
       'bankPostalCode': instance.bankPostalCode,

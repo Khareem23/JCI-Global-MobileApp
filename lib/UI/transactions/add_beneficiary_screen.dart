@@ -51,8 +51,8 @@ class AddBeneficiaryScreen extends HookWidget {
     final accCurrency = useState('');
     final bankCountry = useTextEditingController();
     final bankidentifier_text = useTextEditingController();
-
-
+    final bankCountry_alpha = useTextEditingController();
+    final ben_country_alpha = useTextEditingController();
 
     return ProviderListener(
       onChange: (BuildContext context, value) {
@@ -173,7 +173,7 @@ class AddBeneficiaryScreen extends HookWidget {
                             icon: const Icon(Icons.arrow_drop_down),
                             onSelected: (CountryData value) {
                               country.text = value.country!;
-                              countryCode.value = value.alpha3Code!;
+                              ben_country_alpha.text = value.alpha3Code!;
                               accCurrency.value = value.currency!;
                               print(value.alpha3Code);
                             },
@@ -364,8 +364,8 @@ class AddBeneficiaryScreen extends HookWidget {
                             icon: const Icon(Icons.arrow_drop_down),
                             onSelected: (CountryData value) {
                               bankCountry.text = value.country!;
-                              //countryCode.value = value.alpha3Code!;
-                              // accCurrency.value = value.currency!;
+                              bankCountry_alpha.text = value.alpha3Code!;
+                              accCurrency.value = value.currency!;
                               //print(value.alpha3Code);
                             },
                             itemBuilder: (BuildContext context) {
@@ -531,7 +531,7 @@ class AddBeneficiaryScreen extends HookWidget {
                                      // submit();
                                       final beneficiary =
                                           CreateBeneficiaryModel(
-                                              country: bankCountry.text,
+                                              bankCountry: bankCountry_alpha.text,
                                               bankName: bankName.text,
                                               bankState: bankState.text,
                                               bankPostalCode: postalCode.text,
@@ -541,7 +541,7 @@ class AddBeneficiaryScreen extends HookWidget {
                                               accountNumber: accNumber.text,
                                               beneficiaryAddress: address.text,
                                               accountSWiftCode: swiftCode.text,
-                                              beneficiaryCountry: country.text,
+                                              beneficiaryCountry: ben_country_alpha.text,
                                               bankIdentifierCode: bankIdentifierNumber.text,
                                               bankIdentifier:bankidentifier_text.text,
                                               accountBsbCode: bsb.text,
